@@ -30,6 +30,11 @@ header {
     font-weight: bold;
 }
 
+/* Header page block. */
+.scims-page-header {
+    margin-bottom: 10px;
+}
+
 /* Title of the article on webpage. */
 .scims-page-title {
     text-align: center;
@@ -48,6 +53,13 @@ header {
     margin-left: 20px;
 }
 
+.scims-excerpt-button {
+    float: right;
+}
+
+.scims-excerpt-button a {
+    color: white;
+}
 
 /***********************************/
 /*       ICONS IN NAVIGATION       */
@@ -60,4 +72,14 @@ header {
 .scims-connexion:before {
     font-family: FontAwesome;
     content: "\f007";
+}
+
+.scims-excerpt-tags:before {
+    font-family: FontAwesome;
+    content: "\f02c";
+}
+
+.scims-excerpt-categories:before {
+    font-family: FontAwesome;
+    content: "\f02e";
 }
