@@ -15,6 +15,28 @@
      */
     class UserDAO extends DAO {
     
+    
+        /**
+         * Method use for retrieve all users present on Database.
+         *
+         * @return array
+         *  An array with all Users present on Database.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function findAll() {
+            $sql = "SELECT * FROM `users`";
+            $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+            
+            $users = array();
+            foreach ($result as $row) {
+                $id = $row['id'];
+                $users[$id] = $this->buildDomain($row[$id]);
+            }
+            
+            return $users;
+        }
+    
         /**
          * Method use for research 1 user thanks to the id.
          *
