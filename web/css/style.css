@@ -1,0 +1,85 @@
+html {
+    margin: 10px 10px 10px 25px;
+}
+
+h1 {
+    font-size: 1.8em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+/* Header of page */
+header {
+    height: 100px;
+}
+
+/* Transform text in italic. */
+.scims-italic {
+    font-style: italic;
+}
+
+/* Brand of SciMS on left navigation */
+.scims-brand {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+/* Header page block. */
+.scims-page-header {
+    margin-bottom: 10px;
+}
+
+/* Title of the article on webpage. */
+.scims-page-title {
+    text-align: center;
+    font-size: 1.8em;
+}
+
+/* Author of the article on Header page. */
+.scims-header-page-subtitle {
+    display: block;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* Sub level on Summary */
+.scims-sub-level-summary {
+    margin-left: 20px;
+}
+
+.scims-excerpt-button {
+    float: right;
+}
+
+.scims-excerpt-button a {
+    color: white;
+}
+
+/***********************************/
+/*       ICONS IN NAVIGATION       */
+/***********************************/
+.scims-brand:before {
+    font-family: FontAwesome;
+    content: "\f015";
+}
+
+.scims-connexion:before {
+    font-family: FontAwesome;
+    content: "\f007";
+}
+
+.scims-excerpt-tags:before {
+    font-family: FontAwesome;
+    content: "\f02c";
+}
+
+.scims-excerpt-categories:before {
+    font-family: FontAwesome;
+    content: "\f02e";
+}

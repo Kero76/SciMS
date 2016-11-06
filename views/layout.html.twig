@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="../vendor/twitter/bootstrap/dist/css/bootstrap.min.css">       <!-- Bootstrap.min -->
+            <link rel="stylesheet" type="text/css" href="../vendor/fortawesome/font-awesome/css/font-awesome.min.css">  <!-- Font Awesome -->
+            <link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css">     <!-- Personnal Stylesheet -->
+        {% endblock %}
+
+        <title>{% block title %}SciMS - {% endblock %}</title>
+    </head>
+    <body>
+    <!-- Body of webpage -->
+    <section id="scims-article-body" class="container">
+        <div class="row">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Loading script section -->
+        {% block javascripts %}
+            <script src="../vendor/components/jquery/jquery.min.js"></script> <!-- jquery    -->
+            <script src="../vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script> <!-- bootstrap -->
+        {% endblock %}
+    </section>
+
+    <!-- Footer of the webpage. -->
+    <div class="row">
+        <footer class="col-md-12 col-sm-12 col-xs-12">
+            <p class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire POMMIER, &copy; 2016, SciMS : Simplified the written of your research articles.</p>
+        </footer>
+    </div>
+    </body>
+</html>
