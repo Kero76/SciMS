@@ -19,8 +19,11 @@
          */
         private $_categories;
         private $_tags;
-        
-        
+    
+        /**
+         * @var integer
+         */
+        private $_status;
         private $date_creation;
         private $date_modified;
     
@@ -125,6 +128,20 @@
             $this->_tags = $tags;
         }
     
+        /**
+         * @return mixed
+         */
+        public function getStatus() {
+            return $this->_status;
+        }
+    
+        /**
+         * @param mixed $status
+         */
+        public function setStatus($status) {
+            $this->_status = $status;
+        }
+        
         /**
          * Return the date of the article creation.
          *

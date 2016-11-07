@@ -13,21 +13,105 @@
      *  - GUEST         : Can only view article without any modification of it.
      * He have an avatar, so it can using Gravatar service to add his avatar directly on website.
      *
+     * -> V1.1 :
+     *  Added attributes connect + corresponding Getter and Setter.
+     *
      * @author Kero76
      * @package SciMS\Domain
      * @since SciMS 0.1
-     * @version 1.0
+     * @version 1.1
      */
     class User {
+    
+        /**
+         * The id of the User.
+         *
+         * @var integer
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_id;
+    
+        /**
+         * The first name of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_fname;
+    
+        /**
+         * The last name of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_lname;
+    
+        /**
+         * The username of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_username;
+    
+        /**
+         * The email of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_email;
+    
+        /**
+         * The hash password of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_password;
+    
+        /**
+         * The salt using in password of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_salt;
+    
+        /**
+         * The link for displaying the avatar.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_avatar;
+    
+        /**
+         * The role of the user.
+         *
+         * @var integer
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_role;
+    
+        /**
+         * Boolean which represent the connexion of the user of not.
+         *
+         * @var boolean
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        private $_connect;
     
         /**
          * User constructor.
@@ -254,6 +338,30 @@
          */
         public function setRole($role) {
             $this->_role = $role;
+        }
+    
+        /**
+         * Return true if the user is connected, false if the user not connected.
+         *
+         * @return boolean
+         *  A boolean to check if the user is connected.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function getConnect() {
+            return $this->_connect;
+        }
+    
+        /**
+         * Set the user connexion.
+         *
+         * @param boolean $connect
+         *  True if the user is connect, else it's false.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function setConnect($connect) {
+            $this->_connect = $connect;
         }
     
         /**

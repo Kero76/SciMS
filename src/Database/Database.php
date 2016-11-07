@@ -35,42 +35,6 @@
         private $_pdo;
     
         /**
-         * This Host configuration for PDO settings.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const HOST     = "db655171027.db.1and1.com";
-    
-        /**
-         * The Database name configuration for PDO settings.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const DBNAME   = "db655171027";
-    
-        /**
-         * The user name configuration for PDO settings.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const USER     = "dbo655171027";
-    
-        /**
-         * The password configuration for PDO settings.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const PASSWORD = "uh92ZJ7i8TWg";
-    
-        /**
          * Database constructor.
          *
          * @access private
@@ -80,7 +44,7 @@
          */
         private function __construct() {
             try {
-                $this->_pdo = new PDO("mysql:host=" . Database::HOST . ";dbname=" . Database::DBNAME, Database::USER, Database::PASSWORD);
+                $this->_pdo = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, USER, PASSWORD);
                 $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 echo 'Erreur : ' . $e->getMessage().'<br />';

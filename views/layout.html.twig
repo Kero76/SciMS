@@ -6,30 +6,55 @@
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="../vendor/twitter/bootstrap/dist/css/bootstrap.min.css">       <!-- Bootstrap.min -->
             <link rel="stylesheet" type="text/css" href="../vendor/fortawesome/font-awesome/css/font-awesome.min.css">  <!-- Font Awesome -->
-            <link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css">     <!-- Personnal Stylesheet -->
+            <link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css">                     <!-- Personnal Stylesheet -->
         {% endblock %}
 
         <title>{% block title %}SciMS - {% endblock %}</title>
     </head>
     <body>
-    <!-- Body of webpage -->
-    <section id="scims-article-body" class="container">
+        <section id="scims-article-body" class="container">
+            <div class="row">
+                <!-- Header of the webpage. -->
+                <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="scims-page-title">
+                        SciMS : Simplify the writting of Your research articles.
+                        <small class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire Pommier</small>
+                    </h1>
+                </header>
+
+                <!-- Navigation -->
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <aside id="scims-summary" class="scims-anchor-link">
+                        <nav class="navbar">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div id="scims-left-navigation" class="list-group">
+                                    <a class="list-group-item scims-brand" href="#"> Home</a>
+                                    <a class="list-group-item scims-connexion" href="#"> Connexion</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </aside>
+                </div>
+
+                <!-- Body of webpage -->
+                <div class="row">
+                    {% block content %}{% endblock %}
+                </div>
+
+                <!-- Loading script section -->
+                {% block javascripts %}
+                    <script src="../vendor/components/jquery/jquery.min.js"></script> <!-- jquery    -->
+                    <script src="../vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script> <!-- bootstrap -->
+                {% endblock %}
+            </div>
+        </section>
+
+        <!-- Footer of the webpage. -->
         <div class="row">
-            {% block content %}{% endblock %}
+            <footer class="col-md-12 col-sm-12 col-xs-12">
+                <p class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire POMMIER, &copy; 2016, SciMS : Simplify the writting of Your research articles.</p>
+            </footer>
         </div>
-
-        <!-- Loading script section -->
-        {% block javascripts %}
-            <script src="../vendor/components/jquery/jquery.min.js"></script> <!-- jquery    -->
-            <script src="../vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script> <!-- bootstrap -->
-        {% endblock %}
-    </section>
-
-    <!-- Footer of the webpage. -->
-    <div class="row">
-        <footer class="col-md-12 col-sm-12 col-xs-12">
-            <p class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire POMMIER, &copy; 2016, SciMS : Simplified the written of your research articles.</p>
-        </footer>
-    </div>
     </body>
 </html>
