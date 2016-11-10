@@ -1,5 +1,6 @@
 <?php
     namespace SciMS\DAO;
+    
     use SciMS\Domain\User;
 
     /**
