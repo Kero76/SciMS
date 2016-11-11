@@ -1,5 +1,7 @@
 <?php
     namespace SciMS\Database;
+
+    use \PDO;
     
     /**
      * Class Database.
@@ -16,6 +18,12 @@
      * @version 1.0
      */
     class Database {
+    
+        const HOST      = "db655171027.db.1and1.com";
+        const DBNAME    ="db655171027";
+        const USER      = "dbo655171027";
+        const PASSWORD  = "uh92ZJ7i8TWg";
+    
         /**
          * Stored the only one instance of Database on is project.
          *
@@ -44,7 +52,7 @@
          */
         private function __construct() {
             try {
-                $this->_pdo = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, USER, PASSWORD);
+                $this->_pdo = new PDO("mysql:host=" . self::HOST . ";dbname=" . self::DBNAME, self::USER, self::PASSWORD);
                 $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 echo 'Erreur : ' . $e->getMessage().'<br />';

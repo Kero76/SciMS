@@ -50,8 +50,9 @@
          * @version 1.0
          */
         public function __construct() {
-            $path        = dirname(__DIR__) . '/views/';
-            $loader      = new \Twig_Loader_Filesystem($path);
+            $path        = dirname(__DIR__);// . '/views/';
+            $path = substr($path, 0, strlen($path) - 4);
+            $loader      = new \Twig_Loader_Filesystem($path . '/web/views/');
             $this->_twig = new \Twig_Environment($loader);
         
             $this->_services = array(

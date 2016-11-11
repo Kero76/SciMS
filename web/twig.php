@@ -5,4 +5,4 @@
     $loader = new \Twig_Loader_Filesystem($path);
     $twig   = new \Twig_Environment($loader);
     
-    echo $twig->render('user.html.twig', ['username' => 'Mickael Jackson']);
+    echo $twig->render('user.html.twig', ['username' => 'Jean Bonbeurre']);

@@ -1,6 +1,7 @@
 <?php
     namespace SciMS\DAO;
-    
+    use SciMS\Domain\Article;
+
     /**
      * Created by PhpStorm.
      * User: Kero76
@@ -19,6 +20,7 @@
          *  The corresponding instance of Domain object.
          */
         protected function buildDomain($row) {
-            // TODO: Implement buildDomain() method.
+            $article = new Article($row);
+            return $article;
         }
     }
