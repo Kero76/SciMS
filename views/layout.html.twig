@@ -6,7 +6,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="../vendor/twitter/bootstrap/dist/css/bootstrap.min.css">       <!-- Bootstrap.min -->
             <link rel="stylesheet" type="text/css" href="../vendor/fortawesome/font-awesome/css/font-awesome.min.css">  <!-- Font Awesome -->
-            <link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css">                     <!-- Personnal Stylesheet -->
+            <link rel="stylesheet" type="text/css" href="../web/css/style.css">                     <!-- Personnal Stylesheet -->
         {% endblock %}
 
         <title>{% block title %}SciMS - {% endblock %}</title>
@@ -29,8 +29,14 @@
                             <div class="container-fluid">
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div id="scims-left-navigation" class="list-group">
-                                    <a class="list-group-item scims-brand" href="#"> Home</a>
-                                    <a class="list-group-item scims-connexion" href="#"> Connexion</a>
+                                    <a class="list-group-item scims-brand" href="/web/index.php"> Home</a>
+                                    {% if user.connect == true %}
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=administration"> Administration</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
+                                    {% else %}
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Connexion</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </nav>

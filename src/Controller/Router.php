@@ -62,12 +62,16 @@
         public function __construct() {
             $this->_renderer = new Renderer();
             $this->_routes   = array(
-                'index' => '/web/index.php',
+                'home'          => '/web/index.php',
+                'connection'     => '/web/index.php?action=connection',
+                'inscription'   => '/web/index.php?action=inscription',
             );
             
             $this->_templates = array(
-                'index' => 'index.html.twig',
-                '404'   => '404.html.twig',
+                'home'          => 'home.html.twig',
+                'connection'    => 'connection.html.twig',
+                'inscription'   => 'inscription.html.twig',
+                '404'           => '404.html.twig',
             );
     
             $this->_services = array(
@@ -125,6 +129,11 @@
          *  The HTML view corresponding to the good template.
          */
         private function _parseUrl($key) {
+            /*$domains = array(
+                'user' => array(
+                    'connect' => true,
+                )
+             );*/
             $domains = array();
             return $this->_renderer->renderer($this->_templates[$key], $domains);
         }
