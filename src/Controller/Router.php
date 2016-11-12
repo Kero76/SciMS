@@ -1,6 +1,10 @@
 <?php
     namespace SciMS\Controller;
     
+    use \SciMS\DAO\ArticleDAO;
+    use \SciMS\DAO\CategoryDAO;
+    use \SciMS\DAO\UserDAO;
+    
     /**
      * Class Router.
      *
@@ -21,6 +25,7 @@
         
         /**
          * An array with all routes present on website.
+         * These routes are describe by their regex pattern use for reconize them.
          *
          * @var array
          *  This array contains all routes present on website.
@@ -34,6 +39,16 @@
          *  This array contains all templates with the same key as $_routes.
          */
         private $_templates;
+    
+        /**
+         * An array with all DAO Services present on Website.
+         * It contains all DAO service use for generate Twig render in functon of
+         * the Domain object present on Website.
+         *
+         * @var array
+         * @since SciMS 0.1
+         */
+        private $_services;
         
         /**
          * Router constructor.
@@ -52,14 +67,65 @@
             
             $this->_templates = array(
                 'index' => 'index.html.twig',
+                '404'   => '404.html.twig',
+            );
+    
+            $this->_services = array(
+                'user.dao'      => new UserDAO(),
+                'article.dao'   => new ArticleDAO(),
+                'category.dao'  => new CategoryDAO(),
             );
         }
-        
-        public function parse($url) {
+    
+        /**
+         * Render the corresponding view in function of the URL.
+         *
+         * @param $url
+         *  URL requested by user.
+         * @return null|string
+         *  Return HTML content of the page.
+         */
+        public function render($url) {
+            $view = null;
+            $view = $this->_match($url);
+            return $view;
+        }
+    
+        /**
+         * Match if the URL passed on parameter is present on routes.
+         *
+         * @access private
+         * @param $url
+         *  Url who match the route pattern present on routes.
+         * @return string
+         *  Return the HTML page content.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        private function _match($url) {
+            $view = null;
             foreach ($this->_routes AS $key => $value) {
-                if (preg_match($value, $url)) {
-                    return $this->_renderer->renderer($this->_templates[$key], array());
+                if (strcmp($url, $value) == 0) {
+                    $view = $this->_parseUrl($key);
                 }
             }
+            if ($view === null) {
+                $view = $this->_parseUrl('404');
+            }
+            return $view;
+        }
+    
+        /**
+         * Method use to parse URL and generate corresponding view in function of the user request.
+         *
+         * @access private
+         * @param $key
+         *  Use for retrieve good template from templates array.
+         * @return string
+         *  The HTML view corresponding to the good template.
+         */
+        private function _parseUrl($key) {
+            $domains = array();
+            return $this->_renderer->renderer($this->_templates[$key], $domains);
         }
     }

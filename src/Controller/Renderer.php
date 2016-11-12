@@ -1,9 +1,5 @@
 <?php
     namespace SciMS\Controller;
-    
-    use SciMS\DAO\ArticleDAO;
-    use SciMS\DAO\CategoryDAO;
-    use SciMS\DAO\UserDAO;
 
     /**
      * Class Renderer.
@@ -20,22 +16,20 @@
     class Renderer {
     
         /**
-         * An array with all DAO Services present on Website.
-         * It contains all DAO service use for generate Twig render in functon of
-         * the Domain object present on Website.
-         *
-         * @var array
-         * @since SciMS 0.1
-         */
-        private $_services;
-    
-        /**
          * An instance of Twig use for generate template view in function of the route.
          *
          * @var \Twig_Environment
          * @since SciMS 0.1
          */
         private $_twig;
+    
+        /**
+         * Contains the path of the templates directory.
+         *
+         * @var string
+         * @since SciMS 0.1
+         */
+        private $_template_dir;
     
         /**
          * Renderer constructor.
@@ -50,16 +44,14 @@
          * @version 1.0
          */
         public function __construct() {
-            $path        = dirname(__DIR__);// . '/views/';
-            $path = substr($path, 0, strlen($path) - 4);
-            $loader      = new \Twig_Loader_Filesystem($path . '/web/views/');
-            $this->_twig = new \Twig_Environment($loader);
-        
-            $this->_services = array(
-                'user.dao'      => new UserDAO(),
-                'article.dao'   => new ArticleDAO(),
-                'category.dao'  => new CategoryDAO(),
-            );
+            $path = realpath('../');
+            $path .= '/views';
+            $this->_template_dir = $path;
+            $loader      = new \Twig_Loader_Filesystem($this->_template_dir);
+            $this->_twig = new \Twig_Environment($loader, array(
+                'debug' => true,
+                'cache' => false,
+            ));
         }
     
         /**
@@ -68,7 +60,7 @@
          * @param       $template
          *  Template used to render the view.
          * @param array $domains
-         *  All domains object used to render the view.
+         *  All domains objects use to render the view.
          * @return string
          */
         public function renderer($template, array $domains) {
