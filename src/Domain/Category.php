@@ -1,14 +1,37 @@
 <?php
     namespace SciMS\Domain;
-    
+
     /**
-     * Created by PhpStorm.
-     * User: Kero76
-     * Date: 04/11/16
-     * Time: 15:24
+     * Class User
+     *
+     * The class is a representation of an category on Website.
+     *
+     * -> V1.1 :
+     *  Added attributes connect + corresponding Getter and Setter.
+     *
+     * @author Kero76
+     * @package SciMS\Domain
+     * @since SciMS 0.1
+     * @version 1.1
      */
     class Category {
+    
+        /**
+         * Id of the Category.
+         *
+         * @var integer
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_id;
+    
+        /**
+         * Name of the Category
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
         private $_name;
     
         /**
@@ -18,6 +41,8 @@
          * @param array $data
          *  An array with all data used for hydrate object.
          * @see _hydrate(array $data).
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function __construct(array $data) {
             $this->_hydrate($data);
@@ -28,6 +53,8 @@
          *
          * @return integer
          *  The id of the Category.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function getId() {
             return $this->_id;
@@ -38,6 +65,8 @@
          *
          * @param integer $id
          *  The id of the Category.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function setId($id) {
             $this->_id = $id;
@@ -48,6 +77,8 @@
          *
          * @return string
          *  The name of the Category.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function getName() {
             return $this->_name;
@@ -58,6 +89,8 @@
          *
          * @param string $name
          *  The name of the Category.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function setName($name) {
             $this->_name = $name;
@@ -72,6 +105,8 @@
          * @access private
          * @param array $data
          *  An array with all Data for hydrate the current instance of Category.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         private function _hydrate(array $data) {
             foreach($data as $key => $value) {

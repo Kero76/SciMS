@@ -29,13 +29,13 @@
         public function findAll() {
             $sql = "SELECT * FROM `users`";
             $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
-            
+    
             $users = array();
             foreach ($result as $row) {
                 $id = $row['id'];
-                $users[$id] = $this->buildDomain($row[$id]);
+                $users[$id] = $this->buildDomain($row);
             }
-            
+    
             return $users;
         }
     

@@ -1,13 +1,35 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}SciMS - {{ article.title }}{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ article.title }}
+            <small class="scims-italic scims-header-page-subtitle">{{ article.authors }}</small>
+        </h1>
+    </header>
+{% endblock %}
+
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <h1>{{ article.title }}</h1>
-        <ul>
-            {% for article in articles %}
-                <li><a href="/web/index.php?action=article&id={{ article.id }}" >{{ article.title }}</a></li>
-            {% endfor %}
-        </ul>
+        {% autoescape false %}
+            {{ article.content }}
+        {% endautoescape %}
+
+        <!-- Categories -->
+        <section>
+            <ul class="list-unstyled list-inline scims-excerpt-categories">
+                {{ article.category }}
+            </ul>
+
+            <!-- Tags -->
+            <ul class="list-unstyled list-inline scims-excerpt-tags">
+                {% for tag in article.tags %}
+                    <li>{{ tag }}</li>
+                {% endfor %}
+            </ul>
+        </section>
     </section>
 {% endblock %}

@@ -49,6 +49,7 @@
          * @since SciMS 0.1
          */
         private $_services;
+    
         
         /**
          * Router constructor.
@@ -63,10 +64,10 @@
             $this->_renderer    = new Renderer();
             
             $this->_routes = array(
-                'home'          => '/web/index.php',
-                'connection'    => '/web/index.php?action=connection',
-                'inscription'   => '/web/index.php?action=inscription',
-                'article'       => '/web/index.php?action=article&id=2', // Generate regex here to interact with all id's articles.
+                'home'          => '#\/web\/index\.php$#',
+                'connection'    => '#\/web\/index\.php\?action=connection$#',
+                'inscription'   => '#\/web\/index\.php\?action=inscription$#',
+                'article'       => '#\/web\/index\.php\?action=article&id=[0-9]{1,9}$#',
             );
             
             $this->_templates = array(
@@ -112,7 +113,8 @@
         private function _match($url) {
             $view = null;
             foreach ($this->_routes AS $key => $value) {
-                if (strcmp($url, $value) == 0) {
+                // Generate REGEX to recognize good url form.
+                if (preg_match($value, $url) != 0) {
                     $view = $this->_parseUrl($key);
                 }
             }
@@ -132,9 +134,43 @@
          *  The HTML view corresponding to the good template.
          */
         private function _parseUrl($key) {
-            $domains = array(
-                'articles' => $this->_services['article.dao']->findAll(),
-             );
+            $domains = null;
+            
+            // Switch on $key
+            switch ($key) {
+                // Home template generate with good domains object.
+                case 'home' :
+                    $domains = array(
+                        'articles' => $this->_services['article.dao']->findAll(),
+                    );
+                    break;
+                
+                // Connection template generate with good domains object.
+                case 'connection' :
+                    $domains = array(
+                        
+                    );
+                    break;
+    
+                // Inscription template generate with good domains object.
+                case 'inscription' :
+                    $domains = array(
+                        
+                    );
+                    break;
+    
+                // Article template generate with good domains object.
+                case 'article' :
+                    $domains = array(
+                        'article' => $this->_services['article.dao']->findById($_GET['id']),
+                    );
+                    break;
+    
+                // 404 template generate with nothing domains object.
+                default :
+                    $domains = array();
+                    break;
+            }
             
             return $this->_renderer->renderer($this->_templates[$key], $domains);
         }

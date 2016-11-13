@@ -14,14 +14,7 @@
     <body>
         <section id="scims-article-body" class="container">
             <div class="row">
-                <!-- Header of the webpage. -->
-                <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
-                    <h1 class="scims-page-title">
-                        SciMS : Simplify the writting of Your research articles.
-                        <small class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire Pommier</small>
-                    </h1>
-                </header>
-
+                {% block page_title %}{% endblock %}
                 <!-- Navigation -->
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <aside id="scims-summary" class="scims-anchor-link">
@@ -34,7 +27,7 @@
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=administration"> Administration</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% else %}
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Connexion</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Connection</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% endif %}
                                 </div>

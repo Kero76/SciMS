@@ -14,7 +14,7 @@
      * He have an avatar, so it can using Gravatar service to add his avatar directly on website.
      *
      * -> V1.1 :
-     *  Added attributes connect + corresponding Getter and Setter.
+     *  Added role constante.
      *
      * @author Kero76
      * @package SciMS\Domain
@@ -22,6 +22,42 @@
      * @version 1.1
      */
     class User {
+    
+        /**
+         * Administrator status of the User.
+         *
+         * @const
+         * @var integer
+         * @since SciMS 0.1
+         */
+        const ADMINISTRATOR = 0;
+    
+        /**
+         * Moderator status of the User.
+         *
+         * @const
+         * @var integer
+         * @since SciMS 0.1
+         */
+        const MODERATOR = 1;
+    
+        /**
+         * Writter status of the User.
+         *
+         * @const
+         * @var integer
+         * @since SciMS 0.1
+         */
+        const WRITTER = 2;
+    
+        /**
+         * Guest status of the User.
+         *
+         * @const
+         * @var integer
+         * @since SciMS 0.1
+         */
+        const GUEST = 3;
     
         /**
          * The id of the User.
@@ -118,6 +154,7 @@
          * @constructor
          * @param array $data
          *  An array with all data from Database.
+         * @see _hydrate(array $data)
          * @since SciMS 0.1
          * @version 1.0
          */

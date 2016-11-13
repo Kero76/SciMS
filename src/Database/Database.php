@@ -19,9 +19,32 @@
      */
     class Database {
     
-        const DNS       = "mysql:host=db655171027.db.1and1.com;dbname=db655171027";
-        const USER      = "dbo655171027";
-        const PASSWORD  = "uh92ZJ7i8TWg";
+        /**
+         * DNS setting of the PDO object.
+         *
+         * @const
+         * @var string
+         * @since SciMS 0.1
+         */
+        const DNS = "mysql:host=db655171027.db.1and1.com;dbname=db655171027";
+    
+        /**
+         * User setting of the PDO object.
+         *
+         * @const
+         * @var string
+         * @since SciMS 0.1
+         */
+        const USER = "dbo655171027";
+    
+        /**
+         * Password setting of the PDO object.
+         *
+         * @const
+         * @var string
+         * @since SciMS 0.1
+         */
+        const PASSWORD = "uh92ZJ7i8TWg";
     
         /**
          * Stored the only one instance of Database on is project.
