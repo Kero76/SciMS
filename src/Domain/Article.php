@@ -8,27 +8,54 @@
      * Time: 14:01
      */
     class Article {
-        
+    
+        /**
+         * @var integer
+         */
         private $_id;
+    
+        /**
+         * @var string
+         */
         private $_title;
+    
+        /**
+         * @var string
+         */
         private $_content;
+    
+        /**
+         * @var string
+         */
         private $_authors;
     
         /**
-         * @var Category
+         * @var \SciMS\Domain\Category
          */
         private $_categories;
+    
+        /**
+         * @var string
+         */
         private $_tags;
     
         /**
          * @var integer
          */
         private $_status;
+    
+        /**
+         * @var timestamp
+         */
         private $date_creation;
+    
+        /**
+         * @var timestamp
+         */
         private $date_modified;
     
         /**
-         * @var User
+         * @var \SciMS\Domain\User
          */
         private $writer;
         
@@ -101,7 +128,7 @@
     
         /**
          *
-         * @param \Category $categories
+         * @param \SciMS\$categories
          *  An instance of Category.
          */
         public function setCategories($categories) {
@@ -185,7 +212,7 @@
         /**
          * Return the Writer.
          *
-         * @return \User
+         * @return \SciMS\Domain\User
          *  An instance of User.
          */
         public function getWriter() {
@@ -195,7 +222,7 @@
         /**
          * Set the writer.
          *
-         * @param \User $writer
+         * @param \SciMS\Domain\User $writer
          *  The value of the Writer.
          */
         public function setWriter($writer) {
@@ -212,10 +239,11 @@
         private function _hydrate(array $data) {
             foreach($data as $key => $value) {
                 $method = 'set';
-                $keySplit = explode("_", $key);
+                $keySplit = explode("_", $key); // split key name if contains XXX_XXX_XXX
                 for ($i = 0; $i < count($keySplit); $i++ ) {
-                    $method .= ucfirst($keySplit[$i]);
+                    $method .= ucfirst($keySplit[$i]); // Replace first characters of each word in uppercase form.
                 }
+                // Execute method if exists on is object.
                 if(method_exists($this, $method)) {
                     $this->$method($value);
                 }

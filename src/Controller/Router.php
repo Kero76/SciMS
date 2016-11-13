@@ -60,17 +60,20 @@
          * @version 1.0
          */
         public function __construct() {
-            $this->_renderer = new Renderer();
-            $this->_routes   = array(
+            $this->_renderer    = new Renderer();
+            
+            $this->_routes = array(
                 'home'          => '/web/index.php',
-                'connection'     => '/web/index.php?action=connection',
+                'connection'    => '/web/index.php?action=connection',
                 'inscription'   => '/web/index.php?action=inscription',
+                'article'       => '/web/index.php?action=article&id=2', // Generate regex here to interact with all id's articles.
             );
             
             $this->_templates = array(
                 'home'          => 'home.html.twig',
                 'connection'    => 'connection.html.twig',
                 'inscription'   => 'inscription.html.twig',
+                'article'       => 'article.html.twig',
                 '404'           => '404.html.twig',
             );
     
@@ -129,12 +132,10 @@
          *  The HTML view corresponding to the good template.
          */
         private function _parseUrl($key) {
-            /*$domains = array(
-                'user' => array(
-                    'connect' => true,
-                )
-             );*/
-            $domains = array();
+            $domains = array(
+                'articles' => $this->_services['article.dao']->findAll(),
+             );
+            
             return $this->_renderer->renderer($this->_templates[$key], $domains);
         }
     }

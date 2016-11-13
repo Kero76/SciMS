@@ -1,9 +1,9 @@
 <?php
     namespace SciMS\DAO;
-    
+
+    use \PDO;
     use SciMS\Domain\Category;
-
-
+    
     /**
      * Class CategoryDAO.
      *
@@ -43,12 +43,12 @@
         /**
          * Method use for build a Domain object.
          *
-         * @param $row
+         * @param array $row
          *  The data use for build Domain.
          * @return \SciMS\Domain\Category
          *  The corresponding instance of Domain object.
          */
-        public function buildDomain($row) {
+        public function buildDomain(array $row) {
             $category = new Category($row);
             return $category;
         }

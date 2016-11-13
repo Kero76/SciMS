@@ -1,6 +1,6 @@
 <?php
     namespace SciMS\Database;
-
+    
     use \PDO;
     
     /**
@@ -19,8 +19,7 @@
      */
     class Database {
     
-        const HOST      = "db655171027.db.1and1.com";
-        const DBNAME    ="db655171027";
+        const DNS       = "mysql:host=db655171027.db.1and1.com;dbname=db655171027";
         const USER      = "dbo655171027";
         const PASSWORD  = "uh92ZJ7i8TWg";
     
@@ -52,7 +51,7 @@
          */
         private function __construct() {
             try {
-                $this->_pdo = new PDO("mysql:host=" . self::HOST . ";dbname=" . self::DBNAME, self::USER, self::PASSWORD);
+                $this->_pdo = new PDO(self::DNS, self::USER, self::PASSWORD);
                 $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 echo 'Erreur : ' . $e->getMessage().'<br />';
@@ -96,17 +95,17 @@
          *  The SQL requet to execute.
          * @param array $statement
          *  The statement present on prepare request.
-         * @param       $fetchMethod
+         * @param       $fetch_style
          *  Method use to fetch data retrieve from PDO.
          * @return mixed
          *  Return the data with format speficic on fetchMethod attributes.
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function execute($sql, array $statement, $fetchMethod) {
+        public function execute($sql, array $statement, $fetch_style) {
             $request = $this->_pdo->prepare($sql);
             $request->execute($statement);
-            return $request->fetch($fetchMethod);
+            return $request->fetch($fetch_style);
         }
     
         /**
@@ -114,12 +113,20 @@
          *
          * @param $sql
          *  The SQL request to use for query the Database.
-         * @return \PDOStatement
-         *  Return a PDOStatement who representing the data from the Database.
+         * @param $fetch_style
+         *  Select the fetch mode using in query function.
+         * @param $class
+         *  Return the corresponding classes required.
+         * @return array
+         *  An array with all row present on database.
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function query($sql) {
-            return $this->_pdo->query($sql);
+        public function query($sql, $fetch_style = PDO::ATTR_DEFAULT_FETCH_MODE, $class = '') {
+            if (strlen($class) > 0) {
+                return $this->_pdo->query($sql)->fetchAll($fetch_style, '\\SciMS\\Domain\\' . $class);
+            } else {
+                return $this->_pdo->query($sql)->fetchAll($fetch_style);
+            }
         }
     }

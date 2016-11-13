@@ -1,5 +1,6 @@
 <?php
     namespace SciMS\DAO;
+
     use SciMS\Database\Database;
 
     /**
@@ -53,12 +54,12 @@
          *
          * @abstract
          * @access protected.
-         * @param $row
+         * @param array $row
          *  The data use for build Domain.
          * @return mixed
          *  The corresponding instance of Domain object.
          * @since SciMS 0.1
          * @version 1.0
          */
-        protected abstract function buildDomain($row);
+        protected abstract function buildDomain(array $row);
     }

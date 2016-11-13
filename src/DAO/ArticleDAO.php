@@ -1,25 +1,76 @@
 <?php
     namespace SciMS\DAO;
+    
+    use \PDO;
     use SciMS\Domain\Article;
-
+    
     /**
-     * Created by PhpStorm.
-     * User: Kero76
-     * Date: 04/11/16
-     * Time: 15:32
+     * Class ArticleDAO.
+     *
+     * This class represent the interaction between Database and Domain object.
+     * In fact, with it, we can interact with the Table articles on Database.
+     *
+     * @author Kero76
+     * @package SciMS\DAO
+     * @since SciMS 0.1
+     * @version 1.0
      */
     class ArticleDAO extends DAO {
+        
+        /**
+         * Method use for retrieve all articles present on Database.
+         *
+         * @return array
+         *  An array with all Articles present on Database.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function findAll() {
+            $sql = "SELECT * FROM `articles`";
+            $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+    
+            $articles = array();
+            foreach ($result as $row) {
+                $id = $row['id'];
+                $articles[$id] = $this->buildDomain($row);
+            }
+                 
+            return $articles;
+        }
+    
+        /**
+         * Method use for research 1 article thanks to the id.
+         *
+         * @param $id
+         *  The id of the article research on Database.
+         * @return \SciMS\Domain\Article
+         *  Return an instance of the Article, if it found.
+         * @throws \Exception
+         * Throw an exception if the article with "id" not found on Database.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function findById($id) {
+            $sql = "SELECT * FROM `articles` WHERE id = ?";
+            $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
+        
+            if ($row) {
+                return $this->buildDomain($row);
+            } else {
+                throw new \Exception("No article with this id is present on Website.");
+            }
+        }
     
         /**
          * Method use for build a Domain object.
          *
-         * @param $row
+         * @param array $row
          *  The data use for build Domain.
          *
          * @return mixed
          *  The corresponding instance of Domain object.
          */
-        protected function buildDomain($row) {
+        protected function buildDomain(array $row) {
             $article = new Article($row);
             return $article;
         }

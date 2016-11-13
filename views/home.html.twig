@@ -3,6 +3,11 @@
 {% block title %}SciMS - Home{% endblock %}
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <p>Vous êtes dans Home.</p>
+        <h2>Last articles</h2>
+        <ul>
+            {% for article in articles %}
+                <li><a href="/web/index.php?action=article&id={{ article.id }}" >{{ article.title }}</a></li>
+            {% endfor %}
+        </ul>
     </section>
 {% endblock %}

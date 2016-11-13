@@ -1,13 +1,14 @@
 <?php
     namespace SciMS\DAO;
-    
+
+    use \PDO;
     use SciMS\Domain\User;
 
     /**
      * Class UserDAO.
      *
      * This class represent the interaction between Database and Domain object.
-     * In fact, with it, we can interact with the Table User on Database.
+     * In fact, with it, we can interact with the Table users on Database.
      *
      * @author Kero76
      * @package SciMS\DAO
@@ -130,14 +131,14 @@
         /**
          * Method use for build a Domain object.
          *
-         * @param $row
+         * @param array $row
          *  The data use for build Domain.
          * @return \SciMS\Domain\User
          *  The corresponding instance of Domain object.
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function buildDomain($row) {
+        public function buildDomain(array $row) {
             $user = new User($row);
             return $user;
         }
