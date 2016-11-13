@@ -141,7 +141,7 @@
                 // Home template generate with good domains object.
                 case 'home' :
                     $domains = array(
-                        'articles' => $this->_services['article.dao']->findAll(),
+                        'articles' => $this->_services['article.dao']->findLastArticle(10),
                     );
                     break;
                 

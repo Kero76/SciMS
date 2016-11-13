@@ -39,6 +39,29 @@
         }
     
         /**
+         * Method use for retrieve last $last_nb articles present on Database.
+         *
+         * @param integer $last_nb
+         *  Parameter use for return X last Article present on Website.
+         * @return array
+         *  An array with all Articles present on Database.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function findLastArticle($last_nb) {
+            $sql = "SELECT * FROM `articles` ORDEr BY `id` DESC LIMIT 0," . $last_nb;
+            $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+    
+            $articles = array();
+            foreach ($result as $row) {
+                $id = $row['id'];
+                $articles[$id] = $this->buildDomain($row);
+            }
+    
+            return $articles;
+        }
+    
+        /**
          * Method use for research 1 article thanks to the id.
          *
          * @param $id
