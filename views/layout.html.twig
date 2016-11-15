@@ -4,13 +4,14 @@
         <meta charset="utf-8">
 
         {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="../vendor/twitter/bootstrap/dist/css/bootstrap.min.css">       <!-- Bootstrap.min -->
-            <link rel="stylesheet" type="text/css" href="../vendor/fortawesome/font-awesome/css/font-awesome.min.css">  <!-- Font Awesome -->
-            <link rel="stylesheet" type="text/css" href="../web/css/style.css">                     <!-- Personnal Stylesheet -->
+            <link rel="stylesheet" type="text/css" href="../web/lib/bootstrap/css/bootstrap.min.css"> <!-- Bootstrap.min -->
+            <link rel="stylesheet" type="text/css" href="../web/lib/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
+            <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
         {% endblock %}
 
         <title>{% block title %}SciMS - {% endblock %}</title>
     </head>
+
     <body>
         <section id="scims-article-body" class="container">
             <div class="row">
@@ -24,6 +25,7 @@
                                 <div id="scims-left-navigation" class="list-group">
                                     <a class="list-group-item scims-brand" href="/web/index.php"> Home</a>
                                     {% if user.connect == true %}
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=account"> Account</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=administration"> Administration</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% else %}
@@ -43,8 +45,8 @@
 
                 <!-- Loading script section -->
                 {% block javascripts %}
-                    <script src="../vendor/components/jquery/jquery.min.js"></script> <!-- jquery    -->
-                    <script src="../vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script> <!-- bootstrap -->
+                    <script src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
+                    <script src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
                 {% endblock %}
             </div>
         </section>

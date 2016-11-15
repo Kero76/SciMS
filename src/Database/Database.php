@@ -125,9 +125,13 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function execute($sql, array $statement, $fetch_style) {
+        public function execute($sql, array $statement, $fetch_style = NULL) {
             $request = $this->_pdo->prepare($sql);
             $request->execute($statement);
+            
+            if ($fetch_style === NULL) {
+                return $request->fetch();
+            }
             return $request->fetch($fetch_style);
         }
     

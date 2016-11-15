@@ -38,6 +38,7 @@ Creation of CMS like for post research article.
 
 ### Links
 * An article to manage Composer dependency : [http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer](http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer)
-* An large article to help with PDO operation : [https://phpdelusions.net/pdo](https://phpdelusions.net/pdo)
+* A large article to help with PDO operation : [https://phpdelusions.net/pdo](https://phpdelusions.net/pdo)
 * A list of all package available with Composer : [https://packagist.org/](https://packagist.org/)
 * A good practice to develop with PSR-X : [http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/](http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/)
+* An article to see more informations about URL Rewriting : [https://craym.eu/tutoriels/referencement/url_rewriting.html](https://craym.eu/tutoriels/referencement/url_rewriting.html)

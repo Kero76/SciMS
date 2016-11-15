@@ -1,8 +1,52 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}SciMS - {{ username }}{% endblock %}
+{% block title %}SciMS - {{ user.username }}{% endblock %}
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <p>{{ username }}</p>
+        <form action="" method="post" class="form-horizontal">
+            <!-- Avatar -->
+            <div class="form-group">
+                <img src="{{ user.avatar }}" alt="{{ user.username }}'s avatar">
+            </div>
+            <!-- Label Username -->
+            <div class="form-group">
+                <label for="username" class="control-label col-md-2 col-sm-4 col-xs-4">Username</label>
+                <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                    <input type="text" id="username" name="username" class="form-control" required value="{{ user.username }}">
+                </div>
+            </div>
+            <!-- Label fname -->
+            <div class="form-group">
+                <label for="fname" class="control-label col-md-2 col-sm-4 col-xs-4">First name</label>
+                <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                    <input type="text" id="fname" name="fname" class="form-control" required
+                            {% if user.fname != "" %}
+                                value="{{ user.fname }}"
+                            {% else %}
+                                placeholder="Enter your first name ..."
+                            {% endif %}
+                    >
+                </div>
+            </div>
+            <!-- Label lname -->
+            <div class="form-group">
+                <label for="lname" class="control-label col-md-2 col-sm-4 col-xs-4">Last name</label>
+                <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                    <input type="text" id="lname" name="lname" class="form-control" required
+                            {% if user.lname != "" %}
+                                value="{{ user.lname }}"
+                            {% else %}
+                                placeholder="Enter your last name ..."
+                            {% endif %}
+                    >
+                </div>
+            </div>
+            <!-- Button group -->
+            <div class="form-group">
+                <div class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    <button type="submit" class="btn btn-primary">Inscription</button>
+                </div>
+            </div>
+        </form>
     </section>
 {% endblock %}

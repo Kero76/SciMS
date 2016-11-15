@@ -67,7 +67,8 @@
                 'home'          => '#\/web\/index\.php$#',
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
-                'article'       => '#\/web\/index\.php\?action=article&id=[0-9]{1,9}$#',
+                'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
+                'user'          => '#\/web\/index\.php\?action=user&id=[0-9]+$#',
             );
             
             $this->_templates = array(
@@ -75,6 +76,7 @@
                 'connection'    => 'connection.html.twig',
                 'inscription'   => 'inscription.html.twig',
                 'article'       => 'article.html.twig',
+                'user'          => 'user.html.twig',
                 '404'           => '404.html.twig',
             );
     
@@ -163,6 +165,13 @@
                 case 'article' :
                     $domains = array(
                         'article' => $this->_services['article.dao']->findById($_GET['id']),
+                    );
+                    break;
+    
+                // User template generate with good domains object.
+                case 'user' :
+                    $domains = array(
+                        'user' => $this->_services['user.dao']->findById($_GET['id']),
                     );
                     break;
     
