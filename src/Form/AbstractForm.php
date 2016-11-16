@@ -8,7 +8,7 @@
      *
      * @author Kero76
      * @package SciMS\Form
-     * @since SciMS 0.1
+     * @since SciMS 0.2
      * @version 1.0
      */
     abstract class AbstractForm {
@@ -17,7 +17,7 @@
          * Id use to qualify Form object.
          *
          * @var string
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_id;
     
@@ -25,7 +25,7 @@
          * Name use to qualify Form object.
          *
          * @var string
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_name;
     
@@ -33,7 +33,7 @@
          * All classes use to qualify Form object.
          *
          * @var string
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_class;
     
@@ -41,7 +41,7 @@
          * A boolean to check if the form element is necessary before sending informations.
          *
          * @var boolean
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_required;
     
@@ -49,7 +49,7 @@
          * Value of placeholder tags.
          *
          * @var boolean
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_placeholder;
     
@@ -57,7 +57,7 @@
          * Value of label html.
          *
          * @var string
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_label;
     
@@ -65,7 +65,7 @@
          * Stored HTML representation.
          *
          * @var boolean
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          */
         private $_render;
     
@@ -74,7 +74,7 @@
          *
          * @return string
          *  The id of the object Form.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getId() {
@@ -86,7 +86,7 @@
          *
          * @param string $id
          *  The id of the object Form.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setId($id) {
@@ -97,7 +97,7 @@
          * Return the name of the Form object.
          *
          * @return string
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getName() {
@@ -109,7 +109,7 @@
          *
          * @param string $name
          *  Set the name of the Form object.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setName($name) {
@@ -121,7 +121,7 @@
          *
          * @return string
          *  Return the class apply to the Form object.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getClass() {
@@ -133,7 +133,7 @@
          *
          * @param string $class
          *  Class apply to the Form object.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setClass($class) {
@@ -145,7 +145,7 @@
          *
          * @return boolean
          *  Return the value of required tags.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getRequired() {
@@ -157,7 +157,7 @@
          *
          * @param boolean $required
          *  Set the value of required tags.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setRequired($required) {
@@ -169,7 +169,7 @@
          *
          * @return string
          *  Return the value of placeholder.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getPlaceholder() {
@@ -181,7 +181,7 @@
          *
          * @param string $placeholder
          *  Set the value of placeholder tag.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setPlaceholder($placeholder) {
@@ -193,7 +193,7 @@
          *
          * @return string
          *  Return the name of the label.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getLabel() {
@@ -205,7 +205,7 @@
          *
          * @param string $label
          *  The name of the label.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setLabel($label) {
@@ -217,7 +217,7 @@
          *
          * @return string
          *  Return the HTML representation.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function getRender() {
@@ -229,7 +229,7 @@
          *
          * @param string $render
          *  Value of attribute render.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         public function setRender($render) {
@@ -242,7 +242,7 @@
          * @access protected
          * @param array $data
          *  An array with all data from the Database.
-         * @since SciMS 0.1
+         * @since SciMS 0.2
          * @version 1.0
          */
         protected function _hydrate(array $data) {
