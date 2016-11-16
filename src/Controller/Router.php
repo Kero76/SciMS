@@ -4,7 +4,11 @@
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
-    
+    use \SciMS\Form\FormBuilder;
+    use \SciMS\Form\InputEmail;
+    use \SciMS\Form\InputPassword;
+    use \SciMS\Form\InputText;
+
     /**
      * Class Router.
      *
@@ -64,11 +68,11 @@
             $this->_renderer    = new Renderer();
             
             $this->_routes = array(
-                'home'          => '#\/web\/index\.php$#',
+                'home'          => '#\/web\/index\.php(&user=[0-9]+)?$#',
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
-                'user'          => '#\/web\/index\.php\?action=user&id=[0-9]+$#',
+                'user'          => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
             );
             
             $this->_templates = array(
@@ -76,7 +80,7 @@
                 'connection'    => 'connection.html.twig',
                 'inscription'   => 'inscription.html.twig',
                 'article'       => 'article.html.twig',
-                'user'          => 'user.html.twig',
+                'account'       => 'account.html.twig',
                 '404'           => '404.html.twig',
             );
     
@@ -84,6 +88,7 @@
                 'user.dao'      => new UserDAO(),
                 'article.dao'   => new ArticleDAO(),
                 'category.dao'  => new CategoryDAO(),
+                'form.builder'  => new FormBuilder(),
             );
         }
     
@@ -94,6 +99,8 @@
          *  URL requested by user.
          * @return null|string
          *  Return HTML content of the page.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function render($url) {
             $view = null;
@@ -142,36 +149,85 @@
             switch ($key) {
                 // Home template generate with good domains object.
                 case 'home' :
-                    $domains = array(
-                        'articles' => $this->_services['article.dao']->findLastArticle(10),
-                    );
+                    if (!isset($_SESSION['id'])) {
+                        $domains = array(
+                            'articles' => $this->_services['article.dao']->findLastArticle(10),
+                        );
+                    } else {
+                        $domains = array(
+                            'articles' => $this->_services['article.dao']->findLastArticle(10),
+                            'user'     => $this->_services['user.dao']->findById($_SESSION['id']),
+                        );
+                    }
                     break;
                 
                 // Connection template generate with good domains object.
                 case 'connection' :
-                    $domains = array(
-                        
-                    );
+                    if (!isset($_SESSION['id'])) {
+                        $domains = array(
+                            'articles' => $this->_services['article.dao']->findLastArticle(10),
+                        );
+                    } else {
+                        $domains = array(
+                            'articles' => $this->_services['article.dao']->findLastArticle(10),
+                            'user'     => $this->_services['user.dao']->findById($_SESSION['id']),
+                        );
+                    }
                     break;
     
                 // Inscription template generate with good domains object.
                 case 'inscription' :
                     $domains = array(
-                        
+                        'forms' => $this->_services['form.builder']->add(
+                                new InputEmail(array(
+                                    'type'          => 'email',
+                                    'id'            => 'email',
+                                    'name'          => 'email',
+                                    'placeholder'   => 'Enter your email ...',
+                                    'class'         => 'form-control',
+                                    'required'      => true,
+                                ))
+                            )
+                            ->add(
+                                new InputText(array(
+                                    'type'          => 'text',
+                                    'id'            => 'username',
+                                    'name'          => 'username',
+                                    'placeholder'   => 'Enter your username ...',
+                                    'class'         => 'form-control',
+                                    'required'      => true,
+                                ))
+                            )
+                            ->add( new InputPassword(array(
+                                    'type'          => 'password',
+                                    'id'            => 'password',
+                                    'name'          => 'password',
+                                    'placeholder'   => 'Enter your password ...',
+                                    'class'         => 'form-control',
+                                    'required'      => true,
+                                ))
+                            ),
                     );
                     break;
     
                 // Article template generate with good domains object.
                 case 'article' :
-                    $domains = array(
-                        'article' => $this->_services['article.dao']->findById($_GET['id']),
-                    );
+                    if (!isset($_SESSION['id'])) {
+                        $domains = array(
+                            'article' => $this->_services['article.dao']->findById($_GET['id']),
+                        );
+                    } else {
+                        $domains = array(
+                            'article' => $this->_services['article.dao']->findById($_GET['id']),
+                            'user'     => $this->_services['user.dao']->findById($_SESSION['id']),
+                        );
+                    }
                     break;
-    
+                
                 // User template generate with good domains object.
-                case 'user' :
+                case 'account' :
                     $domains = array(
-                        'user' => $this->_services['user.dao']->findById($_GET['id']),
+                        'account' => $this->_services['user.dao']->findById($_GET['id']),
                     );
                     break;
     

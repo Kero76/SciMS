@@ -23,12 +23,12 @@
                             <div class="container-fluid">
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div id="scims-left-navigation" class="list-group">
-                                    <a class="list-group-item scims-brand" href="/web/index.php"> Home</a>
                                     {% if user.connect == true %}
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=account"> Account</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=administration"> Administration</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
+                                        <a class="list-group-item scims-brand"     href="/web/index.php&user={{ user.id }}"> Home</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=account&user={{ user.id }}"> Account</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=administration&user={{ user.id }}"> Administration</a>
                                     {% else %}
+                                        <a class="list-group-item scims-brand"     href="/web/index.php"> Home</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Connection</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% endif %}

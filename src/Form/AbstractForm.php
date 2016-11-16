@@ -1,5 +1,4 @@
 <?php
-
     namespace SciMS\Form;
 
     /**
@@ -53,6 +52,22 @@
          * @since SciMS 0.1
          */
         private $_placeholder;
+    
+        /**
+         * Value of label html.
+         *
+         * @var string
+         * @since SciMS 0.1
+         */
+        private $_label;
+    
+        /**
+         * Stored HTML representation.
+         *
+         * @var boolean
+         * @since SciMS 0.1
+         */
+        private $_render;
     
         /**
          * Return the id of the object Form.
@@ -171,6 +186,54 @@
          */
         public function setPlaceholder($placeholder) {
             $this->_placeholder = $placeholder;
+        }
+    
+        /**
+         * Return the name of the label.
+         *
+         * @return string
+         *  Return the name of the label.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function getLabel() {
+            return $this->_label;
+        }
+    
+        /**
+         * Set the name of the label.
+         *
+         * @param string $label
+         *  The name of the label.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function setLabel($label) {
+            $this->_label = $label;
+        }
+
+        /**
+         * Return the HTML representation.
+         *
+         * @return string
+         *  Return the HTML representation.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function getRender() {
+            return $this->_render;
+        }
+    
+        /**
+         * Set the attribute render.
+         *
+         * @param string $render
+         *  Value of attribute render.
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        public function setRender($render) {
+            $this->_render = $render;
         }
         
         /**
