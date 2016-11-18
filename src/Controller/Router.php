@@ -4,6 +4,7 @@
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
+    use \SciMS\Error\MessageHandler;
     use \SciMS\Form\FormBuilder;
     use \SciMS\Form\InputEmail;
     use \SciMS\Form\InputPassword;
@@ -15,6 +16,7 @@
      *
      * -> V1.1
      *  - Added new routes, templates and form.builder service.
+     *  - Moved $_renderer attribute into $_services array.
      *
      * @author Kero76
      * @package SciMS\Controller
@@ -22,15 +24,6 @@
      * @version 1.1
      */
     class Router {
-        
-        /**
-         * An instance of the Renderer object use for render the view.
-         *
-         * @var \SciMS\Controller\Renderer
-         * @since SciMS 0.1
-         */
-        private $_renderer;
-        
         /**
          * An array with all routes present on website.
          * These routes are describe by their regex pattern use for reconize them.
@@ -50,8 +43,10 @@
     
         /**
          * An array with all DAO Services present on Website.
-         * It contains all DAO service use for generate Twig render in functon of
+         * It contain all DAO service use for generate Twig render in function of
          * the Domain object present on Website.
+         * It contain too FormBuilder object use to build form in view.
+         * So it contain finally the Renderer object to render the view.
          *
          * @var array
          * @since SciMS 0.1
@@ -74,8 +69,6 @@
          * @version 1.1
          */
         public function __construct() {
-            $this->_renderer    = new Renderer();
-            
             $this->_routes = array(
                 'home'          => '#\/web\/index\.php(&user=[0-9]+)?$#',
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
@@ -98,10 +91,13 @@
             );
     
             $this->_services = array(
-                'user.dao'      => new UserDAO(),
-                'article.dao'   => new ArticleDAO(),
-                'category.dao'  => new CategoryDAO(),
-                'form.builder'  => new FormBuilder(),
+                'dao.user'          => new UserDAO(),
+                'dao.article'       => new ArticleDAO(),
+                'dao.category'      => new CategoryDAO(),
+                'form.builder'      => new FormBuilder(),
+                'form.checker'      => new FormChecker(),
+                'message.handler'   => new MessageHandler(),
+                'renderer'          => new Renderer(),
             );
         }
     
@@ -169,12 +165,12 @@
                 case 'home' :
                     if (!isset($_SESSION['id'])) {
                         $domains = array(
-                            'articles' => $this->_services['article.dao']->findLastArticle(10),
+                            'articles' => $this->_services['dao.article']->findLastArticle(10),
                         );
                     } else {
                         $domains = array(
-                            'articles' => $this->_services['article.dao']->findLastArticle(10),
-                            'user'     => $this->_services['user.dao']->findById($_SESSION['id']),
+                            'articles' => $this->_services['dao.article']->findLastArticle(10),
+                            'user'     => $this->_services['dao.user']->findById($_SESSION['id']),
                         );
                     }
                     break;
@@ -270,11 +266,38 @@
                     $entry_form = $_GET['form'];
                     
                     switch ($entry_form) {
-    
                         case 'connection' :
+                            $user  = $this->_services['dao.user']->findByUsername($_POST['username']);
+                            $check = $this->_services['form.checker']->checkConnection($_POST, $user);
+                            if ($check) {
+                                $this->_services['dao.user']->saveUser($user);
+                                $domains = array(
+                                    $this->_services['message.handler']->getSuccess($key),
+                                );
+                            } else {
+                                $domains = array(
+                                    $this->_services['message.handler']->getSuccess($key . '_username'),
+                                );
+                            }
                             break;
     
                         case 'inscription' :
+                            $user  = array(
+                                'email'     => $_POST['email'],
+                                'username'  => $_POST['username'],
+                                'password'  => $_POST['password'],
+                            );
+                            $check = $this->_services['form.checker']->checkInscription($_POST, $user);
+                            if ($check) {
+                                $this->_services['dao.user']->saveUser($user);
+                                $domains = array(
+                                    $this->_services['message.handler']->getSuccess($key),
+                                );
+                            } else {
+                                $domains = array(
+                                    $this->_services['message.handler']->getSuccess($key . '_username'),
+                                );
+                            }
                             break;
                         
                         // Default case : $_GET['form'] not exists or not corresponding with possible choice.
@@ -290,12 +313,12 @@
                 case 'article' :
                     if (!isset($_SESSION['id'])) {
                         $domains = array(
-                            'article' => $this->_services['article.dao']->findById($_GET['id']),
+                            'article' => $this->_services['dao.article']->findById($_GET['id']),
                         );
                     } else {
                         $domains = array(
-                            'article' => $this->_services['article.dao']->findById($_GET['id']),
-                            'user'    => $this->_services['user.dao']->findById($_SESSION['id']),
+                            'article' => $this->_services['dao.article']->findById($_GET['id']),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['id']),
                         );
                     }
                     break;
@@ -303,7 +326,7 @@
                 // User template generate with good domains object.
                 case 'account' :
                     $domains = array(
-                        'account' => $this->_services['user.dao']->findById($_GET['id']),
+                        'account' => $this->_services['dao.user']->findById($_GET['id']),
                     );
                     break;
     
@@ -313,6 +336,6 @@
                     break;
             }
             
-            return $this->_renderer->renderer($this->_templates[$key], $domains);
+            return $this->_services['renderer']->renderer($this->_templates[$key], $domains);
         }
     }
