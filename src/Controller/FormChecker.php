@@ -37,8 +37,8 @@
          *
          * @param array $post
          *  $_POST[] array.
-         * @return bool
-         *  True or false in function of the inscription form is valid or not.
+         * @return string
+         *  The key use to generate message in view.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -46,14 +46,14 @@
             // Check if string is empty.
             foreach ($post as $p) {
                 if (!$this->_checkEmptyString($p)) {
-                    return false;
+                    return 'field_empty_' . $p;
                 }
             }
             // Check if email is valid.
             if (!$this->_checkEmail($post['email'])) {
-                return false;
+                return 'email_not_valid';
             }
-            return true;
+            return 'inscription_success';
         }
     
         /**
@@ -63,8 +63,8 @@
          *  $_POST[] array.
          * @param \SciMS\Domain\User $user
          *  An instance of user retrieve by the username to check if the password is the same as the password stored on Database.
-         * @return bool
-         *  True or false in function of the inscription form is valid or not.
+         * @return string
+         *  The key use to generate message in view.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -72,14 +72,14 @@
             // Check if string is empty.
             foreach ($post as $p) {
                 if (!$this->_checkEmptyString($p)) {
-                    return false;
+                    return 'field_empty_' . $p;
                 }
             }
             // Check if password is the same as the password store on database.
             if (!$this->_checkSamePassword($post['password'], $user->getPassword())) {
-                return false;
+                return 'not_same_password';
             }
-            return true;
+            return 'connection_success';
         }
     
         /**

@@ -93,24 +93,20 @@
         public function saveUser(User $user) {
             // Stored users informations into on associative array.
             $infoUser = array(
-                'fname'     => $user->getFname(),
-                'lname'     => $user->getLname(),
                 'username'  => $user->getUsername(),
                 'email'     => $user->getEmail(),
                 'password'  => $user->getPassword(),
-                'salt'      => $user->getSalt(),
-                'avatar'    => $user->getAvatar(),
                 'role'      => $user->getRole(),
             );
             
             // If id not empty, so update user, else insert user.
-            if ($user->getId()) {
-                $sql = "UPDATE `users` SET  fname = ?, lname = ?, username = ?, email = ?, password = ?, salt = ?, avatar = ?, role = ? WHERE id = ?";
+            /*if ($user->getId()) {
+                $sql = "UPDATE `users` SET  fname = ?, lname = ?, username = ?, email = ?, password = ?, avatar = ?, role = ? WHERE id = ?";
                 $this->getDatabase()->execute($sql, $infoUser);
-            } else {
-                $sql = "INSERT INTO `users` (fname, lname, username, email, password, salt, avatar, role) VALUES ?, ?, ?, ?, ?, ?, ?, ?";
-                $this->getDatabase()->execute($sql, $infoUser);
-            }
+            }*/
+            
+            $sql = "INSERT INTO `users` (username, email, password, role) VALUES (:username, :email, :password, :role)";
+            $this->getDatabase()->update($sql, $infoUser);
         }
     
         /**

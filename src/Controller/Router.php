@@ -4,6 +4,7 @@
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
+    use \SciMS\Domain\User;
     use \SciMS\Error\MessageHandler;
     use \SciMS\Form\FormBuilder;
     use \SciMS\Form\InputEmail;
@@ -268,34 +269,35 @@
                     switch ($entry_form) {
                         case 'connection' :
                             $user  = $this->_services['dao.user']->findByUsername($_POST['username']);
-                            $check = $this->_services['form.checker']->checkConnection($_POST, $user);
-                            if ($check) {
+                            $message_key = $this->_services['form.checker']->checkConnection($_POST, $user);
+                            if ((strcmp($message_key, 'connection_success') == 0) || strcmp($message_key, 'inscription_success') == 0)  {
                                 $this->_services['dao.user']->saveUser($user);
                                 $domains = array(
-                                    'message' => $this->_services['message.handler']->getSuccess($entry_form),
+                                    'message' => $this->_services['message.handler']->getSuccess($message_key),
                                 );
                             } else {
                                 $domains = array(
-                                    'message' => $this->_services['message.handler']->getError($entry_form . '_username'),
+                                    'message' => $this->_services['message.handler']->getError($message_key),
                                 );
                             }
                             break;
     
                         case 'inscription' :
-                            $user  = array(
+                            $user = new User(array(
                                 'email'     => $_POST['email'],
                                 'username'  => $_POST['username'],
                                 'password'  => $_POST['password'],
-                            );
-                            $check = $this->_services['form.checker']->checkInscription($_POST, $user);
-                            if ($check) {
+                                'role'      => User::WRITTER,
+                            ));
+                            $message_key = $this->_services['form.checker']->checkInscription($_POST, $user);
+                            if ((strcmp($message_key, 'connection_success') == 0) || strcmp($message_key, 'inscription_success') == 0)  {
                                 $this->_services['dao.user']->saveUser($user);
                                 $domains = array(
-                                    'message' => $this->_services['message.handler']->getSuccess($entry_form),
+                                    'message' => $this->_services['message.handler']->getSuccess($message_key),
                                 );
                             } else {
                                 $domains = array(
-                                    'message' => $this->_services['message.handler']->getError($entry_form . '_username'),
+                                    'message' => $this->_services['message.handler']->getError($message_key),
                                 );
                             }
                             break;
