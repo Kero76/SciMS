@@ -10,7 +10,7 @@
      * This class represent the interaction between Database and Domain object.
      * In fact, with it, we can interact with the Table articles on Database.
      *
-     * @author Kero76
+     * @author Kero76, TeeGreg
      * @package SciMS\DAO
      * @since SciMS 0.1
      * @version 1.0
@@ -49,7 +49,7 @@
          * @version 1.0
          */
         public function findLastArticle($last_nb) {
-            $sql = "SELECT * FROM `articles` ORDEr BY `id` DESC LIMIT 0," . $last_nb;
+            $sql = "SELECT * FROM `articles` ORDER BY `id` DESC LIMIT 0," . $last_nb;
             $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();

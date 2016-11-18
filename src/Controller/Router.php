@@ -7,7 +7,7 @@
     use \SciMS\Form\FormBuilder;
     use \SciMS\Form\InputEmail;
     use \SciMS\Form\InputPassword;
-    use SciMS\Form\InputSubmit;
+    use \SciMS\Form\InputSubmit;
     use \SciMS\Form\InputText;
 
     /**
@@ -82,7 +82,7 @@
                 'disconnection' => '#\/web\/index\.php\?action=disconnection$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
-                'user'          => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
+                'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
             );
             
             $this->_templates = array(
@@ -272,7 +272,7 @@
                     } else {
                         $domains = array(
                             'article' => $this->_services['article.dao']->findById($_GET['id']),
-                            'user'     => $this->_services['user.dao']->findById($_SESSION['id']),
+                            'user'    => $this->_services['user.dao']->findById($_SESSION['id']),
                         );
                     }
                     break;
