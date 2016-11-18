@@ -79,8 +79,6 @@
         
             if ($row) {
                 return $this->buildDomain($row);
-            } else {
-                throw new \Exception("No article with this id is present on Website.");
             }
         }
         
@@ -97,13 +95,14 @@
          * @version 1.0
          */
         public function findByTag(array $tags) {
-            foreach ($tag as $tags) {
+            $rows = array();
+            foreach ($tags AS $tag) {
                 $sql = "SELECT * FROM `articles` WHERE tags like %?%";
-                $row.push($this->getDatabase()->execute($sql, $tag, PDO::FETCH_ASSOC));
+                $rows.push($this->getDatabase()->execute($sql, $tag, PDO::FETCH_ASSOC));
             }
-            $row = array_unique($row);
+            $rows = array_unique($rows);
             $articles = array();
-            foreach ($result as $row) {
+            foreach ($rows as $row) {
                 $id = $row['id'];
                 $articles[$id] = $this->buildDomain($row);
             }
@@ -126,16 +125,13 @@
             $sql = "SELECT * FROM `articles` WHERE categories = ?";
             $row = $this->getDatabase()->execute($sql, array($category), PDO::FETCH_ASSOC);
             $articles = array();
-            foreach ($result as $row) {
-                $id = $row['id'];
+            foreach ($row as $result) {
+                $id = $result['id'];
                 $articles[$id] = $this->buildDomain($row);
             }
             return $articles;
-
         }
         
-    
-
         /**
          * Method use for build a Domain object.
          *

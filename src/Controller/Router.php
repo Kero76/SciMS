@@ -272,11 +272,11 @@
                             if ($check) {
                                 $this->_services['dao.user']->saveUser($user);
                                 $domains = array(
-                                    $this->_services['message.handler']->getSuccess($key),
+                                    'message' => $this->_services['message.handler']->getSuccess($entry_form),
                                 );
                             } else {
                                 $domains = array(
-                                    $this->_services['message.handler']->getSuccess($key . '_username'),
+                                    'message' => $this->_services['message.handler']->getError($entry_form . '_username'),
                                 );
                             }
                             break;
@@ -291,18 +291,20 @@
                             if ($check) {
                                 $this->_services['dao.user']->saveUser($user);
                                 $domains = array(
-                                    $this->_services['message.handler']->getSuccess($key),
+                                    'message' => $this->_services['message.handler']->getSuccess($entry_form),
                                 );
                             } else {
                                 $domains = array(
-                                    $this->_services['message.handler']->getSuccess($key . '_username'),
+                                    'message' => $this->_services['message.handler']->getError($entry_form . '_username'),
                                 );
                             }
                             break;
                         
                         // Default case : $_GET['form'] not exists or not corresponding with possible choice.
                         default:
-                            
+                            $domains = array(
+                                'message' => $this->_services['message.handler']->getError('404'),
+                            );
                             break;
                     }
                     

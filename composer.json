@@ -2,9 +2,8 @@
   "require": {
     "twig/twig": "~1.27.0",
     "twig/extensions": "~1.4.1",
-    "tinymce/tinymce": "~4.4.3",
-    "mathjax/mathjax": "~2.7.0",
-    "forxer/Gravatar": "~1.2"
+    "forxer/Gravatar": "~1.2",
+    "ircmaxell/password-compat": "~v1.0.4"
   },
 
   "autoload": {

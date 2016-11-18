@@ -57,8 +57,6 @@
             
             if ($row) {
                 return $this->buildDomain($row);
-            } else {
-                throw new \Exception("No user with this id is present on Website.");
             }
         }
     
@@ -74,13 +72,13 @@
          * @version 1.0
          */
         public function findByUsername($username) {
-            $sql = "SELECT * FROM `users` WHERE login = ?";
+            $sql = "SELECT * FROM `users` WHERE username = ?";
             $row = $this->getDatabase()->execute($sql, array($username), PDO::FETCH_ASSOC);
     
             if ($row) {
                 return $this->buildDomain($row);
             } else {
-                throw new \Exception("No user with this username is present on Website.");
+                return $this->buildDomain(array());
             }
         }
     

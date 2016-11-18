@@ -36,16 +36,17 @@
          */
         public function __construct() {
             $this->_errors = array(
-                'connection_username'   => 'Username fail',
-                'connection_password'   => 'Password fail',
-                'inscription_username'  => 'Username fail',
-                'inscription_password'  => 'Password fail',
-                'inscription_email'     => 'Email fail',
+                'connection_username'   => new Error('Username fail'),
+                'connection_password'   => new Error('Password fail'),
+                'inscription_username'  => new Error('Username fail'),
+                'inscription_password'  => new Error('Password fail'),
+                'inscription_email'     => new Error('Email fail'),
+                '404'                   => new Error('Page not found'),
             );
             
             $this->_successes = array(
-                'connection'    => 'Connection !',
-                'inscription'   => 'Inscription !',
+                'connection'    => new Success('Connection !'),
+                'inscription'   => new Success('Inscription !'),
             );
         }
     
@@ -54,11 +55,13 @@
          *
          * @param $key
          *  Return the message in function of the key.
+         * @return string
+         *  A message.
          * @since SciMS 0.2
          * @version 1.0
          */
         public function getSuccess($key) {
-            $this->_successes[$key];
+            return $this->_successes[$key];
         }
     
         /**
@@ -66,10 +69,12 @@
          *
          * @param $key
          *  Return the message in function of the key.
+         * @return string
+         *  A message.
          * @since SciMS 0.2
          * @version 1.0
          */
         public function getError($key) {
-            $this->_errors[$key];
+            return $this->_errors[$key];
         }
     }

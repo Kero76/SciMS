@@ -35,8 +35,6 @@
         
             if ($row) {
                 return $this->buildDomain($row);
-            } else {
-                throw new \Exception("No category with this id is present on Website.");
             }
         }
         
