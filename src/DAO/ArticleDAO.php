@@ -69,7 +69,7 @@
          * @return \SciMS\Domain\Article
          *  Return an instance of the Article, if it found.
          * @throws \Exception
-         * Throw an exception if the article with "id" not found on Database.
+         *  Throw an exception if the article with "id" not found on Database.
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -83,7 +83,59 @@
                 throw new \Exception("No article with this id is present on Website.");
             }
         }
+        
+        /**
+         * Method use for research a list of articles using tag.
+         *
+         * @param $tags
+         *  A list of tag to search in the Database.
+         * @return \SciMS\Domain\Article
+         *  Return an colection of Article, as found.
+         * @throws \Exception
+         *  Throw an exception if no article with "tags" not found on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findByTag(array $tags) {
+            foreach ($tag as $tags) {
+                $sql = "SELECT * FROM `articles` WHERE tags like %?%";
+                $row.push($this->getDatabase()->execute($sql, $tag, PDO::FETCH_ASSOC));
+            }
+            $row = array_unique($row);
+            $articles = array();
+            foreach ($result as $row) {
+                $id = $row['id'];
+                $articles[$id] = $this->buildDomain($row);
+            }
+            return $articles;
+        }
     
+        /**
+         * Method use for research 1 article thanks to the category.
+         *
+         * @param $category
+         *  The id of the article research on Database.
+         * @return \SciMS\Domain\Article
+         *  Return an colection of Article, as found.
+         * @throws \Exception
+         *  Throw an exception if the article with "category" not found on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findByCategories($category) {
+            $sql = "SELECT * FROM `articles` WHERE categories = ?";
+            $row = $this->getDatabase()->execute($sql, array($category), PDO::FETCH_ASSOC);
+            $articles = array();
+            foreach ($result as $row) {
+                $id = $row['id'];
+                $articles[$id] = $this->buildDomain($row);
+            }
+            return $articles;
+
+        }
+        
+    
+
         /**
          * Method use for build a Domain object.
          *

@@ -7,7 +7,7 @@
      *
      * Abstract class which represent input submit in form.
      *
-     * @author Kero76
+     * @author Kero76, TeeGreg
      * @package SciMS\Form
      * @since SciMS 0.2
      * @version 1.0
