@@ -81,6 +81,7 @@
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
                 'disconnection' => '#\/web\/index\.php\?action=disconnection$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
+                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription)+$#',
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
                 'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
             );
@@ -90,6 +91,7 @@
                 'connection'    => 'connection.html.twig',
                 'disconnection' => 'disconnection.html.twig',
                 'inscription'   => 'inscription.html.twig',
+                'verification'  => 'verification.html.twig',
                 'article'       => 'article.html.twig',
                 'account'       => 'account.html.twig',
                 '404'           => '404.html.twig',
@@ -261,6 +263,27 @@
                         ))
                         )->getForms(),
                     );
+                    break;
+                
+                // Form verification template.
+                case 'verification' :
+                    $entry_form = $_GET['form'];
+                    
+                    switch ($entry_form) {
+    
+                        case 'connection' :
+                            break;
+    
+                        case 'inscription' :
+                            break;
+                        
+                        // Default case : $_GET['form'] not exists or not corresponding with possible choice.
+                        default:
+                            
+                            break;
+                    }
+                    
+                    
                     break;
     
                 // Article template generate with good domains object.
