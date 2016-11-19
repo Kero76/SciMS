@@ -62,6 +62,14 @@
         private $_label;
     
         /**
+         * Value of readonly attribute html.
+         *
+         * @var boolean
+         * @since SciMS 0.2
+         */
+        private $_readonly;
+    
+        /**
          * Stored HTML representation.
          *
          * @var boolean
@@ -211,7 +219,31 @@
         public function setLabel($label) {
             $this->_label = $label;
         }
-
+    
+        /**
+         * Return if the form object is on readonly attribute or not.
+         *
+         * @return boolean
+         *  If the form object is on readonly attribute or not.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function getReadonly() {
+            return $this->_readonly;
+        }
+    
+        /**
+         * Set the value of the boolean readonly.
+         *
+         * @param boolean $readonly
+         *  Set the value of the boolean readonly.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function setReadonly($readonly) {
+            $this->_readonly = $readonly;
+        }
+        
         /**
          * Return the HTML representation.
          *

@@ -41,13 +41,17 @@
                 'field_empty_password'  => new Error('The field password is empty.'),
                 'email_not_valid'       => new Error('Email is not valid.'),
                 'not_same_password'     => new Error('The password type and the password are not the same.'),
+                'not_same_username'     => new Error('The username type and the username are not the same.'),
+                'email_not_found'       => new Error('Email not found in website.'),
                 'user_not_found'        => new Error('Username not found in website.'),
+                'email_already_found'   => new Error('Email already use in website.'),
                 '404'                   => new Error('Page not found'),
             );
             
             $this->_successes = array(
                 'connection_success'    => new Success('Connection !'),
                 'inscription_success'   => new Success('Inscription !'),
+                'update_success'        => new Success('Update !'),
             );
         }
     

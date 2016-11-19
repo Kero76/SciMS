@@ -31,6 +31,7 @@
             $render .= ($this->getId()           == ''   ) ? '' : ' id="'             . $this->getId()            . '"';
             $render .= ($this->getName()         == ''   ) ? '' : ' name="'           . $this->getName()          . '"';
             $render .= ($this->getPlaceholder()  == ''   ) ? '' : ' placeholder="'    . $this->getPlaceholder()   . '"';
+            $render .= ($this->getValue()        == ''   ) ? '' : ' value="'          . $this->getValue()         . '"';
             $render .= ($this->getRequired()     == false) ? '' : ' required';
             $render .= '>';
             $this->setRender($render);

@@ -7,10 +7,14 @@
     use \SciMS\Domain\User;
     use \SciMS\Error\MessageHandler;
     use \SciMS\Form\FormBuilder;
+    use SciMS\Form\InputDate;
     use \SciMS\Form\InputEmail;
+    use \SciMS\Form\InputFile;
+    use \SciMS\Form\InputHidden;
     use \SciMS\Form\InputPassword;
     use \SciMS\Form\InputSubmit;
     use \SciMS\Form\InputText;
+    use \SciMS\Form\TextArea;
 
     /**
      * Class Router.
@@ -73,9 +77,9 @@
             $this->_routes = array(
                 'home'          => '#\/web\/index\.php(&user=[0-9]+)?$#',
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
-                'disconnection' => '#\/web\/index\.php\?action=disconnection$#',
+                'disconnection' => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
-                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription)+$#',
+                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update)+$#',
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
                 'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
             );
@@ -164,14 +168,15 @@
             switch ($key) {
                 // Home template generate with good domains object.
                 case 'home' :
-                    if (!isset($_SESSION['id'])) {
+                    if (!isset($_SESSION['user_id'])) {
                         $domains = array(
                             'articles' => $this->_services['dao.article']->findLastArticle(10),
                         );
                     } else {
                         $domains = array(
                             'articles' => $this->_services['dao.article']->findLastArticle(10),
-                            'user'     => $this->_services['dao.user']->findById($_SESSION['id']),
+                            'user'     => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                            'connect'  => true,
                         );
                     }
                     break;
@@ -180,14 +185,14 @@
                 case 'connection' :
                     $domains = array(
                         'forms' => $this->_services['form.builder']->add(
-                            new InputText(array(
-                                'type'          => 'text',
-                                'id'            => 'username',
-                                'name'          => 'username',
-                                'placeholder'   => 'Enter your username ...',
+                            new InputEmail(array(
+                                'type'          => 'email',
+                                'id'            => 'email',
+                                'name'          => 'email',
+                                'placeholder'   => 'Enter your email ...',
                                 'class'         => 'form-control',
                                 'required'      => true,
-                                'label'         => 'Username',
+                                'label'         => 'Email',
                             ))
                         )->add(
                             new InputPassword(array(
@@ -211,10 +216,18 @@
                     );
                     break;
     
-                // disonnection template generate with good domains object.
+                // disconnection template generate with good domains object.
                 case 'disconnection' :
                     $domains = array(
-                        
+                        'forms' => $this->_services['form.builder']->add(
+                            new InputSubmit(array(
+                                'type'          => 'submit',
+                                'id'            => 'submit',
+                                'name'          => 'submit',
+                                'value'         => 'Sign out',
+                                'class'         => 'form-control btn btn-primary',
+                            ))
+                        )->getForms(),
                     );
                     break;
     
@@ -267,12 +280,13 @@
                     $entry_form = $_GET['form'];
                     
                     switch ($entry_form) {
+                        // Connection section.
                         case 'connection' :
-                            $user  = $this->_services['dao.user']->findByUsername($_POST['username']);
+                            $user = $this->_services['dao.user']->findByEmail($_POST['email']);
                             $message_key = $this->_services['form.checker']->checkConnection($_POST, $user);
                             if ((strcmp($message_key, 'connection_success') == 0) || strcmp($message_key, 'inscription_success') == 0)  {
-                                $this->_services['dao.user']->saveUser($user);
                                 $domains = array(
+                                    'user'    => $user->setConnect(true),
                                     'message' => $this->_services['message.handler']->getSuccess($message_key),
                                 );
                             } else {
@@ -282,22 +296,56 @@
                             }
                             break;
     
+                        // Inscription section.
                         case 'inscription' :
                             $user = new User(array(
                                 'email'     => $_POST['email'],
                                 'username'  => $_POST['username'],
-                                'password'  => $_POST['password'],
+                                'password'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
                                 'role'      => User::WRITTER,
+                                'connect'   => true,
                             ));
-                            $message_key = $this->_services['form.checker']->checkInscription($_POST, $user);
+                            // Potential user because the username is possible not corresponding to the email type on form.
+                            $potential_user = $this->_services['dao.user']->findByEmail($user->getEmail());
+                            $message_key = $this->_services['form.checker']->checkInscription($_POST, $potential_user);
                             if ((strcmp($message_key, 'connection_success') == 0) || strcmp($message_key, 'inscription_success') == 0)  {
                                 $this->_services['dao.user']->saveUser($user);
                                 $domains = array(
                                     'message' => $this->_services['message.handler']->getSuccess($message_key),
+                                    'user'    => $this->_services['dao.user']->findByUsername($user->getUsername()),
                                 );
                             } else {
                                 $domains = array(
                                     'message' => $this->_services['message.handler']->getError($message_key),
+                                );
+                            }
+                            break;
+                        
+                        case 'disconnection' :
+                            session_destroy();
+                            $domains = array(
+                                
+                            );
+                            break;
+                        
+                        // Update user.
+                        case 'update' :
+                            $message_key = $this->_services['form.checker']->checkUpdate($_POST);
+                            
+                            $user = $this->_services['dao.user']->findByUsername($_POST['username']);
+                            $user->setUsername($_POST['username']);
+                            $user->setFname($_POST['fname']);
+                            $user->setLname($_POST['lname']);
+    
+                            if ((strcmp($message_key, 'update_success') == 0))  {
+                                $this->_services['dao.user']->updateUser($user);
+                                $domains = array(
+                                    'message' => $this->_services['message.handler']->getSuccess($message_key),
+                                    'user'    => $this->_services['dao.user']->findByUsername($user->getUsername()),
+                                );
+                            } else {
+                                $domains = array(
+                                    
                                 );
                             }
                             break;
@@ -309,28 +357,132 @@
                             );
                             break;
                     }
-                    
-                    
                     break;
     
                 // Article template generate with good domains object.
                 case 'article' :
-                    if (!isset($_SESSION['id'])) {
+                    if (!isset($_SESSION['user_id'])) {
                         $domains = array(
                             'article' => $this->_services['dao.article']->findById($_GET['id']),
                         );
                     } else {
                         $domains = array(
                             'article' => $this->_services['dao.article']->findById($_GET['id']),
-                            'user'    => $this->_services['dao.user']->findById($_SESSION['id']),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                            'connect'  => true,
                         );
                     }
                     break;
                 
                 // User template generate with good domains object.
                 case 'account' :
+                    $user = $this->_services['dao.user']->findById($_SESSION['user_id']);
                     $domains = array(
-                        'account' => $this->_services['dao.user']->findById($_GET['id']),
+                        'forms' => $this->_services['form.builder']->add(
+                            // Username
+                            new InputText(array(
+                                'type'  => 'text',
+                                'id'    => 'username',
+                                'name'  => 'username',
+                                'value' => $user->getUsername(),
+                                'class' => 'form-control',
+                                'label' => 'Username',
+                            ))
+                        )->add(
+                            // First name
+                            new InputText(array(
+                                'type'  => 'text',
+                                'id'    => 'username',
+                                'name'  => 'username',
+                                'value' => $user->getFname(),
+                                'class' => 'form-control',
+                                'label' => 'First name',
+                            ))
+                        )->add(
+                            // Last name
+                            new InputText(array(
+                                'type'  => 'text',
+                                'id'    => 'username',
+                                'name'  => 'username',
+                                'value' => $user->getLname(),
+                                'class' => 'form-control',
+                                'label' => 'Last name',
+                            ))
+                        )->add(
+                            // Email - readonly.
+                            new InputEmail(array(
+                                'type'      => 'email',
+                                'value'     => $user->getEmail(),
+                                'class' => 'form-control',
+                                'label' => 'Email',
+                                'readonly'  => true,
+                            ))
+                        )->add(
+                            // Password
+                            new InputPassword(array(
+                                'type'  => 'password',
+                                'id'    => 'password',
+                                'name'  => 'password',
+                                'class' => 'form-control',
+                                'label' => 'New Password',
+                            ))
+                        )->add(
+                            // Repeat Password
+                            new InputPassword(array(
+                                'type'  => 'password',
+                                'id'    => 'repeat_password',
+                                'name'  => 'repeat_password',
+                                'class' => 'form-control',
+                                'label' => 'Repeat Password',
+                            ))
+                        )->add(
+                            // Birthday
+                            new InputDate(array(
+                                'type'  => 'date',
+                                'id'    => 'birthday',
+                                'name'  => 'birthday',
+                                'class' => 'form-control',
+                                'label' => 'Birthday',
+                                'value' => $user->getBirthday(),
+                            ))
+                        )->add(
+                            // Biography
+                            new TextArea(array(
+                                'id'    => 'biography',
+                                'name'  => 'biography',
+                                'class' => 'form-control',
+                                'label' => 'Biography',
+                                'value' => $user->getBiography(),
+                                'rows'  => '10',
+                                'cols'  => '50',
+                            ))
+                        )->add(
+                            // Avatar
+                            new InputFile(array(
+                                'type'  => 'file',
+                                'id'    => 'avatar',
+                                'name'  => 'avatar',
+                                'class' => 'form-control',
+                                'label' => 'Avatar',
+                            ))
+                        )->add(
+                            // Max size of file
+                            new InputHidden(array(
+                                'type'  => 'hidden',
+                                'name'  => 'max_size_file',
+                                'value' => '',
+                            ))
+                        )->add(
+                            // Submit button
+                            new InputSubmit(array(
+                                'type'  => 'submit',
+                                'id'    => 'submit',
+                                'name'  => 'submit',
+                                'value' => 'Submit',
+                                'class' => 'form-control btn btn-primary',
+                            ))
+                        )->getForms(),
+                        'connect'  => true,
                     );
                     break;
     

@@ -15,11 +15,14 @@
      *
      * -> V1.1 :
      *  Added role constante.
+     * -> V1.2 :
+     *  Added Birthday and Biography attribute + corresponding Getters and Setters.
+     *  Removed salt attribute + corresponding Getter and Setter.
      *
      * @author Kero76
      * @package SciMS\Domain
      * @since SciMS 0.1
-     * @version 1.1
+     * @version 1.2
      */
     class User {
     
@@ -51,15 +54,6 @@
         const WRITTER = 2;
     
         /**
-         * Guest status of the User.
-         *
-         * @const
-         * @var integer
-         * @since SciMS 0.1
-         */
-        const GUEST = 3;
-    
-        /**
          * The id of the User.
          *
          * @var integer
@@ -85,6 +79,16 @@
          * @version 1.0
          */
         private $_lname;
+    
+    
+        /**
+         * The birthday date of the user.
+         *
+         * @var \DateTime
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        private $_birthday;
     
         /**
          * The username of the user.
@@ -114,15 +118,6 @@
         private $_password;
     
         /**
-         * The salt using in password of the user.
-         *
-         * @var string
-         * @since SciMS 0.1
-         * @version 1.0
-         */
-        private $_salt;
-    
-        /**
          * The link for displaying the avatar.
          *
          * @var string
@@ -130,6 +125,15 @@
          * @version 1.0
          */
         private $_avatar;
+        
+        /**
+         * The biography of the user.
+         *
+         * @var string
+         * @since SciMS 0.1
+         * @version 1.0
+         */
+        private $_biography;
     
         /**
          * The role of the user.
@@ -296,37 +300,17 @@
     
         /**
          * Set the password of the user hash with md5 method.
+         *
+         * -> V1.1 :
+         *  - Add password hash if user not connected at the website.
+         *
          * @param string $password
          *  The password of the user (hash with md5 method).
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         public function setPassword($password) {
             $this->_password = $password;
-        }
-    
-        /**
-         * Return the salt of the password.
-         *
-         * @return string
-         *  The salt of the password.
-         * @since SciMS 0.1
-         * @version 1.0
-         */
-        public function getSalt() {
-            return $this->_salt;
-        }
-    
-        /**
-         * Set the salt of the password.
-         *
-         * @param string $salt
-         *  The salt of the user.
-         * @since SciMS 0.1
-         * @version 1.0
-         */
-        public function setSalt($salt) {
-            $this->_salt = $salt;
         }
     
         /**
@@ -378,6 +362,56 @@
         }
     
         /**
+         * Return the birthday date of the user.
+         *
+         * @return \DateTime
+         *  The birthday date of the user.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function getBirthday() {
+            return $this->_birthday;
+        }
+    
+        /**
+         * Set the birthday date of the user.
+         *
+         * @param \DateTime $birthday
+         *  The birthday date of the user.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function setBirthday($birthday) {
+            $this->_birthday = $birthday;
+        }
+    
+        /**
+         * Return the biography of the user.
+         *
+         * @return string
+         *  The biography of the user.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function getBiography() {
+            return $this->_biography;
+        }
+    
+        /**
+         * Set the content of the user's biography.
+         *
+         * @param string $biography
+         *  Set the biography of the user.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function setBiography($biography) {
+            $this->_biography = $biography;
+        }
+        
+        
+    
+        /**
          * Return true if the user is connected, false if the user not connected.
          *
          * @return boolean
@@ -398,6 +432,8 @@
          * @version 1.0
          */
         public function setConnect($connect) {
+            $_SESSION['user_connect'] = $connect;
+            $_SESSION['user_id']      = $this->getId();
             $this->_connect = $connect;
         }
     

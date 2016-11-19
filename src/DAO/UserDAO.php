@@ -62,6 +62,7 @@
     
         /**
          * Method use for research 1 user thanks to the username.
+         *
          * @param $username
          *  The username research on Database.
          * @return \SciMS\Domain\User
@@ -74,7 +75,7 @@
         public function findByUsername($username) {
             $sql = "SELECT * FROM `users` WHERE username = ?";
             $row = $this->getDatabase()->execute($sql, array($username), PDO::FETCH_ASSOC);
-    
+        
             if ($row) {
                 return $this->buildDomain($row);
             } else {
@@ -83,12 +84,38 @@
         }
     
         /**
-         * Method use for register or update an user.
+         * Method use for research 1 user thanks to the email.
+         *
+         * @param $email
+         *  The email research on Database.
+         * @return \SciMS\Domain\User
+         *  Return an instance of the User, if it found.
+         * @throws \Exception
+         *  Throw an exception if the user with "username" not found in Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findByEmail($email) {
+            $sql = "SELECT * FROM `users` WHERE email = ?";
+            $row = $this->getDatabase()->execute($sql, array($email), PDO::FETCH_ASSOC);
+        
+            if ($row) {
+                return $this->buildDomain($row);
+            } else {
+                return $this->buildDomain(array());
+            }
+        }
+    
+        /**
+         * Method use for register an user.
+         *
+         * -> V1.1 :
+         *  - Removed method "UPDATE" on Database.
          *
          * @param \SciMS\Domain\User $user
-         *  The user at add or update on Database.
+         *  The user at add on Database.
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         public function saveUser(User $user) {
             // Stored users informations into on associative array.
@@ -99,13 +126,33 @@
                 'role'      => $user->getRole(),
             );
             
-            // If id not empty, so update user, else insert user.
-            /*if ($user->getId()) {
-                $sql = "UPDATE `users` SET  fname = ?, lname = ?, username = ?, email = ?, password = ?, avatar = ?, role = ? WHERE id = ?";
-                $this->getDatabase()->execute($sql, $infoUser);
-            }*/
-            
             $sql = "INSERT INTO `users` (username, email, password, role) VALUES (:username, :email, :password, :role)";
+            $this->getDatabase()->update($sql, $infoUser);
+        }
+    
+    
+        /**
+         * Method use for update an user.
+         *
+         * @param \SciMS\Domain\User $user
+         *  The user at update on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function updateUser(User $user) {
+            // Stored users informations into on associative array.
+            $infoUser = array(
+                'fname'     => $user->getFname(),
+                'lname'     => $user->getLname(),
+                'username'  => $user->getUsername(),
+                'email'     => $user->getEmail(),
+                'password'  => $user->getPassword(),
+                'avatar'    => $user->getAvatar(),
+                'role'      => $user->getRole(),
+                'id'        => $user->getId(),
+            );
+            
+            $sql = "UPDATE `users` SET fname = :fname, lname = :lname, username = :username, email = :email, password = :password, avatar = :avatar, role = :role WHERE id = :id";
             $this->getDatabase()->update($sql, $infoUser);
         }
     

@@ -37,22 +37,31 @@
          *
          * @param array $post
          *  $_POST[] array.
+         * @param \SciMS\Domain\User $potential_user
+         *  An instance of user retrieve by the username to check if the password is already present on Database.
          * @return string
          *  The key use to generate message in view.
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function checkInscription(array $post) {
+        public function checkInscription(array $post, $potential_user) {
             // Check if string is empty.
             foreach ($post as $p) {
                 if (!$this->_checkEmptyString($p)) {
                     return 'field_empty_' . $p;
                 }
             }
+            
             // Check if email is valid.
-            if (!$this->_checkEmail($post['email'])) {
+            if (!$this->_checkConformEmail($post['email'])) {
                 return 'email_not_valid';
             }
+    
+            // Check if the email is the same as the email store on Database.
+            if (!$this->_checkEmailPresentOnDatabase($post['email'], $potential_user->getEmail())) {
+                return 'email_already_found';
+            }
+            
             return 'inscription_success';
         }
     
@@ -75,6 +84,17 @@
                     return 'field_empty_' . $p;
                 }
             }
+        
+            // Check if email is valid.
+            if (!$this->_checkConformEmail($post['email'])) {
+                return 'email_not_valid';
+            }
+        
+            // Check if the email is the same as the email store on Database.
+            if ($this->_checkEmailPresentOnDatabase($post['email'], $user->getEmail())) {
+                return 'email_not_found';
+            }
+        
             // Check if password is the same as the password store on database.
             if (!$this->_checkSamePassword($post['password'], $user->getPassword())) {
                 return 'not_same_password';
@@ -83,18 +103,23 @@
         }
     
         /**
-         * Return the encrypt password with salt include on it to avoid
-         * to stored separately salt and password on Database.
+         * Control form input before update user.
          *
-         * @param $password
-         *  The password at encrypt.
+         * @param array $post
+         *  $_POST[] array.
          * @return string
-         *  The password encrypt with salt include on it.
+         *  The key use to generate message in view.
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function encryptPassword($password) {
-            return password_hash($password, PASSWORD_DEFAULT);
+        public function checkUpdate(array $post) {
+            // Check if string is empty.
+            foreach ($post as $p) {
+                if (!$this->_checkEmptyString($p)) {
+                    return 'field_empty_' . $p;
+                }
+            }
+            return 'update_success';
         }
     
         /**
@@ -108,11 +133,8 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        private function _checkEmail($email) {
-            if (preg_match($this->_regex_email, $email) !=0) {
-                return true;
-            }
-            return false;
+        private function _checkConformEmail($email) {
+            return (preg_match($this->_regex_email, $email) !==0) ? true : false;
         }
     
         /**
@@ -127,15 +149,13 @@
          * @version 1.0
          */
         private function _checkEmptyString($str) {
-            if (!empty($str)) {
-                return true;
-            }
-            return false;
+            return (!empty($str) ? true : false);
         }
     
         /**
          * Check if the password type on form is equal to the password retrieve from the Database.
          *
+         * @access private
          * @param $user_password
          *  The password type by user on form.
          * @param $hash_password
@@ -147,5 +167,21 @@
          */
         private function _checkSamePassword($user_password, $hash_password) {
             return password_verify($user_password, $hash_password);
+        }
+    
+        /**
+         * Check if the email post on form and email store on database are the same.
+         *
+         * @param $email_post
+         *  Email type on form.
+         * @param $email_db
+         *  Email retrieve from Database.
+         * @return bool
+         *  True if the emails are the same. Otherwise, return false.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        private function _checkEmailPresentOnDatabase($email_post, $email_db) {
+            return (strcmp($email_post, $email_db) === 0) ? false : true;
         }
     }

@@ -31,14 +31,14 @@
          */
         public function __construct(array $attributes) {
             $this->_hydrate($attributes);
-            $render  = '<input ';
+            $render  = '<textarea ';
             $render .= ($this->getClass()    == ''   ) ? '' : ' class="'  . $this->getClass() . '"';
             $render .= ($this->getId()       == ''   ) ? '' : ' id="'     . $this->getId()    . '"';
             $render .= ($this->getName()     == ''   ) ? '' : ' name="'   . $this->getName()  . '"';
             $render .= ($this->getCols()     == 0    ) ? '' : ' cols="'   . $this->getCols()  . '"';
             $render .= ($this->getRows()     == 0    ) ? '' : ' rows="'   . $this->getRows()  . '"';
             $render .= ($this->getRequired() == false) ? '' : ' required';
-            $render .= '>';
+            $render .= '></textarea>';
             $this->setRender($render);
         }
     
