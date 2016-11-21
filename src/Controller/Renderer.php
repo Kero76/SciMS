@@ -47,7 +47,7 @@
             $path = realpath('../');
             $path .= '/views';
             $this->_template_dir = $path;
-            $loader      = new \Twig_Loader_Filesystem($this->_template_dir);
+            $loader      = new \Twig_Loader_Filesystem(array($this->_template_dir, $this->_template_dir . '/admin'));
             $this->_twig = new \Twig_Environment($loader, array(
                 'debug' => true,
                 'cache' => false,

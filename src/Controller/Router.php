@@ -91,7 +91,8 @@
                 'inscription'   => 'inscription.html.twig',
                 'verification'  => 'verification.html.twig',
                 'article'       => 'article.html.twig',
-                'account'       => 'account.html.twig',
+                'account'       => 'admin/account.html.twig',
+                'add_article'   => 'admin/article.html.twig',
                 '404'           => '404.html.twig',
             );
     
@@ -482,6 +483,7 @@
                                 'class' => 'form-control btn btn-primary',
                             ))
                         )->getForms(),
+                        'user'     => $user,
                         'connect'  => true,
                     );
                     break;

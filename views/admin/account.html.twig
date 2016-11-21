@@ -18,7 +18,7 @@
             <!-- Avatar -->
             <div class="form-group">
                 {% if user.avatar == '' %}
-                    <img class="scims-avatar" src="../web/images/default-avatar.png" alt="default avatar" width="128" height="128">
+                    <img class="scims-avatar" src="../../web/images/default-avatar.png" alt="default avatar" width="128" height="128">
                 {% else %}
                     <img class="scims-avatar" src="{{ user.avatar }}" alt="{{ user.username }}'s avatar">
                 {% endif %}

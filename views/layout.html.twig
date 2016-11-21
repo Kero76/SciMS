@@ -3,11 +3,10 @@
     <head>
         <meta charset="utf-8">
 
-        {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="../web/lib/bootstrap/css/bootstrap.min.css"> <!-- Bootstrap.min -->
-            <link rel="stylesheet" type="text/css" href="../web/lib/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
-            <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
-        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="../web/lib/bootstrap/css/bootstrap.min.css"> <!-- Bootstrap.min -->
+        <link rel="stylesheet" type="text/css" href="../web/lib/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
+        {% block stylesheets %}{% endblock %}
 
         <title>{% block title %}SciMS - {% endblock %}</title>
     </head>
@@ -45,10 +44,9 @@
                 </div>
 
                 <!-- Loading script section -->
-                {% block javascripts %}
-                    <script src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
-                    <script src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
-                {% endblock %}
+                <script src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
+                <script src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
+                {% block javascripts %}{% endblock %}
             </div>
         </section>
 
