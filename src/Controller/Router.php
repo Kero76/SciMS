@@ -490,7 +490,16 @@
     
                 // 404 template generate with nothing domains object.
                 default :
-                    $domains = array();
+                    if (!isset($_SESSION['user_id'])) {
+                        $domains = array(
+
+                        );
+                    } else {
+                        $domains = array(
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                            'connect'  => true,
+                        );
+                    }
                     break;
             }
             
