@@ -46,8 +46,6 @@
          *  The id of the user research on Database.
          * @return \SciMS\Domain\User
          *  Return an instance of the User, if it found.
-         * @throws \Exception
-         * Throw an exception if the user with "id" not found on Database.
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -57,6 +55,8 @@
             
             if ($row) {
                 return $this->buildDomain($row);
+            } else {
+                return $this->buildDomain(array());
             }
         }
     
@@ -67,8 +67,6 @@
          *  The username research on Database.
          * @return \SciMS\Domain\User
          *  Return an instance of the User, if it found.
-         * @throws \Exception
-         *  Throw an exception if the user with "username" not found in Database.
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -90,8 +88,6 @@
          *  The email research on Database.
          * @return \SciMS\Domain\User
          *  Return an instance of the User, if it found.
-         * @throws \Exception
-         *  Throw an exception if the user with "username" not found in Database.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -104,6 +100,21 @@
             } else {
                 return $this->buildDomain(array());
             }
+        }
+    
+        /**
+         * Method use for return last id present on Database.
+         *
+         * @return integer
+         *  Return the last id present on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findLastId() {
+            $sql = "SELECT MAX(id) AS max FROM `users`";
+            $row = $this->getDatabase()->execute($sql, array(), PDO::FETCH_ASSOC);
+            
+            return $row['max'];
         }
     
         /**

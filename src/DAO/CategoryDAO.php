@@ -24,8 +24,6 @@
          *  The id of the category research on Database.
          * @return \SciMS\Domain\Category
          *  Return an instance of the Category, if it found.
-         * @throws \Exception
-         * Throw an exception if the user with "id" not found on Database.
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -35,6 +33,8 @@
         
             if ($row) {
                 return $this->buildDomain($row);
+            } else {
+                return $this->buildDomain(array());
             }
         }
         

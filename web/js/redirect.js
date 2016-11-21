@@ -15,5 +15,5 @@
 $(document).ready(function () {
     setTimeout(function () {
         window.location.href = window.location.origin + '/' + window.location.pathname;
-    }, 5000);
+    }, 0050);
 });

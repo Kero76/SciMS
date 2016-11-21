@@ -68,8 +68,6 @@
          *  The id of the article research on Database.
          * @return \SciMS\Domain\Article
          *  Return an instance of the Article, if it found.
-         * @throws \Exception
-         *  Throw an exception if the article with "id" not found on Database.
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -88,9 +86,7 @@
          * @param $tags
          *  A list of tag to search in the Database.
          * @return \SciMS\Domain\Article
-         *  Return an colection of Article, as found.
-         * @throws \Exception
-         *  Throw an exception if no article with "tags" not found on Database.
+         *  Return a collection of Article, as found.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -116,8 +112,6 @@
          *  The id of the article research on Database.
          * @return \SciMS\Domain\Article
          *  Return an colection of Article, as found.
-         * @throws \Exception
-         *  Throw an exception if the article with "category" not found on Database.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -131,15 +125,31 @@
             }
             return $articles;
         }
+    
+        /**
+         * Method use for return last id present on Database.
+         *
+         * @return integer
+         *  Return the last id present on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findLastId() {
+            $sql = "SELECT MAX(id) AS max FROM `articles`";
+            $row = $this->getDatabase()->execute($sql, array(), PDO::FETCH_ASSOC);
+        
+            return $row['max'];
+        }
         
         /**
          * Method use for build a Domain object.
          *
          * @param array $row
          *  The data use for build Domain.
-         *
          * @return mixed
          *  The corresponding instance of Domain object.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         protected function buildDomain(array $row) {
             $article = new Article($row);
