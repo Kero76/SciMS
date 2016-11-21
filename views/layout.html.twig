@@ -23,9 +23,9 @@
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div id="scims-left-navigation" class="list-group">
                                     {% if connect == true %}
-                                        <a class="list-group-item scims-brand"     href="/web/index.php&user={{ user.id }}"> Home</a>
+                                        <a class="list-group-item scims-brand"     href="/web/index.php?user={{ user.id }}"> Home</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=account&user={{ user.id }}"> {{ user.username }} Profil</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=administration&user={{ user.id }}"> Administration</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=write&user={{ user.id }}"> Write an Article</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=disconnection&user={{ user.id }}"> Sign Out</a>
                                     {% else %}
                                         <a class="list-group-item scims-brand"     href="/web/index.php"> Home</a>

@@ -44,7 +44,7 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function checkInscription(array $post, $potential_user) {
+        public function checkUserInscription(array $post, $potential_user) {
             // Check if string is empty.
             foreach ($post as $p) {
                 if (!$this->_checkEmptyString($p)) {
@@ -77,7 +77,7 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function checkConnection(array $post, $user) {
+        public function checkUserConnection(array $post, $user) {
             // Check if string is empty.
             foreach ($post as $p) {
                 if (!$this->_checkEmptyString($p)) {
@@ -112,12 +112,46 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function checkUpdate(array $post) {
+        public function checkUserUpdate(array $post) {
             // Check if string is empty.
             foreach ($post as $p) {
                 if (!$this->_checkEmptyString($p)) {
                     return 'field_empty_' . $p;
                 }
+            }
+            return 'update_success';
+        }
+        
+        /**
+         * Control form input before add article.
+         *
+         * @param array $post
+         *  $_POST[] array.
+         * @return string
+         *  The key use to generate message in view.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function checkAddArticle(array $post) {
+            if (!$this->_checkEmptyString($post['title']) && !$this->_checkEmptyString($post['content'])) {
+                return '';
+            }
+            return 'insert_success';
+        }
+    
+        /**
+         * Control form input before update article.
+         *
+         * @param array $post
+         *  $_POST[] array.
+         * @return string
+         *  The key use to generate message in view.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function checkUpdateArticle(array $post) {
+            if (!$this->_checkEmptyString($post['title']) && !$this->_checkEmptyString($post['content'])) {
+                return '';
             }
             return 'update_success';
         }

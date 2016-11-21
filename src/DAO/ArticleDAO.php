@@ -2,7 +2,7 @@
     namespace SciMS\DAO;
     
     use \PDO;
-    use SciMS\Domain\Article;
+    use \SciMS\Domain\Article;
     
     /**
      * Class ArticleDAO.

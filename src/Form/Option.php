@@ -1,29 +1,20 @@
 <?php
-    
     namespace SciMS\Form;
 
     /**
-     * Class Input.
+     * Class Option.
      *
-     * Abstract class which represent all input element use in form.
+     * An option is an element content on select tag.
      *
-     * @author Kero76, TeeGreg
+     * @author Kero76
      * @package SciMS\Form
      * @since SciMS 0.2
      * @version 1.0
      */
-    abstract class Input extends AbstractForm {
+    class Option extends AbstractForm {
     
         /**
-         * Type of Input Form.
-         *
-         * @var string
-         * @since SciMS 0.2
-         */
-        private $_type;
-    
-        /**
-         * Value of Input Form.
+         * Content of the attribute value.
          *
          * @var string
          * @since SciMS 0.2
@@ -31,29 +22,21 @@
         private $_value;
     
         /**
-         * Return the type attribute of Input Form.
+         * Option constructor.
          *
-         * @return string
-         *  Return the type of the input.
+         * @param array $attributes
+         *  An array with all attributes.
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function getType() {
-            return $this->_type;
+        public function __construct(array $attributes) {
+            $this->_hydrate($attributes);
+            $render  = '<option';
+            $render .= ($this->getValue() == '' ) ? '' : ' value="' . $this->getValue() . '"';
+            $render .= '>' . ucfirst($this->getValue()) . '</option>';
+            $this->setRender($render);
         }
-    
-        /**
-         * Set the value of attribute type.
-         *
-         * @param string $type
-         *  The value of type attribute.
-         * @since SciMS 0.2
-         * @version 1.0
-         */
-        public function setType($type) {
-            $this->_type = $type;
-        }
-    
+        
         /**
          * Return the value of attribute value.
          *

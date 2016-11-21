@@ -15,14 +15,12 @@
     <section class="col-md-8 col-sm-8 col-xs-8">
         <form action="/web/index.php?action=verification&form=inscription" method="post" class="form-horizontal">
             {% for form in forms %}
-                {% autoescape false %}
-                    <div class="form-group">
-                        <label for="{{ form.id }}" class="control-label col-md-2 col-sm-4 col-xs-4">{{ form.label }}</label>
-                        <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-                            {{ form.render }}
-                        </div>
+                <div class="form-group">
+                    <label for="{{ form.id }}" class="control-label col-md-2 col-sm-4 col-xs-4">{{ form.label }}</label>
+                    <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                        {% autoescape false %}{{ form.render }}{% endautoescape %}
                     </div>
-                {% endautoescape %}
+                </div>
             {% endfor %}
         </form>
     </section>

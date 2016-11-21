@@ -2,7 +2,7 @@
     namespace SciMS\DAO;
 
     use \PDO;
-    use SciMS\Domain\Category;
+    use \SciMS\Domain\Category;
     
     /**
      * Class CategoryDAO.
@@ -17,6 +17,27 @@
      */
     class CategoryDAO extends DAO {
     
+        /**
+         * Return all Categories stored on Database.
+         *
+         * @return array
+         *  Return an array with all categories present on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findAll() {
+            $sql = "SELECT * FROM `category`";
+            $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+    
+            $categories = array();
+            foreach ($result as $row) {
+                $id = $row['id'];
+                $categories[$id] = $this->buildDomain($row);
+            }
+    
+            return $categories;
+        }
+        
         /**
          * Method use for research 1 category thanks to the id.
          *
