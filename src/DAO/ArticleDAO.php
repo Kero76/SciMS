@@ -125,6 +125,28 @@
             }
             return $articles;
         }
+        
+        
+        /**
+         * Method use to get all the articles own by a use.
+         *
+         * @param $userid
+         *  The id of the writter research on Database.
+         * @return \SciMS\Domain\Article
+         *  Return an colection of Article, as found.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function findByOwnership($userid) {
+            $sql = "SELECT * FROM `articles` WHERE writter = ?";
+            $row = $this->getDatabase()->execute($sql, array($userid), PDO::FETCH_ASSOC);
+            $articles = array();
+            foreach ($row as $result) {
+                $id = $result['id'];
+                $articles[$id] = $this->buildDomain($row);
+            }
+            return $articles;
+        }        
     
         /**
          * Method use for return last id present on Database.
