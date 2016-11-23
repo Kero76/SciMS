@@ -1,25 +1,23 @@
 <?php
     
-    namespace SciMS\Form;
+    namespace SciMS\Form\Input;
     
     /**
-     * Class InputHidden.
+     * Class InputDate.
      *
-     * Abstract class which represent input text in form.
-     *
-     * @author Kero76
-     * @package SciMS\Form
+     * @author Kero76, TeeGreg
+     * @package SciMS\Form\Input
      * @since SciMS 0.2
      * @version 1.0
      */
-    class InputHidden extends Input {
+    class InputDate extends Input {
         
         /**
-         * InputHidden constructor.
+         * InputDate constructor.
          *
          * @constructor
          * @param array $attributes
-         *  An array with all attributes use for create InputFile object.
+         *  An array with all attributes use for create InputDate object.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -31,6 +29,7 @@
             $render .= ($this->getId()           == ''   ) ? '' : ' id="'             . $this->getId()            . '"';
             $render .= ($this->getName()         == ''   ) ? '' : ' name="'           . $this->getName()          . '"';
             $render .= ($this->getPlaceholder()  == ''   ) ? '' : ' placeholder="'    . $this->getPlaceholder()   . '"';
+            $render .= ($this->getValue()        == ''   ) ? '' : ' value="'          . $this->getValue()         . '"';
             $render .= ($this->getRequired()     == false) ? '' : ' required';
             $render .= '>';
             $this->setRender($render);

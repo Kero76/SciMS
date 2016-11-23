@@ -26,15 +26,18 @@
          * @version 1.0
          */
         public function findAll() {
+            $user_dao = new UserDAO();
             $sql = "SELECT * FROM `articles`";
             $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();
             foreach ($result as $row) {
-                $id = $row['id'];
-                $articles[$id] = $this->buildDomain($row);
+                $id   = $row['id'];
+                $user = $user_dao->findById($row['writter']);
+                $row['writter'] = $user;
+                $articles[$id]  = $this->buildDomain($row);
             }
-                 
+    
             return $articles;
         }
     
@@ -49,13 +52,16 @@
          * @version 1.0
          */
         public function findLastArticle($last_nb) {
+            $user_dao = new UserDAO();
             $sql = "SELECT * FROM `articles` ORDER BY `id` DESC LIMIT 0," . $last_nb;
             $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();
             foreach ($result as $row) {
-                $id = $row['id'];
-                $articles[$id] = $this->buildDomain($row);
+                $id   = $row['id'];
+                $user = $user_dao->findById($row['writter']);
+                $row['writter'] = $user;
+                $articles[$id]  = $this->buildDomain($row);
             }
     
             return $articles;
@@ -161,6 +167,55 @@
             $row = $this->getDatabase()->execute($sql, array(), PDO::FETCH_ASSOC);
         
             return $row['max'];
+        }
+        
+        /**
+         * Method use for register an article.
+         *
+         * @param \SciMS\Domain\Article $article
+         *  The article to add on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function saveArticle(Article $article) {
+            // Stored article informations into on associative array.
+            $infoUser = array(
+                'title'         => $article->getTitle(),
+                'content'       => $article->getContent(),
+                'authors'       => $article->getAuthors(),
+                'categories'    => $article->getCategories(),
+                'tags'          => $article->getTags(),
+                'status'        => $article->getStatus(),
+                'writter'       => $article->getWritter()->getId(),
+            );
+        
+            $sql = "INSERT INTO `articles` (title, content, authors, categories, tags, status, writter) VALUES (:title, :content, :authors, :categories, :tags, :status, :writter)";
+            $this->getDatabase()->update($sql, $infoUser);
+        }
+    
+        /**
+         * Method use for update an user.
+         *
+         * @param \SciMS\Domain\Article $article
+         *  The user at update on Database.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function updateUser(Article $article) {
+            // Stored users informations into on associative array.
+            $infoArticle = array(
+                'title'         => $article->getTitle(),
+                'content'       => $article->getContent(),
+                'authors'       => $article->getAuthors(),
+                'categories'    => $article->getCategories(),
+                'tags'          => $article->getTags(),
+                'status'        => $article->getStatus(),
+                'writter'       => $article->getWritter()->getId(),
+                'id'            => $article->getId(),
+            );
+        
+            $sql = "UPDATE `articles` SET title = :title, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :writter, role = :writter WHERE id = :id";
+            $this->getDatabase()->update($sql, $infoArticle);
         }
         
         /**

@@ -1,25 +1,23 @@
 <?php
     
-    namespace SciMS\Form;
-
+    namespace SciMS\Form\Input;
+    
     /**
-     * Class InputText.
-     *
-     * Abstract class which represent input text in form.
+     * Class InputReset.
      *
      * @author Kero76, TeeGreg
-     * @package SciMS\Form
+     * @package SciMS\Form\Input
      * @since SciMS 0.2
      * @version 1.0
      */
-    class InputText extends Input {
-    
+    class InputReset extends Input {
+        
         /**
-         * InputText constructor.
+         * InputReset constructor.
          *
          * @constructor
          * @param array $attributes
-         *  An array with all attributes use for create InputText object.
+         *  An array with all attributes use for create InputReset object.
          * @since SciMS 0.2
          * @version 1.0
          */

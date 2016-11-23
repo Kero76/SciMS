@@ -22,6 +22,14 @@
         private $_value;
     
         /**
+         * Content of the attribute label.
+         *
+         * @var string
+         * @since SciMS 0.2
+         */
+        private $_label;
+    
+        /**
          * Option constructor.
          *
          * @param array $attributes
@@ -33,7 +41,7 @@
             $this->_hydrate($attributes);
             $render  = '<option';
             $render .= ($this->getValue() == '' ) ? '' : ' value="' . $this->getValue() . '"';
-            $render .= '>' . ucfirst($this->getValue()) . '</option>';
+            $render .= '>' . ucfirst($this->getLabel()) . '</option>';
             $this->setRender($render);
         }
         
@@ -60,4 +68,30 @@
         public function setValue($value) {
             $this->_value = $value;
         }
+    
+        /**
+         * Return the value of the label.
+         *
+         * @return string
+         *  Value of the label.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function getLabel() {
+            return $this->_label;
+        }
+    
+        /**
+         * Set the value of the label.
+         *
+         * @param string
+         *  Value of label.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function setLabel($label) {
+            $this->_label = $label;
+        }
+        
+        
     }

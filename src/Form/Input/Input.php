@@ -1,6 +1,8 @@
 <?php
     
-    namespace SciMS\Form;
+    namespace SciMS\Form\Input;
+    
+    use SciMS\Form\AbstractForm;
 
     /**
      * Class Input.
@@ -8,7 +10,7 @@
      * Abstract class which represent all input element use in form.
      *
      * @author Kero76, TeeGreg
-     * @package SciMS\Form
+     * @package SciMS\Form\Input
      * @since SciMS 0.2
      * @version 1.0
      */

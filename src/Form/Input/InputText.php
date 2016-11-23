@@ -1,25 +1,23 @@
 <?php
     
-    namespace SciMS\Form;
-    
+    namespace SciMS\Form\Input;
+
     /**
-     * Class InputFile.
+     * Class InputText.
      *
-     * Abstract class which represent input text in form.
-     *
-     * @author Kero76
-     * @package SciMS\Form
+     * @author Kero76, TeeGreg
+     * @package SciMS\Form\Input
      * @since SciMS 0.2
      * @version 1.0
      */
-    class InputFile extends Input {
-        
+    class InputText extends Input {
+    
         /**
-         * InputFile constructor.
+         * InputText constructor.
          *
          * @constructor
          * @param array $attributes
-         *  An array with all attributes use for create InputFile object.
+         *  An array with all attributes use for create InputText object.
          * @since SciMS 0.2
          * @version 1.0
          */

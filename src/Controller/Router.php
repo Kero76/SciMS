@@ -4,16 +4,17 @@
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
+    use \SciMS\Domain\Article;
     use \SciMS\Domain\User;
     use \SciMS\Error\MessageHandler;
     use \SciMS\Form\FormBuilder;
-    use \SciMS\Form\InputDate;
-    use \SciMS\Form\InputEmail;
-    use \SciMS\Form\InputFile;
-    use \SciMS\Form\InputHidden;
-    use \SciMS\Form\InputPassword;
-    use \SciMS\Form\InputSubmit;
-    use \SciMS\Form\InputText;
+    use \SciMS\Form\Input\InputDate;
+    use \SciMS\Form\Input\InputEmail;
+    use \SciMS\Form\Input\InputFile;
+    use \SciMS\Form\Input\InputHidden;
+    use \SciMS\Form\Input\InputPassword;
+    use \SciMS\Form\Input\InputSubmit;
+    use \SciMS\Form\Input\InputText;
     use \SciMS\Form\Option;
     use \SciMS\Form\Select;
     use \SciMS\Form\TextArea;
@@ -81,7 +82,7 @@
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
                 'disconnection' => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
-                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update)+$#',
+                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update|write)+$#', // Change it when you add new Form.
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
                 'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
                 'write'         => '#\/web\/index\.php\?action=write&user=[0-9]+$#',
@@ -445,19 +446,43 @@
                         );
                     } else {
                         $domains = array(
-                
+                            'message' => $this->_services['message.handler']->getError($message_key),
+                            'user'    => $this->_services['dao.user']->findByUsername($user->getUsername()),
                         );
                     }
                     break;
                 
                 // Write an Article
                 case 'write' :
-                    $domains = array(
-                        
-                    );
+                    $message_key = $this->_services['form.checker']->checkInsertArticle($_POST);
+                    $category    = $this->_services['dao.category']->findById($_POST['category']);
+                    $user        = $this->_services['dao.user']->findById($_POST['writter']);
+                    
+                    $article = new Article(array(
+                        'title'         => $_POST['title'],
+                        'content'       => $_POST['content'],
+                        'authors'       => $_POST['authors'],
+                        'categories'    => $category->getId(),
+                        'tags'          => $_POST['tags'],
+                        'status'        => $_POST['status'],
+                        'writter'       => $user,
+                    ));
+                    
+                    if (strcmp($message_key, 'insert_success') === 0) {
+                        $this->_services['dao.article']->saveArticle($article);
+                        $domains = array(
+                            'message' => $this->_services['message.handler']->getSuccess($message_key),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                        );
+                    } else {
+                        $domains = array(
+                            'message' => $this->_services['message.handler']->getError($message_key),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                        );
+                    }
                     break;
         
-                // Default case : $_GET['form'] not exists or not corresponding with possible choice.
+                // Default case : $_GET['form'] not exists or not corresponding with possible choices.
                 default:
                     $domains = array(
                         'message' => $this->_services['message.handler']->getError('404'),
@@ -477,6 +502,7 @@
          * @version 1.0
          */
         private function _buildDomainArticle() {
+            
             if (!isset($_SESSION['user_id'])) {
                 $domains = array(
                     'article' => $this->_services['dao.article']->findById($_GET['id']),
@@ -615,19 +641,46 @@
         
         private function _buildDomainWrite() {
             $user = $this->_services['dao.user']->findById($_SESSION['user_id']);
+            
+            // Create the object datalist for the category.
             $categories = $this->_services['dao.category']->findAll();
-            $select = new Select(array(
+            $select_category = new Select(array(
                 'id'    => 'category',
                 'name'  => 'category',
                 'label' => 'Category',
                 'class' => 'form-control',
             ));
-            
+    
             // Fill option in Select object.
             foreach ($categories as $category) {
-                $select->add(new Option(array('value' => $category->getName())));
+                $select_category->add(new Option(array(
+                    'value' => $category->getId(),
+                    'label' => $category->getTitle(),
+                )));
             }
-            $select->renderSelect();
+            $select_category->renderSelect();
+            
+            // Status
+            $select_status = new Select(array(
+                'id'    => 'status',
+                'label' => 'status',
+                'class' => 'form-control',
+            ));
+    
+            // Fill option in Select object0
+            $status = array(
+                'Release' => Article::RELEASE,
+                'Pending' => Article::PENDING,
+                'Hidden'  => Article::HIDDEN
+            );
+            
+            foreach ($status as $key => $value) {
+                $select_status->add(new Option(array(
+                    'value' => $value,
+                    'label' => $key,
+                )));
+            }
+            $select_status->renderSelect();
             
             $domains = array(
                 'forms'  => $this->_services['form.builder']->add(
@@ -656,12 +709,12 @@
                         'name'  => 'authors',
                         'class' => 'form-control',
                         'label' => 'Authors',
-                        'rows'  => '10',
+                        'rows'  => '5',
                         'cols'  => '50',
                     ))
                 )->add(
                     // Category
-                    $select
+                    $select_category
                 )->add(
                     // Tags
                     new InputText(array(
@@ -673,9 +726,27 @@
                     ))
                 )->add(
                     // Status
-                    new InputDate(array())
+                    $select_status
+                )->add(
+                    // Writter id.
+                    new InputHidden(array(
+                        'type'  => 'hidden',
+                        'id'    => 'writter',
+                        'name'  => 'writter',
+                        'value' => $user->getId(),
+                    ))
+                )->add(
+                    // Submit
+                    new InputSubmit(array(
+                        'type'  => 'submit',
+                        'id'    => 'submit',
+                        'name'  => 'submit',
+                        'class' => 'form-control btn btn-primary',
+                        'value' => 'Submit'
+                    ))
                 )->getForms(),
-                'user'  => $user,
+                'user'    => $user,
+                'connect' => true,
             );
             
             return $domains;

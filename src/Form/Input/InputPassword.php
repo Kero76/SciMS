@@ -1,25 +1,23 @@
 <?php
     
-    namespace SciMS\Form;
+    namespace SciMS\Form\Input;
     
     /**
-     * Class InputReset.
-     *
-     * Abstract class which represent input submit in form.
+     * Class InputPassword.
      *
      * @author Kero76, TeeGreg
-     * @package SciMS\Form
+     * @package SciMS\Form\Input
      * @since SciMS 0.2
      * @version 1.0
      */
-    class InputReset extends Input {
+    class InputPassword extends Input {
         
         /**
-         * InputReset constructor.
+         * InputPassword constructor.
          *
          * @constructor
          * @param array $attributes
-         *  An array with all attributes use for create InputReset object.
+         *  An array with all attributes use for create InputPassword object.
          * @since SciMS 0.2
          * @version 1.0
          */
@@ -31,7 +29,6 @@
             $render .= ($this->getId()           == ''   ) ? '' : ' id="'             . $this->getId()            . '"';
             $render .= ($this->getName()         == ''   ) ? '' : ' name="'           . $this->getName()          . '"';
             $render .= ($this->getPlaceholder()  == ''   ) ? '' : ' placeholder="'    . $this->getPlaceholder()   . '"';
-            $render .= ($this->getValue()        == ''   ) ? '' : ' value="'          . $this->getValue()         . '"';
             $render .= ($this->getRequired()     == false) ? '' : ' required';
             $render .= '>';
             $this->setRender($render);

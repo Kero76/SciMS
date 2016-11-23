@@ -132,10 +132,13 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function checkAddArticle(array $post) {
-            if (!$this->_checkEmptyString($post['title']) && !$this->_checkEmptyString($post['content'])) {
-                return '';
+        public function checkInsertArticle(array $post) {
+            foreach ($post as $p) {
+                if (!$this->_checkEmptyString($p)) {
+                    return 'field_empty_' . $p;
+                }
             }
+            
             return 'insert_success';
         }
     
@@ -150,9 +153,12 @@
          * @version 1.0
          */
         public function checkUpdateArticle(array $post) {
-            if (!$this->_checkEmptyString($post['title']) && !$this->_checkEmptyString($post['content'])) {
-                return '';
+            foreach ($post as $p) {
+                if (!$this->_checkEmptyString($p)) {
+                    return 'field_empty_' . $p;
+                }
             }
+            
             return 'update_success';
         }
     

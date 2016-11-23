@@ -1,14 +1,12 @@
 <?php
     
-    namespace SciMS\Form;
+    namespace SciMS\Form\Input;
     
     /**
      * Class InputEmail.
      *
-     * Abstract class which represent input submit in form.
-     *
      * @author Kero76, TeeGreg
-     * @package SciMS\Form
+     * @package SciMS\Form\Input
      * @since SciMS 0.2
      * @version 1.0
      */
