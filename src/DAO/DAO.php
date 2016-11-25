@@ -8,7 +8,7 @@
      *
      * This class is a representation of the DAO object.
      * In fact, it have an access at the Database for each children generate,
-     * and it have an abstract method overwrite on each children.
+     * and it have an abstract method defined on each child.
      *
      * @author Kero76
      * @package \SciMS\DAO
@@ -41,7 +41,7 @@
          *
          * @access protected.
          * @return \SciMS\Database\Database
-         *  The uique instance of Database.
+         *  The unique instance of Database.
          * @since SciMS 0.1
          * @version 1.0
          */

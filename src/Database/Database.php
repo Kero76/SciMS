@@ -12,10 +12,13 @@
      * The connexion with the Database is automatically closed when the script is finished.
      * So, it's not necessary to develop a "close" method, but it can be possible to use it, then, it develop it.
      *
+     * -> v1.1 :
+     *  - Added method update($sql, array $statement) to update table on database.
+     *
      * @author Kero76
      * @package \SciMS\Database
      * @since SciMS 0.1
-     * @version 1.0
+     * @version 1.1
      */
     class Database {
     
@@ -115,7 +118,7 @@
          * Method use for execute a SQL request with statement.
          *
          * @param       $sql
-         *  The SQL requet to execute.
+         *  The SQL request to execute.
          * @param array $statement
          *  The statement present on prepare request.
          * @param       $fetch_style
@@ -125,9 +128,13 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function execute($sql, array $statement, $fetch_style) {
+        public function execute($sql, array $statement, $fetch_style = NULL) {
             $request = $this->_pdo->prepare($sql);
             $request->execute($statement);
+            
+            if ($fetch_style === NULL) {
+                return $request->fetch();
+            }
             return $request->fetch($fetch_style);
         }
     
@@ -151,5 +158,21 @@
             } else {
                 return $this->_pdo->query($sql)->fetchAll($fetch_style);
             }
+        }
+    
+    
+        /**
+         * Method use for execute a SQL request with statement to update table present on Database.
+         *
+         * @param       $sql
+         *  The SQL request to execute.
+         * @param array $statement
+         *  The statement present on prepare request.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function update($sql, array $statement) {
+            $request = $this->_pdo->prepare($sql);
+            $request->execute($statement);
         }
     }

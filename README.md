@@ -36,8 +36,13 @@ Creation of CMS like for post research article.
 * Website of Gravatar : [http://fr.gravatar.com/](http://fr.gravatar.com/)
 * A website to test Regular Expression : [https://regex101.com/](https://regex101.com/)
 
+#### TinyMCE plugins
+* LaTex plugin : [http://moonwave99.github.io/TinyMCELatexPlugin/](http://moonwave99.github.io/TinyMCELatexPlugin/)
+* Math integration plugin : [http://www.wiris.com/solutions/tinymce](http://www.wiris.com/solutions/tinymce)
+
 ### Links
 * An article to manage Composer dependency : [http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer](http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer)
-* An large article to help with PDO operation : [https://phpdelusions.net/pdo](https://phpdelusions.net/pdo)
+* A large article to help with PDO operation : [https://phpdelusions.net/pdo](https://phpdelusions.net/pdo)
 * A list of all package available with Composer : [https://packagist.org/](https://packagist.org/)
 * A good practice to develop with PSR-X : [http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/](http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/)
+* An article to see more informations about URL Rewriting : [https://craym.eu/tutoriels/referencement/url_rewriting.html](https://craym.eu/tutoriels/referencement/url_rewriting.html)

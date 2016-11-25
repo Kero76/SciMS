@@ -5,7 +5,7 @@
      * Class Article.
      *
      * This class is a representation of the Article.
-     * He have 4 role on website :
+     * An article have one of these three possible status :
      *  - RELEASE : Visible on the Website.
      *  - PENDING : Can invisible except for Administrator and Moderator.
      *  - HIDDEN  : Totally hidden.
@@ -94,7 +94,7 @@
         /**
          * Tags of the Article.
          *
-         * @var string
+         * @var array
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -128,13 +128,13 @@
         private $date_modified;
     
         /**
-         * Writer of the Article.
+         * Writter of the Article.
          *
          * @var \SciMS\Domain\User
          * @since SciMS 0.1
          * @version 1.0
          */
-        private $writer;
+        private $_writter;
     
         /**
          * Article constructor.
@@ -266,14 +266,14 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function setCategories($categories) {
+        public function setCategories(Category $categories) {
             $this->_categories = $categories;
         }
     
         /**
          * Return the all tags apply at the article.
          *
-         * @return string
+         * @return array
          *  A string with all tags.
          * @since SciMS 0.1
          * @version 1.0
@@ -291,8 +291,7 @@
          * @version 1.0
          */
         public function setTags($tags) {
-            $tags_explode = explode(',', $tags);
-            $this->_tags = $tags_explode;
+            $this->_tags = $tags;
         }
     
         /**
@@ -387,20 +386,20 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function getWriter() {
-            return $this->writer;
+        public function getWritter() {
+            return $this->_writter;
         }
     
         /**
          * Set the writer.
          *
-         * @param \SciMS\Domain\User $writer
-         *  The value of the Writer.
+         * @param \SciMS\Domain\User $writter
+         *  The value of the Writter.
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function setWriter($writer) {
-            $this->writer = $writer;
+        public function setWritter(User $writter) {
+            $this->_writter = $writter;
         }
         
         /**

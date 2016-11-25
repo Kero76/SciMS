@@ -1,0 +1,36 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}SciMS - {{ user.username }}{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ user.username }} profile
+            <small class="scims-italic scims-header-page-subtitle">Change your personnal informations</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <form action="/web/index.php?action=verification&form=update" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <!-- Avatar -->
+            <div class="form-group">
+                {% if user.avatar == '' %}
+                    <img class="scims-avatar" src="../../web/images/default-avatar.png" alt="default avatar" width="128" height="128">
+                {% else %}
+                    <img class="scims-avatar" src="../../web/uploads/avatar/{{ user.avatar }}" alt="{{ user.username }}'s avatar">
+                {% endif %}
+            </div>
+            {% for form in forms %}
+                <div class="form-group">
+                    <label for="{{ form.id }}" class="control-label col-md-12 col-sm-12 col-xs-12">{{ form.label }}</label>
+                    <div class="col-md-9 col-md-offset-1 col-sm-9 col-sm-offset-3 col-xs-8 col-xs-offset-4">
+                        {% autoescape false %}{{ form.render }}{% endautoescape %}
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+    </section>
+{% endblock %}

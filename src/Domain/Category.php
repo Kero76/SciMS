@@ -4,15 +4,11 @@
     /**
      * Class User
      *
-     * The class is a representation of an category on Website.
-     *
-     * -> V1.1 :
-     *  Added attributes connect + corresponding Getter and Setter.
-     *
+     * The class is a representation of an Category on Website.
      * @author Kero76
      * @package SciMS\Domain
      * @since SciMS 0.1
-     * @version 1.1
+     * @version 1.0
      */
     class Category {
     
@@ -32,7 +28,7 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        private $_name;
+        private $_title;
     
         /**
          * Category constructor.
@@ -80,20 +76,20 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function getName() {
-            return $this->_name;
+        public function getTitle() {
+            return $this->_title;
         }
     
         /**
          * Set the name of the Category.
          *
-         * @param string $name
+         * @param string $title
          *  The name of the Category.
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function setName($name) {
-            $this->_name = $name;
+        public function setTitle($title) {
+            $this->_title = $title;
         }
         
         /**

@@ -47,7 +47,7 @@
             $path = realpath('../');
             $path .= '/views';
             $this->_template_dir = $path;
-            $loader      = new \Twig_Loader_Filesystem($this->_template_dir);
+            $loader      = new \Twig_Loader_Filesystem(array($this->_template_dir, $this->_template_dir . '/admin'));
             $this->_twig = new \Twig_Environment($loader, array(
                 'debug' => true,
                 'cache' => false,
@@ -62,6 +62,9 @@
          * @param array $domains
          *  All domains objects use to render the view.
          * @return string
+         *  Return the HTML view in function of the view requested.
+         * @since SciMS 0.1
+         * @version 1.0
          */
         public function renderer($template, array $domains) {
             return $this->_twig->render($template, $domains);

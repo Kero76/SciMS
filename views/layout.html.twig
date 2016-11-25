@@ -3,14 +3,14 @@
     <head>
         <meta charset="utf-8">
 
-        {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="../vendor/twitter/bootstrap/dist/css/bootstrap.min.css">       <!-- Bootstrap.min -->
-            <link rel="stylesheet" type="text/css" href="../vendor/fortawesome/font-awesome/css/font-awesome.min.css">  <!-- Font Awesome -->
-            <link rel="stylesheet" type="text/css" href="../web/css/style.css">                     <!-- Personnal Stylesheet -->
-        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="../web/lib/bootstrap/css/bootstrap.min.css"> <!-- Bootstrap.min -->
+        <link rel="stylesheet" type="text/css" href="../web/lib/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
+        {% block stylesheets %}{% endblock %}
 
         <title>{% block title %}SciMS - {% endblock %}</title>
     </head>
+
     <body>
         <section id="scims-article-body" class="container">
             <div class="row">
@@ -22,12 +22,14 @@
                             <div class="container-fluid">
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div id="scims-left-navigation" class="list-group">
-                                    <a class="list-group-item scims-brand" href="/web/index.php"> Home</a>
-                                    {% if user.connect == true %}
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=administration"> Administration</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
+                                    {% if connect == true %}
+                                        <a class="list-group-item scims-brand"     href="/web/index.php?user={{ user.id }}"> Home</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=account&user={{ user.id }}"> {{ user.username }} Profil</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=write&user={{ user.id }}"> Write an Article</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=disconnection&user={{ user.id }}"> Sign Out</a>
                                     {% else %}
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Connection</a>
+                                        <a class="list-group-item scims-brand"     href="/web/index.php"> Home</a>
+                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Sign In</a>
                                         <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% endif %}
                                 </div>
@@ -42,10 +44,9 @@
                 </div>
 
                 <!-- Loading script section -->
-                {% block javascripts %}
-                    <script src="../vendor/components/jquery/jquery.min.js"></script> <!-- jquery    -->
-                    <script src="../vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script> <!-- bootstrap -->
-                {% endblock %}
+                <script src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
+                <script src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
+                {% block javascripts %}{% endblock %}
             </div>
         </section>
 

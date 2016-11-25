@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}SciMS - Write an Article{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            Write an Article
+            <small class="scims-italic scims-header-page-subtitle">Write an Article here</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        {# Check if the article_id exist, and if exists change form content #}
+        {% if article_id %}
+            <form action="/web/index.php?action=verification&form=edit" method="post" class="form-horizontal">
+        {% else %}
+            <form action="/web/index.php?action=verification&form=write" method="post" class="form-horizontal">
+        {% endif %}
+            {% for form in forms %}
+                <div class="form-group">
+                    <label for="{{ form.id }}" class="control-label col-md-2 col-sm-4 col-xs-4">{{ form.label }}</label>
+                    <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                        {% autoescape false %}{{ form.render }}{% endautoescape %}
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+    </section>
+{% endblock %}
