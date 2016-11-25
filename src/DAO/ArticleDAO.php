@@ -26,16 +26,19 @@
          * @version 1.0
          */
         public function findAll() {
-            $user_dao = new UserDAO();
-            $sql = "SELECT * FROM `articles`";
-            $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+            $user_dao     = new UserDAO();
+            $category_dao = new CategoryDAO();
+            $sql          = "SELECT * FROM `articles`";
+            $result       = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();
             foreach ($result as $row) {
-                $id   = $row['id'];
-                $user = $user_dao->findById($row['writter']);
-                $row['writter'] = $user;
-                $articles[$id]  = $this->buildDomain($row);
+                $id                 = $row['id'];
+                $user               = $user_dao->findById($row['writter']);
+                $category           = $category_dao->findById($row['writter']);
+                $row['writter']     = $user;
+                $row['categories']  = $category;
+                $articles[$id]      = $this->buildDomain($row);
             }
     
             return $articles;
@@ -52,15 +55,18 @@
          * @version 1.0
          */
         public function findLastArticle($last_nb) {
-            $user_dao = new UserDAO();
-            $sql = "SELECT * FROM `articles` ORDER BY `id` DESC LIMIT 0," . $last_nb;
-            $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+            $user_dao     = new UserDAO();
+            $category_dao = new CategoryDAO();
+            $sql          = "SELECT * FROM `articles` ORDER BY `id` DESC LIMIT 0," . $last_nb;
+            $result       = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();
             foreach ($result as $row) {
-                $id   = $row['id'];
-                $user = $user_dao->findById($row['writter']);
-                $row['writter'] = $user;
+                $id                 = $row['id'];
+                $user               = $user_dao->findById($row['writter']);
+                $category           = $category_dao->findById($row['writter']);
+                $row['writter']     = $user;
+                $row['categories']  = $category;
                 $articles[$id]  = $this->buildDomain($row);
             }
     
@@ -78,10 +84,28 @@
          * @version 1.0
          */
         public function findById($id) {
+            // Retrieve writter id from the database.
+            $writter_id = $this->_findWritterById($id);
+    
+            // Create the user from the database.
+            $user_dao = new UserDAO();
+            $user     = $user_dao->findById($writter_id);
+            
+            // Retrieve Category id from the Database.
+            $category_id = $this->_findCategoryById($id);
+            
+            // Create the Category from the Database.
+            $category_dao = new CategoryDAO();
+            $category     = $category_dao->findById($category_id);
+            
+            // Select article from database.
             $sql = "SELECT * FROM `articles` WHERE id = ?";
             $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
         
+            // Build domain object.
             if ($row) {
+                $row['categories'] = $category;
+                $row['writter']    = $user;
                 return $this->buildDomain($row);
             }
         }
@@ -132,7 +156,6 @@
             return $articles;
         }
         
-        
         /**
          * Method use to get all the articles own by a use.
          *
@@ -152,8 +175,8 @@
                 $articles[$id] = $this->buildDomain($row);
             }
             return $articles;
-        }        
-    
+        }
+        
         /**
          * Method use for return last id present on Database.
          *
@@ -183,7 +206,7 @@
                 'title'         => $article->getTitle(),
                 'content'       => $article->getContent(),
                 'authors'       => $article->getAuthors(),
-                'categories'    => $article->getCategories(),
+                'categories'    => $article->getCategories()->getId(),
                 'tags'          => $article->getTags(),
                 'status'        => $article->getStatus(),
                 'writter'       => $article->getWritter()->getId(),
@@ -217,7 +240,44 @@
             $sql = "UPDATE `articles` SET title = :title, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :writter, role = :writter WHERE id = :id";
             $this->getDatabase()->update($sql, $infoArticle);
         }
-        
+    
+    
+        /**
+         * Method use for search a writter thanks to the article id.
+         *
+         * @access private
+         * @param $id
+         *  The id of the article.
+         * @return integer
+         *  Id of the writter.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        private function _findWritterById($id) {
+            $sql = "SELECT writter FROM `articles` WHERE id = ?";
+            $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
+            return $row['writter'];
+        }
+    
+        /**
+         * Method use for search a category thanks to the article id.
+         *
+         * @access private
+         * @param $id
+         *  The id of the article.
+         * @return integer
+         *  Id of the category.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        private function _findCategoryById($id) {
+            $sql = "SELECT categories FROM `articles` WHERE id = ?";
+            $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
+            return $row['categories'];
+        }
+    
+    
+    
         /**
          * Method use for build a Domain object.
          *

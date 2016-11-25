@@ -45,13 +45,16 @@
                 'email_not_found'       => new Error('Email not found in website.'),
                 'user_not_found'        => new Error('Username not found in website.'),
                 'email_already_found'   => new Error('Email already use in website.'),
+                'avatar_not_upload'     => new Error('Avatar not upload'),
+                'avatar_not_valid'      => new Error('Avatar invalid'),
                 '404'                   => new Error('Page not found'),
             );
             
             $this->_successes = array(
-                'connection_success'    => new Success('Connection !'),
-                'inscription_success'   => new Success('Inscription !'),
-                'update_success'        => new Success('Update !'),
+                'connection_success'         => new Success('Connection !'),
+                'inscription_success'        => new Success('Inscription !'),
+                'update_success'             => new Success('Update !'),
+                'avatar_upload_with_success' => new Success('Avatar upload with success !'),
             );
         }
     

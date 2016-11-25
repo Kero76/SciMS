@@ -21,15 +21,23 @@
         <!-- Categories -->
         <section>
             <ul class="list-unstyled list-inline scims-excerpt-categories">
-                {{ article.category }}
+                <li>{{ article.categories.title }}</li>
             </ul>
 
             <!-- Tags -->
             <ul class="list-unstyled list-inline scims-excerpt-tags">
-                {% for tag in article.tags %}
+                {# Split article.tags into an array to display it like a unstyled list. #}
+                {% set tags = article.tags|split(',')  %}
+                {% for tag in tags %}
                     <li>{{ tag }}</li>
                 {% endfor %}
             </ul>
         </section>
+
+        <!-- User = writter, button update available. -->
+        {% if connect == true and user.id == session_id %}
+            <a href="/web/index.php?action=edit&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
+        {% endif %}
+
     </section>
 {% endblock %}

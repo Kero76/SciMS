@@ -94,7 +94,7 @@
         /**
          * Tags of the Article.
          *
-         * @var string
+         * @var array
          * @since SciMS 0.1
          * @version 1.0
          */
@@ -266,14 +266,14 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        public function setCategories($categories) {
+        public function setCategories(Category $categories) {
             $this->_categories = $categories;
         }
     
         /**
          * Return the all tags apply at the article.
          *
-         * @return string
+         * @return array
          *  A string with all tags.
          * @since SciMS 0.1
          * @version 1.0
@@ -291,8 +291,7 @@
          * @version 1.0
          */
         public function setTags($tags) {
-            $tags_explode = explode(',', $tags);
-            $this->_tags = $tags_explode;
+            $this->_tags = $tags;
         }
     
         /**

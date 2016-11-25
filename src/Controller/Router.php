@@ -86,6 +86,7 @@
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
                 'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
                 'write'         => '#\/web\/index\.php\?action=write&user=[0-9]+$#',
+                'edit'          => '#\/web\/index\.php\?action=edit&user=[0-9]+&article=[0-9]+$#',
             );
             
             $this->_templates = array(
@@ -97,6 +98,7 @@
                 'article'       => 'article.html.twig',
                 'account'       => 'admin/account.html.twig',
                 'write'         => 'admin/article.html.twig',
+                'edit'          => 'admin/article.html.twig',
                 '404'           => '404.html.twig',
             );
     
@@ -106,6 +108,7 @@
                 'dao.category'      => new CategoryDAO(),
                 'form.builder'      => new FormBuilder(),
                 'form.checker'      => new FormChecker(),
+                'file.checker'      => new FileChecker(),
                 'message.handler'   => new MessageHandler(),
                 'renderer'          => new Renderer(),
             );
@@ -207,10 +210,15 @@
                 case 'account' :
                     $domains = $this->_buildDomainAccount();
                     break;
-                
+    
                 // Write on article.
                 case 'write' :
                     $domains = $this->_buildDomainWrite();
+                    break;
+                
+                // Edit on article.
+                case 'edit' :
+                    $domains = $this->_buildDomainEdit();
                     break;
     
                 // 404 template generate with nothing domains object.
@@ -431,12 +439,15 @@
         
                 // Update user.
                 case 'update' :
+                    $this->_services['file.checker']->uploadAvatarFile($_FILES, $_POST['username']);
                     $message_key = $this->_services['form.checker']->checkUserUpdate($_POST);
-            
+                    
                     $user = $this->_services['dao.user']->findByUsername($_POST['username']);
                     $user->setUsername($_POST['username']);
                     $user->setFname($_POST['fname']);
                     $user->setLname($_POST['lname']);
+                    $user->setBirthday($_POST['birthday']);
+                    $user->setBiography($_POST['biography']);
             
                     if ((strcmp($message_key, 'update_success') == 0))  {
                         $this->_services['dao.user']->updateUser($user);
@@ -462,7 +473,7 @@
                         'title'         => $_POST['title'],
                         'content'       => $_POST['content'],
                         'authors'       => $_POST['authors'],
-                        'categories'    => $category->getId(),
+                        'categories'    => $category,
                         'tags'          => $_POST['tags'],
                         'status'        => $_POST['status'],
                         'writter'       => $user,
@@ -489,6 +500,7 @@
                     );
                     break;
             }
+            
             return $domains;
         }
     
@@ -509,9 +521,10 @@
                 );
             } else {
                 $domains = array(
-                    'article' => $this->_services['dao.article']->findById($_GET['id']),
-                    'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
-                    'connect'  => true,
+                    'article'       => $this->_services['dao.article']->findById($_GET['id']),
+                    'user'          => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                    'connect'       => true,
+                    'session_id'    => $_SESSION['user_id'],
                 );
             }
             return $domains;
@@ -613,7 +626,6 @@
                         'type'  => 'file',
                         'id'    => 'avatar',
                         'name'  => 'avatar',
-                        'class' => 'form-control',
                         'label' => 'Avatar',
                     ))
                 )->add(
@@ -638,7 +650,16 @@
             );
             return $domains;
         }
-        
+    
+        /**
+         * A private method use for build domains object using in Article write render.
+         *
+         * @access private
+         * @return array
+         *  An array with all domain class loaded for build page Write an Article.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
         private function _buildDomainWrite() {
             $user = $this->_services['dao.user']->findById($_SESSION['user_id']);
             
@@ -752,6 +773,151 @@
             return $domains;
         }
     
+        /**
+         * A private method use for build domains object using in Edit on article render.
+         *
+         * @access private
+         * @return array
+         *  An array with all domain class loaded for build page Edit an Article.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        private function _buildDomainEdit() {
+            $user    = $this->_services['dao.user']->findById($_SESSION['user_id']);
+            $article = $this->_services['dao.article']->findById($_GET['article']);
+    
+            // Create the object datalist for the category.
+            $categories = $this->_services['dao.category']->findAll();
+            $select_category = new Select(array(
+                'id'    => 'category',
+                'name'  => 'category',
+                'label' => 'Category',
+                'class' => 'form-control',
+            ));
+    
+            // Fill option in Select object.
+            foreach ($categories as $category) {
+                // If the article.category.id == category.id, so selected it directly on view.
+                if ($category->getId() == $article->getCategories()->getId()) {
+                    $select_category->add(new Option(array(
+                        'value'     => $category->getId(),
+                        'label'     => $category->getTitle(),
+                        'selected'  => true,
+                    )));
+                } else {
+                    $select_category->add(new Option(array(
+                        'value' => $category->getId(),
+                        'label' => $category->getTitle(),
+                    )));
+                }
+            }
+            $select_category->renderSelect();
+    
+            // Status
+            $select_status = new Select(array(
+                'id'    => 'status',
+                'label' => 'status',
+                'class' => 'form-control',
+            ));
+    
+            // Fill option in Select object0
+            $status = array(
+                'Release' => Article::RELEASE,
+                'Pending' => Article::PENDING,
+                'Hidden'  => Article::HIDDEN
+            );
+    
+            foreach ($status as $key => $value) {
+                // If the article.category.id == category.id, so selected it directly on view.
+                if ($value == $article->getStatus()) {
+                    $select_status->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => true,
+                    )));
+                } else {
+                    $select_status->add(new Option(array(
+                        'value' => $value,
+                        'label' => $key,
+                    )));
+                }
+            }
+            $select_status->renderSelect();
+    
+            $domains = array(
+                'forms'  => $this->_services['form.builder']->add(
+                // Title
+                    new InputText(array(
+                        'type'  => 'text',
+                        'id'    => 'title',
+                        'name'  => 'title',
+                        'class' => 'form-control',
+                        'label' => 'Title',
+                        'value' => $article->getTitle(),
+                    ))
+                )->add(
+                // Content
+                    new TextArea(array(
+                        'id'    => 'content',
+                        'name'  => 'content',
+                        'class' => 'form-control',
+                        'label' => 'Content',
+                        'rows'  => '10',
+                        'cols'  => '50',
+                        'value' => $article->getContent(),
+                    ))
+                )->add(
+                // Authors
+                    new TextArea(array(
+                        'id'    => 'authors',
+                        'name'  => 'authors',
+                        'class' => 'form-control',
+                        'label' => 'Authors',
+                        'rows'  => '5',
+                        'cols'  => '50',
+                        'value' => $article->getAuthors(),
+                    ))
+                )->add(
+                // Category
+                    $select_category
+                )->add(
+                // Tags
+                    new InputText(array(
+                        'type'  => 'text',
+                        'id'    => 'tags',
+                        'name'  => 'tags',
+                        'class' => 'form-control',
+                        'label' => 'Tags',
+                        'value' => $article->getTags(),
+                    ))
+                )->add(
+                // Status
+                    $select_status
+                )->add(
+                // Writter id.
+                    new InputHidden(array(
+                        'type'  => 'hidden',
+                        'id'    => 'writter',
+                        'name'  => 'writter',
+                        'value' => $user->getId(),
+                    ))
+                )->add(
+                // Submit
+                    new InputSubmit(array(
+                        'type'  => 'submit',
+                        'id'    => 'submit',
+                        'name'  => 'submit',
+                        'class' => 'form-control btn btn-primary',
+                        'value' => 'Submit'
+                    ))
+                )->getForms(),
+                'user'    => $user,
+                'connect' => true,
+            );
+            
+            return $domains;
+        }
+        
         /**
          * A private method use for build domains object using in 404 render.
          *

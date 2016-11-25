@@ -30,6 +30,14 @@
         private $_label;
     
         /**
+         * Indicate if the option was selected by default or not.
+         *
+         * @var bool
+         * @since SciMS 0.2
+         */
+        private $_selected;
+    
+        /**
          * Option constructor.
          *
          * @param array $attributes
@@ -40,7 +48,8 @@
         public function __construct(array $attributes) {
             $this->_hydrate($attributes);
             $render  = '<option';
-            $render .= ($this->getValue() == '' ) ? '' : ' value="' . $this->getValue() . '"';
+            $render .= ($this->getValue() == ''    ) ? '' : ' value="' . $this->getValue() . '"';
+            $render .= ($this->getValue() == false ) ? '' : ' selected"';
             $render .= '>' . ucfirst($this->getLabel()) . '</option>';
             $this->setRender($render);
         }
@@ -92,6 +101,30 @@
         public function setLabel($label) {
             $this->_label = $label;
         }
-        
-        
+    
+        /**
+         * Return the value of the selected.
+         *
+         * @return string
+         *  Value of the selected.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function getSelected() {
+            return $this->_selected;
+        }
+    
+        /**
+         * Set the value of the selected.
+         *
+         * @param string
+         *  Value of the attribute selected.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function setSelected($selected) {
+            $this->_selected = $selected;
+        }
+    
+    
     }

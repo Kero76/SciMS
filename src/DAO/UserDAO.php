@@ -158,12 +158,14 @@
                 'username'  => $user->getUsername(),
                 'email'     => $user->getEmail(),
                 'password'  => $user->getPassword(),
+                'birthday'  => $user->getBirthday(),
+                'biography' => $user->getBiography(),
                 'avatar'    => $user->getAvatar(),
                 'role'      => $user->getRole(),
                 'id'        => $user->getId(),
             );
             
-            $sql = "UPDATE `users` SET fname = :fname, lname = :lname, username = :username, email = :email, password = :password, avatar = :avatar, role = :role WHERE id = :id";
+            $sql = "UPDATE `users` SET fname = :fname, lname = :lname, username = :username, email = :email, password = :password, birthday = :birthday, biography = :biography, avatar = :avatar, role = :role WHERE id = :id";
             $this->getDatabase()->update($sql, $infoUser);
         }
     
