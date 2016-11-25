@@ -1,6 +1,7 @@
 <?php
     namespace SciMS\Controller;
     
+    use \DateTime;
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
@@ -21,6 +22,14 @@
 
     /**
      * Class Router.
+     *
+     * This class is the main and the only Controller of the website.
+     * In fact, this role consist in match in the url a precise pattern to
+     * redirect the user on the right view.
+     * After matching the url, it parse the URL to return the good Domain object
+     * at display on the view.
+     * This class is a composition of lots of private methods use to render the right view
+     * in function of the URL match and parse.
      *
      * -> V1.1
      *  - Added new routes, templates and form.builder service.
@@ -82,7 +91,7 @@
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
                 'disconnection' => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
-                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update|write)+$#', // Change it when you add new Form.
+                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update|write|edit)+$#', // Change it when you add new Form.
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
                 'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
                 'write'         => '#\/web\/index\.php\?action=write&user=[0-9]+$#',
@@ -439,7 +448,8 @@
         
                 // Update user.
                 case 'update' :
-                    $this->_services['file.checker']->uploadAvatarFile($_FILES, $_POST['username']);
+                    $this->_services['file.checker']->uploadAvatarFile($_FILES, strtolower($_POST['username']));
+                    $file_extension = $this->_services['file.checker']->splitExtensionFile($_FILES, 'avatar');
                     $message_key = $this->_services['form.checker']->checkUserUpdate($_POST);
                     
                     $user = $this->_services['dao.user']->findByUsername($_POST['username']);
@@ -448,7 +458,8 @@
                     $user->setLname($_POST['lname']);
                     $user->setBirthday($_POST['birthday']);
                     $user->setBiography($_POST['biography']);
-            
+                    $user->setAvatar(strtolower($user->getUsername() . $file_extension));
+                    
                     if ((strcmp($message_key, 'update_success') == 0))  {
                         $this->_services['dao.user']->updateUser($user);
                         $domains = array(
@@ -492,6 +503,39 @@
                         );
                     }
                     break;
+                
+                // Edit an Article.
+                case 'edit' :
+                    $message_key = $this->_services['form.checker']->checkUpdateArticle($_POST);
+                    $category    = $this->_services['dao.category']->findById($_POST['category']);
+                    $user        = $this->_services['dao.user']->findById($_POST['writter']);
+                    
+                    $date = new DateTime();
+                    $article = new Article(array(
+                        'id'                => $_POST['article_id'],
+                        'title'             => $_POST['title'],
+                        'content'           => $_POST['content'],
+                        'authors'           => $_POST['authors'],
+                        'categories'        => $category,
+                        'tags'              => $_POST['tags'],
+                        'status'            => $_POST['status'],
+                        'date_modified'     => $date->format("Y-m-d H:i:s"),
+                        'writter'           => $user,
+                    ));
+    
+                    if (strcmp($message_key, 'update_success') === 0) {
+                        $this->_services['dao.article']->updateArticle($article);
+                        $domains = array(
+                            'message' => $this->_services['message.handler']->getSuccess($message_key),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                        );
+                    } else {
+                        $domains = array(
+                            'message' => $this->_services['message.handler']->getError($message_key),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                        );
+                    }
+                    break;
         
                 // Default case : $_GET['form'] not exists or not corresponding with possible choices.
                 default:
@@ -514,17 +558,17 @@
          * @version 1.0
          */
         private function _buildDomainArticle() {
-            
             if (!isset($_SESSION['user_id'])) {
                 $domains = array(
                     'article' => $this->_services['dao.article']->findById($_GET['id']),
                 );
             } else {
+                $article = $this->_services['dao.article']->findById($_GET['id']);
                 $domains = array(
-                    'article'       => $this->_services['dao.article']->findById($_GET['id']),
+                    'article'       => $article,
                     'user'          => $this->_services['dao.user']->findById($_SESSION['user_id']),
                     'connect'       => true,
-                    'session_id'    => $_SESSION['user_id'],
+                    'author_id'     => $article->getWritter()->getId(),
                 );
             }
             return $domains;
@@ -556,8 +600,8 @@
                 // First name
                     new InputText(array(
                         'type'  => 'text',
-                        'id'    => 'username',
-                        'name'  => 'username',
+                        'id'    => 'fname',
+                        'name'  => 'fname',
                         'value' => $user->getFname(),
                         'class' => 'form-control',
                         'label' => 'First name',
@@ -566,8 +610,8 @@
                 // Last name
                     new InputText(array(
                         'type'  => 'text',
-                        'id'    => 'username',
-                        'name'  => 'username',
+                        'id'    => 'lname',
+                        'name'  => 'lname',
                         'value' => $user->getLname(),
                         'class' => 'form-control',
                         'label' => 'Last name',
@@ -612,13 +656,13 @@
                 )->add(
                 // Biography
                     new TextArea(array(
-                        'id'    => 'biography',
-                        'name'  => 'biography',
-                        'class' => 'form-control',
-                        'label' => 'Biography',
-                        'value' => $user->getBiography(),
-                        'rows'  => '10',
-                        'cols'  => '50',
+                        'id'        => 'biography',
+                        'name'      => 'biography',
+                        'class'     => 'form-control',
+                        'label'     => 'Biography',
+                        'content'   => $user->getBiography(),
+                        'rows'      => '10',
+                        'cols'      => '50',
                     ))
                 )->add(
                 // Avatar
@@ -858,24 +902,24 @@
                 )->add(
                 // Content
                     new TextArea(array(
-                        'id'    => 'content',
-                        'name'  => 'content',
-                        'class' => 'form-control',
-                        'label' => 'Content',
-                        'rows'  => '10',
-                        'cols'  => '50',
-                        'value' => $article->getContent(),
+                        'id'        => 'content',
+                        'name'      => 'content',
+                        'class'     => 'form-control',
+                        'label'     => 'Content',
+                        'rows'      => '10',
+                        'cols'      => '50',
+                        'content'   => $article->getContent(),
                     ))
                 )->add(
                 // Authors
                     new TextArea(array(
-                        'id'    => 'authors',
-                        'name'  => 'authors',
-                        'class' => 'form-control',
-                        'label' => 'Authors',
-                        'rows'  => '5',
-                        'cols'  => '50',
-                        'value' => $article->getAuthors(),
+                        'id'        => 'authors',
+                        'name'      => 'authors',
+                        'class'     => 'form-control',
+                        'label'     => 'Authors',
+                        'rows'      => '5',
+                        'cols'      => '50',
+                        'content'   => $article->getAuthors(),
                     ))
                 )->add(
                 // Category
@@ -902,6 +946,13 @@
                         'value' => $user->getId(),
                     ))
                 )->add(
+                    new InputHidden(array(
+                        'type'  => 'hidden',
+                        'id'    => 'article_id',
+                        'name'  => 'article_id',
+                        'value' => $_GET['article'],
+                    ))
+                )->add(
                 // Submit
                     new InputSubmit(array(
                         'type'  => 'submit',
@@ -911,8 +962,9 @@
                         'value' => 'Submit'
                     ))
                 )->getForms(),
-                'user'    => $user,
-                'connect' => true,
+                'user'       => $user,
+                'connect'    => true,
+                'article_id' => true,
             );
             
             return $domains;

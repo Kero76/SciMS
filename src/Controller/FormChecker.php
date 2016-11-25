@@ -4,6 +4,11 @@
     /**
      * Class FormChecker.
      *
+     * This class check all forms available on website.
+     * Concretely, it check if the element pass on parameter are not empty,
+     * the email is a valid email (XXX@YYY.ZZ), not present on Database for inscription
+     * and is present on Database for connection.
+     *
      * @author Kero76
      * @package SciMS\Controller
      * @since SciMS 0.2
@@ -114,11 +119,10 @@
          */
         public function checkUserUpdate(array $post) {
             // Check if string is empty.
-            foreach ($post as $p) {
-                if (!$this->_checkEmptyString($p)) {
-                    return 'field_empty_' . $p;
-                }
+            if (!$this->_checkEmptyString($post['username']) && !$this->_checkEmptyString($post['password'])) {
+                return 'field_empty';
             }
+            
             return 'update_success';
         }
         

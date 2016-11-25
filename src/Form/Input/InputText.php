@@ -5,6 +5,8 @@
     /**
      * Class InputText.
      *
+     * This is a representation of the HTML tag input type="text" present on HTML.
+     *
      * @author Kero76, TeeGreg
      * @package SciMS\Form\Input
      * @since SciMS 0.2

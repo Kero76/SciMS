@@ -4,15 +4,11 @@
     /**
      * Class User
      *
-     * The class is a representation of an category on Website.
-     *
-     * -> V1.1 :
-     *  Added attributes connect + corresponding Getter and Setter.
-     *
+     * The class is a representation of an Category on Website.
      * @author Kero76
      * @package SciMS\Domain
      * @since SciMS 0.1
-     * @version 1.1
+     * @version 1.0
      */
     class Category {
     

@@ -40,6 +40,7 @@
         /**
          * Option constructor.
          *
+         * @constructor
          * @param array $attributes
          *  An array with all attributes.
          * @since SciMS 0.2
@@ -125,6 +126,4 @@
         public function setSelected($selected) {
             $this->_selected = $selected;
         }
-    
-    
     }

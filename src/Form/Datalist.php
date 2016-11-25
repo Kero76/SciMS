@@ -4,6 +4,8 @@
     /**
      * Class DataList.
      *
+     * This is a representation of the HTML tag Datalist present on HTML5.
+     *
      * @author Kero76
      * @package SciMS\Form\Input
      * @since SciMS 0.2
@@ -29,6 +31,7 @@
         /**
          * Datalist constructor.
          *
+         * @constructor
          * @param array $attributes
          *  All attributes present on select attributes.
          * @param \SciMS\Form\Input\InputList

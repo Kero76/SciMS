@@ -20,7 +20,7 @@
                 {% if user.avatar == '' %}
                     <img class="scims-avatar" src="../../web/images/default-avatar.png" alt="default avatar" width="128" height="128">
                 {% else %}
-                    <img class="scims-avatar" src="{{ user.avatar }}" alt="{{ user.username }}'s avatar">
+                    <img class="scims-avatar" src="../../web/uploads/avatar/{{ user.avatar }}" alt="{{ user.username }}'s avatar">
                 {% endif %}
             </div>
             {% for form in forms %}

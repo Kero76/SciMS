@@ -5,6 +5,8 @@
     /**
      * Class InputHidden.
      *
+     * This is a representation of the HTML tag input type="hidden" present on HTML.
+     *
      * @author Kero76
      * @package SciMS\Form\Input
      * @since SciMS 0.2

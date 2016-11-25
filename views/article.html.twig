@@ -34,8 +34,8 @@
             </ul>
         </section>
 
-        <!-- User = writter, button update available. -->
-        {% if connect == true and user.id == session_id %}
+        {% if connect == true and user.id == author_id %}
+            <!-- User = writter, button update available. -->
             <a href="/web/index.php?action=edit&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
         {% endif %}
 

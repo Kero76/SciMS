@@ -4,6 +4,8 @@
     /**
      * Class Select
      *
+     * This is a representation of the HTML tag Select present on HTML.
+     *
      * @author Kero76
      * @package SciMS\Form
      * @since SciMS 0.2
@@ -22,6 +24,7 @@
         /**
          * Select constructor.
          *
+         * @constructor
          * @param array $attributes
          *  All attributes present on select attributes.
          * @since SciMS 0.2

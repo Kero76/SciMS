@@ -8,7 +8,7 @@
      * Class ArticleDAO.
      *
      * This class represent the interaction between Database and Domain object.
-     * In fact, with it, we can interact with the Table articles on Database.
+     * In fact, with it, it can interact with the Table articles present on Database.
      *
      * @author Kero76, TeeGreg
      * @package SciMS\DAO
@@ -20,10 +20,13 @@
         /**
          * Method use for retrieve all articles present on Database.
          *
+         * -> V1.1 :
+         *  - Added an instance of User and Category on the loop to respect the setX Attribute.
+         *
          * @return array
          *  An array with all Articles present on Database.
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         public function findAll() {
             $user_dao     = new UserDAO();
@@ -47,12 +50,15 @@
         /**
          * Method use for retrieve last $last_nb articles present on Database.
          *
+         * -> V1.1 :
+         *  - Added an instance of User and Category on the loop to respect the setX Attribute.
+         *
          * @param integer $last_nb
          *  Parameter use for return X last Article present on Website.
          * @return array
          *  An array with all Articles present on Database.
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         public function findLastArticle($last_nb) {
             $user_dao     = new UserDAO();
@@ -64,7 +70,7 @@
             foreach ($result as $row) {
                 $id                 = $row['id'];
                 $user               = $user_dao->findById($row['writter']);
-                $category           = $category_dao->findById($row['writter']);
+                $category           = $category_dao->findById($row['categories']);
                 $row['writter']     = $user;
                 $row['categories']  = $category;
                 $articles[$id]  = $this->buildDomain($row);
@@ -76,12 +82,15 @@
         /**
          * Method use for research 1 article thanks to the id.
          *
+         * -> V1.1 :
+         *  - Added an instance of User and Category to respect the setX Attribute.
+         *
          * @param $id
          *  The id of the article research on Database.
          * @return \SciMS\Domain\Article
          *  Return an instance of the Article, if it found.
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         public function findById($id) {
             // Retrieve writter id from the database.
@@ -224,20 +233,21 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        public function updateUser(Article $article) {
+        public function updateArticle(Article $article) {
             // Stored users informations into on associative array.
             $infoArticle = array(
-                'title'         => $article->getTitle(),
-                'content'       => $article->getContent(),
-                'authors'       => $article->getAuthors(),
-                'categories'    => $article->getCategories(),
-                'tags'          => $article->getTags(),
-                'status'        => $article->getStatus(),
-                'writter'       => $article->getWritter()->getId(),
-                'id'            => $article->getId(),
+                'title'             => $article->getTitle(),
+                'content'           => $article->getContent(),
+                'authors'           => $article->getAuthors(),
+                'categories'        => $article->getCategories()->getId(),
+                'tags'              => $article->getTags(),
+                'status'            => $article->getStatus(),
+                'date_modified'     => $article->getDateModified(),
+                'writter'           => $article->getWritter()->getId(),
+                'id'                => $article->getId(),
             );
-        
-            $sql = "UPDATE `articles` SET title = :title, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :writter, role = :writter WHERE id = :id";
+            
+            $sql = "UPDATE `articles` SET title = :title, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :status, date_modified = :date_modified, writter = :writter WHERE id = :id";
             $this->getDatabase()->update($sql, $infoArticle);
         }
     
@@ -275,8 +285,6 @@
             $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
             return $row['categories'];
         }
-    
-    
     
         /**
          * Method use for build a Domain object.

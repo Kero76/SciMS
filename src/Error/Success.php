@@ -5,6 +5,8 @@
     /**
      * Class Success.
      *
+     * This class return a Success message about the form check or file upload.
+     *
      * @author Kero76
      * @package SciMS\Error
      * @since SciMS 0.2

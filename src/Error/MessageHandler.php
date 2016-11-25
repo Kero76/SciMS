@@ -4,6 +4,12 @@
     /**
      * Class MessageHandler.
      *
+     * This class manage all messages presents on website.
+     * It can return a success message if an action is correctly trigger,
+     * or a failure message if the action not working correctly.
+     * These messages are contains on two arrays : one for success and the other for error messages.
+     * It return the corresponding message in function of a key pass on parameter of the method displaying message.
+     *
      * @author Kero76
      * @package SciMS\Error
      * @since SciMS 0.2

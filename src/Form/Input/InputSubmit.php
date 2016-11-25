@@ -5,6 +5,8 @@
     /**
      * Class InputSubmit.
      *
+     * This is a representation of the HTML tag input type="submit" present on HTML.
+     *
      * @author Kero76, TeeGreg
      * @package SciMS\Form\Input
      * @since SciMS 0.2

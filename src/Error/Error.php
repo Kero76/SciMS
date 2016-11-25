@@ -5,6 +5,8 @@
     /**
      * Class Error.
      *
+     * This class return an Error message about the form check or file upload.
+     *
      * @author Kero76
      * @package SciMS\Error
      * @since SciMS 0.2

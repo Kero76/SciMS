@@ -8,7 +8,7 @@
      * Class CategoryDAO.
      *
      * This class represent the interaction between Database and Domain object.
-     * In fact, with it, we can interact with the Table Category on Database.
+     * In fact, with it, it can interact with the Table Category on Database.
      *
      * @author Kero76
      * @package SciMS\DAO

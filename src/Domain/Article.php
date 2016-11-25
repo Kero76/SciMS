@@ -5,7 +5,7 @@
      * Class Article.
      *
      * This class is a representation of the Article.
-     * He have 4 role on website :
+     * An article have one of these three possible status :
      *  - RELEASE : Visible on the Website.
      *  - PENDING : Can invisible except for Administrator and Moderator.
      *  - HIDDEN  : Totally hidden.

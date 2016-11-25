@@ -5,6 +5,8 @@
     /**
      * Class InputFile.
      *
+     * This is a representation of the HTML tag input type="file" present on HTML.
+     *
      * @author Kero76
      * @package SciMS\Form\Input
      * @since SciMS 0.2

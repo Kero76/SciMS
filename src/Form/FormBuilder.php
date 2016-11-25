@@ -5,6 +5,10 @@
     /**
      * Class FormBuilder.
      *
+     * This class create and render a forms website.
+     * To render forms, it stored all tags present on form and execute after all insert a render method who loop on all
+     * form element present on array to render each form element and display these on website.
+     *
      * @author Kero76
      * @package SciMS\Form
      * @since SciMS 0.2

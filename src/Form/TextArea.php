@@ -1,7 +1,16 @@
 <?php
     namespace SciMS\Form;
-    
-    
+
+    /**
+     * Class TextArea
+     *
+     * This is a representation of the HTML tag Textarea present on HTML.
+     *
+     * @author Kero76
+     * @package SciMS\Form
+     * @since SciMS 0.2
+     * @version 1.0
+     */
     class TextArea extends AbstractForm {
     
         /**
@@ -21,6 +30,15 @@
         private $_cols;
     
         /**
+         * Content of TextArea Form.
+         *
+         * @var string
+         * @since SciMS 0.2
+         */
+        private $_content;
+        
+    
+        /**
          * TextArea constructor.
          *
          * @constructor
@@ -38,7 +56,7 @@
             $render .= ($this->getCols()     == 0    ) ? '' : ' cols="'   . $this->getCols()  . '"';
             $render .= ($this->getRows()     == 0    ) ? '' : ' rows="'   . $this->getRows()  . '"';
             $render .= ($this->getRequired() == false) ? '' : ' required';
-            $render .= '></textarea>';
+            $render .= '>' . $this->getContent() . '</textarea>';
             $this->setRender($render);
         }
     
@@ -88,5 +106,29 @@
          */
         public function setCols($cols) {
             $this->_cols = $cols;
+        }
+    
+        /**
+         * Return the content of the TextArea.
+         *
+         * @return string
+         *  The content of the TextArea.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function getContent() {
+            return $this->_content;
+        }
+    
+        /**
+         * Set the content of the TextArea.
+         *
+         * @param string $content
+         *  The content of the TextArea.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function setContent($content) {
+            $this->_content = $content;
         }
     }
