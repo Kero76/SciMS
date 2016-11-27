@@ -1,5 +1,6 @@
 {
   "require": {
+    "symfony/yaml": "~v3.2.0-RC2",
     "twig/twig": "~1.27.0",
     "twig/extensions": "~1.4.1",
     "forxer/Gravatar": "~1.2",

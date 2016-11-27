@@ -17,7 +17,6 @@
      */
     class UserDAO extends DAO {
     
-    
         /**
          * Method use for retrieve all users present on Database.
          *
@@ -44,7 +43,7 @@
          *
          * @param $id
          *  The id of the user research on Database.
-         * @return \SciMS\Domain\User
+         * @return \SciMS\Domain\User | null
          *  Return an instance of the User, if it found.
          * @since SciMS 0.1
          * @version 1.0
@@ -86,7 +85,7 @@
          *
          * @param $email
          *  The email research on Database.
-         * @return \SciMS\Domain\User
+         * @return \SciMS\Domain\User | null
          *  Return an instance of the User, if it found.
          * @since SciMS 0.2
          * @version 1.0

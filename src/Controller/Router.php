@@ -36,6 +36,10 @@
      *  - Added new routes, templates and form.builder service.
      *  - Moved $_renderer attribute into $_services array.
      *
+     * -> V1.2
+     *  - Added url.checker into $_services array.
+     *  - Change view 404 message.
+     *
      * @author Kero76
      * @package SciMS\Controller
      * @since SciMS 0.1
@@ -77,10 +81,14 @@
          *
          * This constructor initialize the object render use for generate the view in function of the route.
          *
-         * -> V1.1
+         * -> V1.1 :
          *  - Add new routes.
          *  - Add new templates.
-         *  - Add form.builder on services.
+         *  - Add form.builder service.
+         *  - Add message.handler service.
+         *
+         * -> V1.2 :
+         *  - Add url.checker service.
          *
          * @constructor
          * @since SciMS 0.1
@@ -121,6 +129,7 @@
                 'form.builder'      => new FormBuilder(),
                 'form.checker'      => new FormChecker(),
                 'file.checker'      => new FileChecker(),
+                'url.checker'       => new URLChecker(),
                 'message.handler'   => new MessageHandler(),
                 'renderer'          => new Renderer(),
             );
@@ -172,8 +181,12 @@
          *
          * -> V1.1 :
          *  - Add new routes.
+         *
          * -> V1.2 :
          *  - Add private method to build domains on each switch case.
+         *
+         * -> V1.3 :
+         *  - Add URL checker before generating domains.
          *
          * @access private
          * @param $key
@@ -181,10 +194,26 @@
          * @return string
          *  The HTML view corresponding to the good template.
          * @since SciMS 0.1
-         * @version 1.2
+         * @version 1.3
          */
         private function _parseUrl($key) {
             $domains = null;
+            
+            // Article id.
+            if (isset($_GET['id'])) {
+                $max_id = $this->_services['dao.article']->findLastId();
+                if (!$this->_services['url.checker']->checkArticleId($_GET['id'], $max_id)) {
+                    $key = '404';
+                }
+            }
+            
+            // User id.
+            if (isset($_GET['user'])) {
+                $max_id = $this->_services['dao.user']->findLastId();
+                if (!$this->_services['url.checker']->checkUserId($_GET['id'], $max_id)) {
+                    $key = '404';
+                }
+            }
             
             // Switch on $key
             switch ($key) {
@@ -1042,21 +1071,25 @@
         /**
          * A private method use for build domains object using in 404 render.
          *
+         * ->V1.1 :
+         *  - Replace original message by a custom message when a user try to access at a page not existing on Website.
+         *
          * @access private
          * @return array
          *  An array with all domain class loaded for build page 404.
          * @since SciMS 0.2
-         * @version 1.0
+         * @version 1.1
          */
         private function _buildDomain404() {
             if (!isset($_SESSION['user_id'])) {
                 $domains = array(
-        
+                    'message' => $this->_services['message.handler']->getError('404'),
                 );
             } else {
                 $domains = array(
+                    'message' => $this->_services['message.handler']->getError('404'),
                     'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
-                    'connect'  => true,
+                    'connect' => true,
                 );
             }
             return $domains;

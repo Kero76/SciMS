@@ -46,3 +46,5 @@ Creation of CMS like for post research article.
 * A list of all package available with Composer : [https://packagist.org/](https://packagist.org/)
 * A good practice to develop with PSR-X : [http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/](http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/)
 * An article to see more informations about URL Rewriting : [https://craym.eu/tutoriels/referencement/url_rewriting.html](https://craym.eu/tutoriels/referencement/url_rewriting.html)
+* Yaml extension : [https://symfony.com/doc/3.1/components/yaml.html](https://symfony.com/doc/3.1/components/yaml.html)
+
