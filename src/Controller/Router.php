@@ -6,6 +6,7 @@
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
     use \SciMS\Domain\Article;
+    use \SciMS\Domain\Category;
     use \SciMS\Domain\User;
     use \SciMS\Error\MessageHandler;
     use \SciMS\Form\FormBuilder;
@@ -91,10 +92,11 @@
                 'connection'    => '#\/web\/index\.php\?action=connection$#',
                 'disconnection' => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
                 'inscription'   => '#\/web\/index\.php\?action=inscription$#',
-                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update|write|edit)+$#', // Change it when you add new Form.
+                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update|write|edit|category)+$#', // Change it when you add new Form.
                 'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
                 'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
                 'write'         => '#\/web\/index\.php\?action=write&user=[0-9]+$#',
+                'category'      => '#\/web\/index\.php\?action=category&user=[0-9]+$#',
                 'edit'          => '#\/web\/index\.php\?action=edit&user=[0-9]+&article=[0-9]+$#',
             );
             
@@ -108,6 +110,7 @@
                 'account'       => 'admin/account.html.twig',
                 'write'         => 'admin/article.html.twig',
                 'edit'          => 'admin/article.html.twig',
+                'category'      => 'admin/category.html.twig',
                 '404'           => '404.html.twig',
             );
     
@@ -228,6 +231,11 @@
                 // Edit on article.
                 case 'edit' :
                     $domains = $this->_buildDomainEdit();
+                    break;
+                
+                // Create a category.
+                case 'category' :
+                    $domains = $this->_buildDomainCategory();
                     break;
     
                 // 404 template generate with nothing domains object.
@@ -503,13 +511,13 @@
                         );
                     }
                     break;
-                
+    
                 // Edit an Article.
                 case 'edit' :
                     $message_key = $this->_services['form.checker']->checkUpdateArticle($_POST);
                     $category    = $this->_services['dao.category']->findById($_POST['category']);
                     $user        = $this->_services['dao.user']->findById($_POST['writter']);
-                    
+        
                     $date = new DateTime();
                     $article = new Article(array(
                         'id'                => $_POST['article_id'],
@@ -522,7 +530,7 @@
                         'date_modified'     => $date->format("Y-m-d H:i:s"),
                         'writter'           => $user,
                     ));
-    
+        
                     if (strcmp($message_key, 'update_success') === 0) {
                         $this->_services['dao.article']->updateArticle($article);
                         $domains = array(
@@ -536,7 +544,31 @@
                         );
                     }
                     break;
+    
+                // Create a Category.
+                case 'category' :
+                    $category_db = $this->_services['dao.category']->findByTitle($_POST['title']);
+                    $user        = $this->_services['dao.user']->findById($_POST['writter']);
+                    $message_key = $this->_services['form.checker']->checkInsertCategory($_POST, $category_db->getTitle());
         
+                    $category = new Category(array(
+                        'title'             => $_POST['title'],
+                    ));
+        
+                    if (strcmp($message_key, 'insert_success') === 0) {
+                        $this->_services['dao.category']->saveCategory($category);
+                        $domains = array(
+                            'message' => $this->_services['message.handler']->getSuccess($message_key),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                        );
+                    } else {
+                        $domains = array(
+                            'message' => $this->_services['message.handler']->getError($message_key),
+                            'user'    => $this->_services['dao.user']->findById($_SESSION['user_id']),
+                        );
+                    }
+                    break;
+    
                 // Default case : $_GET['form'] not exists or not corresponding with possible choices.
                 default:
                     $domains = array(
@@ -959,12 +991,49 @@
                         'id'    => 'submit',
                         'name'  => 'submit',
                         'class' => 'form-control btn btn-primary',
-                        'value' => 'Submit'
+                        'value' => 'Submit',
                     ))
                 )->getForms(),
                 'user'       => $user,
                 'connect'    => true,
                 'article_id' => true,
+            );
+            
+            return $domains;
+        }
+    
+        /**
+         * A private method use for build domains object using in Category render
+         * @access private
+         * @return array
+         *  An array with all domain class loaded for build page Category.
+         * @since SciMS 0.2.1
+         * @version 1.0
+         */
+        private function _buildDomainCategory() {
+            $user    = $this->_services['dao.user']->findById($_SESSION['user_id']);
+            $domains = array(
+                'forms' => $this->_services['form.builder']->add(
+                    // Title
+                    new InputText(array(
+                        'type'  => 'text',
+                        'id'    => 'title',
+                        'name'  => 'title',
+                        'class' => 'form-control',
+                        'label' => 'Title',
+                    ))
+                )->add(
+                    // Submit
+                    new InputSubmit(array(
+                        'type'  => 'submit',
+                        'id'    => 'submit',
+                        'name'  => 'submit',
+                        'class' => 'form-control btn btn-primary',
+                        'value' => 'Submit',
+                    ))
+                )->getForms(),
+                'user'       => $user,
+                'connect'    => true,
             );
             
             return $domains;

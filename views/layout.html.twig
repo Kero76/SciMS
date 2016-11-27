@@ -24,13 +24,14 @@
                                 <div id="scims-left-navigation" class="list-group">
                                     {% if connect == true %}
                                         <a class="list-group-item scims-brand"     href="/web/index.php?user={{ user.id }}"> Home</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=account&user={{ user.id }}"> {{ user.username }} Profil</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=write&user={{ user.id }}"> Write an Article</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=disconnection&user={{ user.id }}"> Sign Out</a>
+                                        <a class="list-group-item scims-account"   href="/web/index.php?action=account&user={{ user.id }}"> {{ user.username }} Profil</a>
+                                        <a class="list-group-item scims-article"   href="/web/index.php?action=write&user={{ user.id }}"> Write an Article</a>
+                                        <a class="list-group-item scims-category"  href="/web/index.php?action=category&user={{ user.id }}"> Add a Category</a>
+                                        <a class="list-group-item scims-signout"   href="/web/index.php?action=disconnection&user={{ user.id }}"> Sign Out</a>
                                     {% else %}
-                                        <a class="list-group-item scims-brand"     href="/web/index.php"> Home</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=connection"> Sign In</a>
-                                        <a class="list-group-item scims-connexion" href="/web/index.php?action=inscription"> Inscription</a>
+                                        <a class="list-group-item scims-brand"       href="/web/index.php"> Home</a>
+                                        <a class="list-group-item scims-signin"      href="/web/index.php?action=connection"> Sign In</a>
+                                        <a class="list-group-item scims-inscription" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% endif %}
                                 </div>
                             </div>

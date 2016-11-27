@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id`      INT(11) NOT NULL AUTO_INCREMENT,                    -- Primary Key : AUTO_INCREMENT
-  `name`    VARCHAR(70) COLLATE utf8_unicode_ci NOT NULL,
+  `title`   VARCHAR(70) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Table category' AUTO_INCREMENT=1 ;
 
@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `articles` (
     `id`            INT(11) NOT NULL AUTO_INCREMENT,            -- Primary Key : AUTO_INCREMENT
     `title`         TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+    `abstract`      TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
     `content`       TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
     `authors`       TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
     `category`      INT(11) NOT NULL,                           -- Foreign Key : category.id

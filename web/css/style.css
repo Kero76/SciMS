@@ -64,21 +64,55 @@ header {
 /***********************************/
 /*       ICONS IN NAVIGATION       */
 /***********************************/
+/* Home icon */
 .scims-brand:before {
     font-family: FontAwesome;
     content: "\f015";
 }
 
-.scims-connexion:before {
+/* sign in icon */
+.scims-signin:before {
+    font-family: FontAwesome;
+    content: "\f090";
+}
+
+/* sign out icon */
+.scims-signout:before {
+    font-family: FontAwesome;
+    content: "\f08b";
+}
+
+/* inscription icon */
+.scims-inscription:before {
+    font-family: FontAwesome;
+    content: "\f234";
+}
+
+/* user profil icon */
+.scims-account:before {
     font-family: FontAwesome;
     content: "\f007";
 }
 
+/* write article icon */
+.scims-article:before {
+    font-family: FontAwesome;
+    content: "\f249";
+}
+
+/* category creation icon */
+.scims-category:before {
+    font-family: FontAwesome;
+    content: "\f02e";
+}
+
+/* Tags on article page icon */
 .scims-excerpt-tags:before {
     font-family: FontAwesome;
     content: "\f02c";
 }
 
+/* Category on article page icon */
 .scims-excerpt-categories:before {
     font-family: FontAwesome;
     content: "\f02e";

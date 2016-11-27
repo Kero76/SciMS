@@ -167,6 +167,30 @@
         }
     
         /**
+         * Control form input before insert category.
+         *
+         * @param array $post
+         *  $_POST[] array.
+         * @param       $category_db
+         *  The name of the category found in Database, if exists.
+         * @return string
+         *  The key use to generate message in view.
+         * @since SciMS 0.2
+         * @version 1.0
+         */
+        public function checkInsertCategory(array $post, $category_db) {
+            if (empty($category_db)) {
+                return 'insert_success';
+            }
+            
+            if (strcmp($post['title'], $category_db) === 0) {
+                return 'category_already_found';
+            }
+            
+            return 'insert_success';
+        }
+    
+        /**
          * Check if an email is validate or not.
          *
          * @access private
