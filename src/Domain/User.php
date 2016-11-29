@@ -432,8 +432,6 @@
          * @version 1.0
          */
         public function setConnect($connect) {
-            $_SESSION['user_connect'] = $connect;
-            $_SESSION['user_id']      = $this->getId();
             $this->_connect = $connect;
         }
     

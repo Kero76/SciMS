@@ -39,6 +39,7 @@ Creation of CMS like for post research article.
 #### TinyMCE plugins
 * LaTex plugin : [http://moonwave99.github.io/TinyMCELatexPlugin/](http://moonwave99.github.io/TinyMCELatexPlugin/)
 * Math integration plugin : [http://www.wiris.com/solutions/tinymce](http://www.wiris.com/solutions/tinymce)
+* Latex integration plugin : [http://moonwave99.github.io/TinyMCELatexPlugin/](http://moonwave99.github.io/TinyMCELatexPlugin/)
 
 ### Links
 * An article to manage Composer dependency : [http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer](http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer)

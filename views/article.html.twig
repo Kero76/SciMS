@@ -7,7 +7,7 @@
     <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
         <h1 class="scims-page-title">
             {{ article.title }}
-            <small class="scims-italic scims-header-page-subtitle">{{ article.authors }}</small>
+            <small class="scims-italic scims-header-page-subtitle">{% autoescape false %}{{ article.authors }}{% endautoescape %}</small>
         </h1>
     </header>
 {% endblock %}

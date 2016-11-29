@@ -95,7 +95,7 @@
         public function findById($id) {
             // Retrieve writter id from the database.
             $writter_id = $this->_findWritterById($id);
-    
+            
             // Create the user from the database.
             $user_dao = new UserDAO();
             $user     = $user_dao->findById($writter_id);
