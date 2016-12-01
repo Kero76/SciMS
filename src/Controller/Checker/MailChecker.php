@@ -13,7 +13,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class MailChecker extends AbstractChecker {
+    class MailChecker extends AbstractChecker  {
     
         /**
          * Regex use to check email address.
@@ -66,5 +66,21 @@
                 return true;
             }
             return false;
+        }
+    
+        /**
+         * Check if the password type on form is equal to the password retrieve from the Database.
+         *
+         * @param $user_password
+         *  The password type by user on form.
+         * @param $hash_password
+         *  The password encrypt by the function password_hash().
+         * @return bool
+         *  True or false in function of the result of the function.
+         * @since SciMS 0.3
+         * @version 1.0
+         */
+        public function checkSamePassword($user_password, $hash_password) {
+            return password_verify($user_password, $hash_password);
         }
     }

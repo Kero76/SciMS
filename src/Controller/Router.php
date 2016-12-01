@@ -12,6 +12,15 @@
     use \SciMS\Controller\BuildDomain\BuildInscription;
     use \SciMS\Controller\BuildDomain\BuildVerification;
     use \SciMS\Controller\BuildDomain\BuildWrite;
+    use \SciMS\Controller\Checker\FileChecker;
+    use SciMS\Controller\Checker\Form\ArticleChecker;
+    use SciMS\Controller\Checker\Form\CategoryChecker;
+    use SciMS\Controller\Checker\Form\ConnectionChecker;
+    use SciMS\Controller\Checker\Form\UserChecker;
+    use \SciMS\Controller\Checker\MailChecker;
+    use \SciMS\Controller\Checker\PasswordChecker;
+    use \SciMS\Controller\Checker\URLChecker;
+    use \SciMS\Controller\RequestHandler\FileHandler;
     use \SciMS\Controller\RequestHandler\GetHandler;
     use \SciMS\Controller\RequestHandler\PostHandler;
     use \SciMS\Controller\RequestHandler\SessionHandler;
@@ -19,6 +28,7 @@
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
     use \SciMS\Error\MessageHandler;
+    use \SciMS\File\FileAvatar;
     use \SciMS\Form\FormBuilder;
 
     /**
@@ -131,17 +141,35 @@
             );
     
             $this->_services = array(
+                // Dao section.
                 'dao.user'          => new UserDAO(),
                 'dao.article'       => new ArticleDAO(),
                 'dao.category'      => new CategoryDAO(),
+                
+                // Builder section.
                 'form.builder'      => new FormBuilder(),
-                'form.checker'      => new FormChecker(),
-                'file.checker'      => new FileChecker(),
-                'url.checker'       => new URLChecker(),
+                
+                // checker section.
+                'article.checker'       => new ArticleChecker(),
+                'category.checker'      => new CategoryChecker(),
+                'connection.checker'    => new ConnectionChecker(),
+                'file.checker'          => new FileChecker(),
+                'mail.checker'          => new MailChecker(),
+                'password.checker'      => new PasswordChecker(),
+                'user.checker'          => new UserChecker(),
+                'url.checker'           => new URLChecker(),
+                
+                // Handler section.
+                'file.handler'      => new FileHandler(),
                 'get.handler'       => new GetHandler(),
                 'post.handler'      => new PostHandler(),
                 'session.handler'   => new SessionHandler(),
                 'message.handler'   => new MessageHandler(),
+                
+                // File section.
+                'avatar.upload'     => new FileAvatar(),
+                
+                // Renderer section.
                 'renderer'          => new Renderer(),
             );
         }
@@ -223,7 +251,7 @@
             // User id.
             if (isset($_GET['user'])) {
                 $max_id = $this->_services['dao.user']->findLastId();
-                if (!$this->_services['url.checker']->checkUserId($this->_services['get.handler']->getRequestField('id'), $max_id)) {
+                if (!$this->_services['url.checker']->checkId($this->_services['get.handler']->getRequestField('id'), $max_id)) {
                     $key = '404';
                 }
             }

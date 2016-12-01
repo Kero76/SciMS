@@ -18,5 +18,5 @@
 $(document).ready(function () {
     setTimeout(function () {
         window.location.href = window.location.origin + '/' + window.location.pathname;
-    }, 2000);
+    }, 10000);
 });

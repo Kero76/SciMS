@@ -1,15 +1,9 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: Kero76
-     * Date: 29/11/16
-     * Time: 16:54
-     */
-    
     namespace SciMS\Controller\Checker\Form;
+    use SciMS\Controller\Checker\AbstractChecker;
 
     /**
-     * Class CheckArticle.
+     * Class CategoryChecker.
      *
      *
      * @author Kero76
@@ -17,47 +11,50 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class CheckArticle implements FormChecker {
+    class CategoryChecker extends AbstractChecker implements FormChecker {
     
         /**
          * Method use to check insertion the differents forms present on website.
          *
-         * @param array $post
-         *  The array $_POST.
+         * @param array $services
+         *  The array with all services available on website.
          * @return bool
          *  True if the insertion are correct, else return false.
          * @since   SciMS 0.3
          * @version 1.0
          */
-        public function checkInsert(array $post) {
-            // TODO: Implement checkInsert() method.
+        public function checkInsert(array $services) {
+            $title = $services['post.handler']->getRequestField('title');
+            if ($this->emptyString($title) && $this->compareString($title, $services['dao.category']->findByTitle($title))) {
+                return false;
+            }
+            return true;
         }
     
         /**
          * Method use to check update the differents forms present on website.
          *
-         * @param array $post
-         *  The array $_POST.
+         * @param array $services
+         *  The array with all services available on website.
          * @return bool
          *  True if the update are correct, else return false.
          * @since   SciMS 0.3
          * @version 1.0
          */
-        public function checkUpdate(array $post) {
+        public function checkUpdate(array $services) {
             // TODO: Implement checkUpdate() method.
         }
     
         /**
          * Method use to check delete the differents forms present on website.
          *
-         * @param array $post
-         *  The array $_POST.
+         * @param array $services
+         *  The array with all services available on website.
          * @return bool
          *  True if the delete are correct, else return false.
          * @since   SciMS 0.3
          * @version 1.0
          */
-        public function checkDelete(array $post) {
+        public function checkDelete(array $services) {
             // TODO: Implement checkDelete() method.
-        }
-    }
+}}

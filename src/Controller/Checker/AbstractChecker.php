@@ -27,4 +27,23 @@
         public function emptyString($str) {
             return empty($str);
         }
+    
+        /**
+         * Check if the two strings are the same or not.
+         *
+         * @param $str1
+         *  First string at compare.
+         * @param $str2
+         *  Second string at compare.
+         * @return bool
+         *  True if the strings are the same. Otherwise, return false.
+         * @since SciMS 0.3
+         * @version 1.0
+         */
+        public function compareString($str1, $str2) {
+            if (strcmp($str1, $str2) === 0) {
+                return true;
+            }
+            return false;
+        }
     }

@@ -168,7 +168,7 @@
                         'type'  => 'hidden',
                         'id'    => 'article_id',
                         'name'  => 'article_id',
-                        'value' => $services['get.handler']->getRequestField(['article']),
+                        'value' => $services['get.handler']->getRequestField('article'),
                     ))
                 )->add(
                 // Submit

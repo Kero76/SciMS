@@ -16,36 +16,36 @@
         /**
          * Method use to check insertion the differents forms present on website.
          *
-         * @param array $post
-         *  The array $_POST.
+         * @param array $services
+         *  The array with all services available on website.
          * @return bool
          *  True if the insertion are correct, else return false.
          * @since SciMS 0.3
          * @version 1.0
          */
-        public function checkInsert(array $post);
+        public function checkInsert(array $services);
     
         /**
          * Method use to check update the differents forms present on website.
          *
-         * @param array $post
-         *  The array $_POST.
+         * @param array $services
+         *  The array with all services available on website.
          * @return bool
          *  True if the update are correct, else return false.
          * @since SciMS 0.3
          * @version 1.0
          */
-        public function checkUpdate(array $post);
+        public function checkUpdate(array $services);
     
         /**
          * Method use to check delete the differents forms present on website.
          *
-         * @param array $post
-         *  The array $_POST.
+         * @param array $services
+         *  The array with all services available on website.
          * @return bool
          *  True if the delete are correct, else return false.
          * @since SciMS 0.3
          * @version 1.0
          */
-        public function checkDelete(array $post);
+        public function checkDelete(array $services);
     }

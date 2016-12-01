@@ -1,5 +1,10 @@
 <?php
     namespace SciMS\Controller\BuildDomain;
+    
+    use \DateTime;
+    use SciMS\Domain\Article;
+    use SciMS\Domain\Category;
+    use SciMS\Domain\User;
 
     /**
      * Class BuildVerification
@@ -36,16 +41,18 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
-            $services['post.handler']->setRequest($_POST);          // Retrieve $_POST.
-            $services['get.handler']->setRequest($_GET);            // Retrieve $_GET.
+            $services['post.handler']->setRequest($_POST);  // Retrieve $_POST.
+            $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
+            $services['file.handler']->setRequest($_FILES); // Retrieve $_SESSION.
             $entry_form = $services['get.handler']->getRequestField('form');
             
             switch ($entry_form) {
                 // Connection section.
                 case 'connection' :
                     $user = $services['dao.user']->findByEmail($services['post.handler']->getRequestField('email'));
-                    $message_key = $services['form.checker']->checkUserConnection($services['post.handler']->getRequest(), $user);
-                    if ((strcmp($message_key, 'connection_success') == 0) || strcmp($message_key, 'inscription_success') == 0)  {
+                    $connection = $services['connection.checker']->checkUpdate($services);
+
+                    if ($connection) {
                         // Create session with session.handler.
                         $services['session.handler']->createSession(array(
                             'user_id'       => $user->getId(),
@@ -53,11 +60,11 @@
                         ));
                         $domains = array(
                             'user'    => $user->setConnect(true),
-                            'message' => $services['message.handler']->getSuccess($message_key),
+                            'message' => 'Connection',//$services['message.handler']->getSuccess($message_key),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError($message_key),
+                            'message' => 'Not connected.',//$services['message.handler']->getError($message_key),
                         );
                     }
                     break;
@@ -71,32 +78,38 @@
                         'role'      => User::WRITTER,
                         'connect'   => true,
                     ));
-                    // Potential user because the username is possible not corresponding to the email type on form.
-                    $potential_user = $services['dao.user']->findByEmail($user->getEmail());
-                    $message_key = $services['form.checker']->checkUserInscription($services['post.handler']->getRequest(), $potential_user);
-                    if ((strcmp($message_key, 'connection_success') == 0) || strcmp($message_key, 'inscription_success') == 0)  {
+                    
+                    $inscription = $services['user.checker']->checkInsert($services);
+                    if ($inscription === true)  {
                         $services['dao.user']->saveUser($user);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess($message_key),
+                            'message' => $services['message.handler']->getSuccess('Inscription !'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError($message_key),
+                            'message' => $services['message.handler']->getError('Inscription failed'),
                         );
                     }
                     break;
         
+                // Disconnection
                 case 'disconnection' :
-                    $services['session.handler']->destroySession();
+                    $disconnection = $services['connection.checker']->checkDelete($services);
+                    if ($disconnection === true) {
+                        $services['session.handler']->destroySession();
+                    }
                     $domains = array();
                     break;
         
                 // Update user.
                 case 'update' :
-                    $services['file.checker']->uploadAvatarFile($_FILES, strtolower($services['post.handler']->getRequestField('username')));
-                    $file_extension = $services['file.checker']->splitExtensionFile($_FILES, 'avatar');
-                    $message_key = $services['form.checker']->checkUserUpdate($services['post.handler']->getRequest());
+                    // File upload.
+                    $services['avatar.upload']->moveFile($services, strtolower($services['post.handler']->getRequestField('username')));
+                    $file_extension = $services['avatar.upload']->splitExtensionFile($services['file.handler']->getRequest(), 'avatar');
+                    
+                    // Check user update.
+                    $update = $services['user.checker']->checkUpdate($services);
             
                     $user = $services['dao.user']->findByUsername($services['post.handler']->getRequestField('username'));
                     $user->setUsername($services['post.handler']->getRequestField('username'));
@@ -105,16 +118,16 @@
                     $user->setBirthday($services['post.handler']->getRequestField('birthday'));
                     $user->setBiography($services['post.handler']->getRequestField('biography'));
                     $user->setAvatar(strtolower($user->getUsername() . $file_extension));
-            
-                    if ((strcmp($message_key, 'update_success') == 0))  {
+                    
+                    if ($update === true)  {
                         $services['dao.user']->updateUser($user);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess($message_key),
+                            'message' => $services['message.handler']->getSuccess('Update !'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError($message_key),
+                            'message' => $services['message.handler']->getError('Update failed'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
                         );
                     }
@@ -122,9 +135,9 @@
         
                 // Write an Article
                 case 'write' :
-                    $message_key = $services['form.checker']->checkInsertArticle($services['post.handler']->getRequest());
-                    $category    = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
-                    $user        = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
+                    $write    = $services['article.checker']->checkInsert($services);
+                    $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
+                    $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
             
                     $article = new Article(array(
                         'title'         => $services['post.handler']->getRequestField('title'),
@@ -136,15 +149,15 @@
                         'writter'       => $user,
                     ));
             
-                    if (strcmp($message_key, 'insert_success') === 0) {
+                    if ($write === true) {
                         $services['dao.article']->saveArticle($article);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess($message_key),
+                            'message' => $services['message.handler']->getSuccess('Write !'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError($message_key),
+                            'message' => $services['message.handler']->getError('Write failed'),
                             'user'    => $services['dao.user']->findById($services['post.handler']->getRequestField('user_id')),
                         );
                     }
@@ -152,10 +165,10 @@
         
                 // Edit an Article.
                 case 'edit' :
-                    $message_key = $services['form.checker']->checkUpdateArticle($services['post.handler']->getRequest());
-                    $category    = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
-                    $user        = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
-            
+                    $edit     = $services['article.checker']->checkUpdate($services);
+                    $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
+                    $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
+                    
                     $date = new DateTime();
                     $article = new Article(array(
                         'id'                => $services['post.handler']->getRequestField('article_id'),
@@ -168,16 +181,17 @@
                         'date_modified'     => $date->format("Y-m-d H:i:s"),
                         'writter'           => $user,
                     ));
+                    
             
-                    if (strcmp($message_key, 'update_success') === 0) {
+                    if ($edit === true) {
                         $services['dao.article']->updateArticle($article);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess($message_key),
+                            'message' => $services['message.handler']->getSuccess('Edition'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError($message_key),
+                            'message' => $services['message.handler']->getError('Edition failed'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         );
                     }
@@ -185,22 +199,20 @@
         
                 // Create a Category.
                 case 'category' :
-                    $category_db = $services['dao.category']->findByTitle($services['post.handler']->getRequestField('title'));
-                    $message_key = $services['form.checker']->checkInsertCategory($services['post.handler']->getRequest(), $category_db->getTitle());
-            
+                    $insertCategory = $services['category.checker']->checkInsert($services);
                     $category = new Category(array(
                         'title' => $services['post.handler']->getRequestField('title'),
                     ));
             
-                    if (strcmp($message_key, 'insert_success') === 0) {
+                    if ($insertCategory === true) {
                         $services['dao.category']->saveCategory($category);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess($message_key),
+                            'message' => $services['message.handler']->getSuccess('Category added'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError($message_key),
+                            'message' => $services['message.handler']->getError('Category already present or invalid'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         );
                     }
