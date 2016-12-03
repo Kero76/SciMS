@@ -36,15 +36,18 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
             if ($services['session.handler']->requestFieldExist('user_id')) {
                 $domains = array(
-                    'articles' => $services['dao.article']->findLastArticle(10),
+                    'articles' => $services['dao.article']->findLastArticle($website->getLastArticle()),
                     'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                     'connect'  => true,
+                    'website'  => $website,
                 );
             } else {
                 $domains = array(
-                    'articles' => $services['dao.article']->findLastArticle(10),
+                    'articles' => $services['dao.article']->findLastArticle($website->getLastArticle()),
+                    'website'  => $website,
                 );
             }
     

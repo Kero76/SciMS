@@ -70,6 +70,7 @@
                         'class'         => 'form-control btn btn-primary',
                     ))
                 )->getForms(),
+                'website' => $services['dao.website']->findSettings('../app/settings.yml'),
             );
             return $domains;
         }

@@ -1,19 +1,19 @@
 <?php
-
-    namespace SciMS\Error;
-
+    
+    namespace SciMS\Message;
+    
     /**
-     * Class Error.
+     * Class Success.
      *
-     * This class return an Error message about the form check or file upload.
+     * This class return a Success message about the form check or file upload.
      *
      * @author Kero76
      * @package SciMS\Error
      * @since SciMS 0.2
      * @version 1.0
      */
-    class Error {
-    
+    class Success implements Message {
+        
         /**
          * A string which represent the message at display on view.
          *
@@ -22,9 +22,9 @@
          * @version 1.0
          */
         private $_message;
-    
+        
         /**
-         * Error constructor.
+         * Success constructor.
          *
          * @constructor
          * @param $message
@@ -35,7 +35,7 @@
         public function __construct($message) {
             $this->_message = $message;
         }
-    
+        
         /**
          * Return the message associate at the error.
          *

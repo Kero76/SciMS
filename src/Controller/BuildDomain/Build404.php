@@ -41,12 +41,15 @@
                     'message' => $services['message.handler']->getError('404'),
                     'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                     'connect' => true,
+                    'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             } else {
                 $domains = array(
                     'message' => $services['message.handler']->getError('404'),
+                    'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             }
+            
             return $domains;
         }
     }

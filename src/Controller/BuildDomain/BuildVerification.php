@@ -60,11 +60,13 @@
                         ));
                         $domains = array(
                             'user'    => $user->setConnect(true),
-                            'message' => 'Connection',//$services['message.handler']->getSuccess($message_key),
+                            'message' => $services['message.handler']->getMessage('connection'),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     } else {
                         $domains = array(
-                            'message' => 'Not connected.',//$services['message.handler']->getError($message_key),
+                            'message' => $services['message.handler']->getMessage('connection_fail'),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     }
                     break;
@@ -83,12 +85,14 @@
                     if ($inscription === true)  {
                         $services['dao.user']->saveUser($user);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess('Inscription !'),
+                            'message' => $services['message.handler']->getMessage('inscription'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError('Inscription failed'),
+                            'message' => $services['message.handler']->getMessage('inscription_fail'),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     }
                     break;
@@ -99,7 +103,10 @@
                     if ($disconnection === true) {
                         $services['session.handler']->destroySession();
                     }
-                    $domains = array();
+                    $domains = array(
+                        'message' => $services['message.handler']->getMessage('disconnection'),
+                        'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                    );
                     break;
         
                 // Update user.
@@ -122,13 +129,15 @@
                     if ($update === true)  {
                         $services['dao.user']->updateUser($user);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess('Update !'),
+                            'message' => $services['message.handler']->getMessage('update'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError('Update failed'),
+                            'message' => $services['message.handler']->getMessage('update_failed'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     }
                     break;
@@ -152,13 +161,15 @@
                     if ($write === true) {
                         $services['dao.article']->saveArticle($article);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess('Write !'),
+                            'message' => $services['message.handler']->getMessage('write_article'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError('Write failed'),
+                            'message' => $services['message.handler']->getMessage('write_article_fail'),
                             'user'    => $services['dao.user']->findById($services['post.handler']->getRequestField('user_id')),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     }
                     break;
@@ -186,13 +197,15 @@
                     if ($edit === true) {
                         $services['dao.article']->updateArticle($article);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess('Edition'),
+                            'message' => $services['message.handler']->getMessage('update_article'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError('Edition failed'),
+                            'message' => $services['message.handler']->getMessage('update_article_fail'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     }
                     break;
@@ -207,13 +220,15 @@
                     if ($insertCategory === true) {
                         $services['dao.category']->saveCategory($category);
                         $domains = array(
-                            'message' => $services['message.handler']->getSuccess('Category added'),
+                            'message' => $services['message.handler']->getMessage('category_create'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getError('Category already present or invalid'),
+                            'message' => $services['message.handler']->getMessage('category_fail'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                         );
                     }
                     break;
@@ -221,7 +236,9 @@
                 // Default case : $_GET['form'] not exists or not corresponding with possible choices.
                 default:
                     $domains = array(
+                        'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         'message' => $services['message.handler']->getError('404'),
+                        'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                     );
                     break;
             }

@@ -13,23 +13,27 @@
     use \SciMS\Controller\BuildDomain\BuildVerification;
     use \SciMS\Controller\BuildDomain\BuildWrite;
     use \SciMS\Controller\Checker\FileChecker;
-    use SciMS\Controller\Checker\Form\ArticleChecker;
-    use SciMS\Controller\Checker\Form\CategoryChecker;
-    use SciMS\Controller\Checker\Form\ConnectionChecker;
-    use SciMS\Controller\Checker\Form\UserChecker;
+    use \SciMS\Controller\Checker\Form\ArticleChecker;
+    use \SciMS\Controller\Checker\Form\CategoryChecker;
+    use \SciMS\Controller\Checker\Form\ConnectionChecker;
+    use \SciMS\Controller\Checker\Form\UserChecker;
     use \SciMS\Controller\Checker\MailChecker;
     use \SciMS\Controller\Checker\PasswordChecker;
     use \SciMS\Controller\Checker\URLChecker;
-    use \SciMS\Controller\RequestHandler\FileHandler;
-    use \SciMS\Controller\RequestHandler\GetHandler;
-    use \SciMS\Controller\RequestHandler\PostHandler;
-    use \SciMS\Controller\RequestHandler\SessionHandler;
+    use \SciMS\Controller\Handler\MessageHandler;
+    use \SciMS\Controller\Handler\RequestHandler\CookieHandler;
+    use \SciMS\Controller\Handler\RequestHandler\FileHandler;
+    use \SciMS\Controller\Handler\RequestHandler\GetHandler;
+    use \SciMS\Controller\Handler\RequestHandler\PostHandler;
+    use \SciMS\Controller\Handler\RequestHandler\SessionHandler;
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
     use \SciMS\DAO\UserDAO;
-    use \SciMS\Error\MessageHandler;
+    use \SciMS\DAO\WebsiteDAO;
     use \SciMS\File\FileAvatar;
     use \SciMS\Form\FormBuilder;
+    use \SciMS\Message\Error;
+    use \SciMS\Message\Success;
 
     /**
      * Class Router.
@@ -52,10 +56,15 @@
      *  - Added RequestHandler classes on services.
      *  - Replaced template array by BuildDomain classes.
      *
+     * -> V1.3
+     *  - Added some new services.
+     *  - Added private method to initialize messages.
+     *  - Check url parameter thanks to Checker classes.
+     *
      * @author Kero76
      * @package SciMS\Controller
      * @since SciMS 0.1
-     * @version 1.2
+     * @version 1.3
      */
     class Router {
         /**
@@ -142,9 +151,10 @@
     
             $this->_services = array(
                 // Dao section.
-                'dao.user'          => new UserDAO(),
                 'dao.article'       => new ArticleDAO(),
                 'dao.category'      => new CategoryDAO(),
+                'dao.user'          => new UserDAO(),
+                'dao.website'       => new WebsiteDAO(),
                 
                 // Builder section.
                 'form.builder'      => new FormBuilder(),
@@ -160,11 +170,12 @@
                 'url.checker'           => new URLChecker(),
                 
                 // Handler section.
+                'cookie.handler'    => new CookieHandler(),
                 'file.handler'      => new FileHandler(),
                 'get.handler'       => new GetHandler(),
+                'message.handler'   => new MessageHandler(),
                 'post.handler'      => new PostHandler(),
                 'session.handler'   => new SessionHandler(),
-                'message.handler'   => new MessageHandler(),
                 
                 // File section.
                 'avatar.upload'     => new FileAvatar(),
@@ -172,6 +183,8 @@
                 // Renderer section.
                 'renderer'          => new Renderer(),
             );
+    
+            $this->_initializeMessageHandler();
         }
     
         /**
@@ -258,5 +271,34 @@
             
             $domains = $this->_domains[$key]->buildDomain($this->_services);
             return $this->_services['renderer']->renderer($this->_domains[$key]->getTemplateName(), $domains);
+        }
+    
+        /**
+         * Private method use for initialize MessageHandler on constructor with message return in differents process.
+         *
+         * @access private
+         * @since SciMS 0.3
+         * @version 1.0
+         */
+        private function _initializeMessageHandler() {
+            // Success messages.
+            $this->_services['message.handler']->pushMessage('inscription',     new Success('Inscription success'));
+            $this->_services['message.handler']->pushMessage('connection',      new Success('Connection success'));
+            $this->_services['message.handler']->pushMessage('update',          new Success('User profile update'));
+            $this->_services['message.handler']->pushMessage('write_article',   new Success('Write article was a success'));
+            $this->_services['message.handler']->pushMessage('update_article',  new Success('Update article was a success'));
+            $this->_services['message.handler']->pushMessage('category_create', new Success('Create category was a success'));
+            $this->_services['message.handler']->pushMessage('disconnection',   new Success('Disconnection success'));
+            
+            // Error messages
+            $this->_services['message.handler']->pushMessage('email_invalid',       new Error('Email invalid'));
+            $this->_services['message.handler']->pushMessage('email_present_on_db', new Error('Email already present on Website'));
+            $this->_services['message.handler']->pushMessage('connection_fail',     new Error('Connection fail'));
+            $this->_services['message.handler']->pushMessage('inscription_fail',    new Error('Inscription fail'));
+            $this->_services['message.handler']->pushMessage('update_failed',       new Error('Update profile fail'));
+            $this->_services['message.handler']->pushMessage('write_article_fail',  new Error('Write article fail'));
+            $this->_services['message.handler']->pushMessage('update_article_fail', new Error('Update article fail'));
+            $this->_services['message.handler']->pushMessage('category_fail',       new Error('Category already present or invalid'));
+            $this->_services['message.handler']->pushMessage('404',                 new Error('Page not found'));
         }
     }

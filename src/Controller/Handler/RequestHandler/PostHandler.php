@@ -1,37 +1,37 @@
 <?php
-    namespace SciMS\Controller\RequestHandler;
+    namespace SciMS\Controller\Handler\RequestHandler;
 
     /**
-     * Class FileHandler.
+     * Class PostHandler
      *
-     * This class manage the $_FILES array.
+     * This class manage the $_POST array.
      *
      * @author Kero76
      * @package SciMS\Controller\RequestHandler
      * @since SciMS 0.3
      * @version 1.0
      */
-    class FileHandler implements RequestHandler {
-    
+    class PostHandler implements RequestHandler {
+        
         /**
-         * An array which contains $_FILES content.
+         * An array which contains $_POST content.
          *
          * @var array
          * @since SciMS 0.3
          */
-        private $_files;
+        private $_post;
     
         /**
-         * FileHandler constructor.
+         * PostHandler constructor.
          *
          * @constructor
-         * @since SciMS 0.3
+         * @since   SciMS 0.3
          * @version 1.0
          */
         public function __construct() {
-            $this->_files = array();
+            $this->_post = array();
         }
-    
+        
         /**
          * This method return the array request who contains $_GET / $_POST / $_SESSION / ...
          *
@@ -41,7 +41,7 @@
          * @version 1.0
          */
         public function getRequest() {
-            return $this->_files;
+            return $this->_post;
         }
     
         /**
@@ -53,7 +53,7 @@
          * @version 1.0
          */
         public function setRequest(array $request) {
-            $this->_files = $request;
+            $this->_post = $request;
         }
     
         /**
@@ -67,7 +67,7 @@
          * @version 1.0
          */
         public function getRequestField($key) {
-            return $this->_files[$key];
+            return $this->_post[$key];
         }
     
         /**
@@ -81,7 +81,7 @@
          * @version 1.0
          */
         public function setRequestField($key, $value) {
-            $this->_files[$key] = $value;
+            $this->_post[$key] = $value;
         }
     
         /**
@@ -89,13 +89,14 @@
          *
          * @param $field
          *  The field at check if exists on request array or not.
+         *
          * @return bool
          *  True or false if the field exists or not.
          * @since   SciMS 0.3
          * @version 1.0
          */
         public function requestFieldExist($field) {
-            if (isset($this->_files[$field])) {
+            if (isset($this->_post[$field])) {
                 return true;
             }
             return false;

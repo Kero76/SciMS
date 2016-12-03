@@ -183,6 +183,7 @@
                 'user'       => $user,
                 'connect'    => true,
                 'article_id' => true,
+                'website' => $services['dao.website']->findSettings('../app/settings.yml'),
             );
     
             return $domains;

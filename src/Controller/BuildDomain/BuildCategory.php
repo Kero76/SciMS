@@ -62,6 +62,7 @@
                 )->getForms(),
                 'user'       => $user,
                 'connect'    => true,
+                'website' => $services['dao.website']->findSettings('../app/settings.yml'),
             );
     
             return $domains;

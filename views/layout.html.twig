@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
         {% block stylesheets %}{% endblock %}
 
-        <title>{% block title %}SciMS - {% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
     </head>
 
     <body>
@@ -54,7 +54,7 @@
         <!-- Footer of the webpage. -->
         <div class="row">
             <footer class="col-md-12 col-sm-12 col-xs-12">
-                <p class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire POMMIER, &copy; 2016, SciMS : Simplify the writting of Your research articles.</p>
+                <p class="scims-italic scims-header-page-subtitle">{% autoescape false %}{{ website.copyright }}{% endautoescape %}</p>
             </footer>
         </div>
     </body>

@@ -1,5 +1,5 @@
 <?php
-    namespace SciMS\Controller\RequestHandler;
+    namespace SciMS\Controller\Handler\RequestHandler;
 
     /**
      * Class SessionHandler.

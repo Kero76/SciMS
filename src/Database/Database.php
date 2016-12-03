@@ -2,7 +2,8 @@
     namespace SciMS\Database;
     
     use \PDO;
-    
+    use SciMS\Domain\DatabaseSetting;
+
     /**
      * Class Database.
      *
@@ -14,41 +15,17 @@
      *
      * -> v1.1 :
      *  - Added method update($sql, array $statement) to update table on database.
+     * -> v1.2 :
+     *  - Added Singleton DatabaseSetting to configure database connection on app/database.yml files.
+     *  - Removed const defines to configure Database access.
      *
      * @author Kero76
      * @package \SciMS\Database
      * @since SciMS 0.1
-     * @version 1.1
+     * @version 1.2
      */
     class Database {
-    
-        /**
-         * DNS setting of the PDO object.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const DNS = "mysql:host=db655171027.db.1and1.com;dbname=db655171027";
-    
-        /**
-         * User setting of the PDO object.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const USER = "dbo655171027";
-    
-        /**
-         * Password setting of the PDO object.
-         *
-         * @const
-         * @var string
-         * @since SciMS 0.1
-         */
-        const PASSWORD = "uh92ZJ7i8TWg";
-    
+        
         /**
          * Stored the only one instance of Database on is project.
          *
@@ -70,14 +47,19 @@
         /**
          * Database constructor.
          *
+         * -> v1.1 :
+         *  - Added Singleton DatabaseSetting to configure database connection on app/database.yml files.
+         *
          * @access private
          * @constructor
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         private function __construct() {
             try {
-                $this->_pdo = new PDO(self::DNS, self::USER, self::PASSWORD);
+                $this->_pdo = new PDO(DatabaseSetting::getInstance()->getDns() . DatabaseSetting::getInstance()->getDbname(),
+                                      DatabaseSetting::getInstance()->getUser(), DatabaseSetting::getInstance()->getPassword());
+                //$this->_pdo = new PDO(self::DNS, self::USER, self::PASSWORD);
                 $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 echo 'Erreur : ' . $e->getMessage().'<br />';
@@ -159,8 +141,7 @@
                 return $this->_pdo->query($sql)->fetchAll($fetch_style);
             }
         }
-    
-    
+        
         /**
          * Method use for execute a SQL request with statement to update table present on Database.
          *

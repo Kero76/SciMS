@@ -45,10 +45,12 @@
                     'user'          => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                     'connect'       => true,
                     'author_id'     => $article->getWritter()->getId(),
+                    'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             } else {
                 $domains = array(
                     'article' => $services['dao.article']->findById($services['get.handler']->getRequestField('id')),
+                    'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             }
             return $domains;
