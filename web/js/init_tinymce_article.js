@@ -7,6 +7,7 @@
  * @version 1.0
  */
 $(document).ready(function(){
+    init_tinyMCE('#abstract', 350);
     init_tinyMCE('#content', 350);
     init_tinyMCE('#authors', 150);
 });

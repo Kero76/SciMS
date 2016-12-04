@@ -1,5 +1,5 @@
 <?php
-    namespace SciMS\Domain;
+    namespace SciMS\Database;
     
     use \Symfony\Component\Yaml\Yaml;
 
@@ -54,7 +54,7 @@
         /**
          * Unique instance of DatabaseSetting.
          *
-         * @var \SciMS\Domain\DatabaseSetting $instance
+         * @var DatabaseSetting $instance
          * @since SciMS 0.3
          */
         private static $_instance = NULL;
@@ -87,7 +87,7 @@
          * It create the instance of the Database if the attributes $_instance is at NULL.
          * Otherwise, it return only the instance of this class.
          *
-         * @return \SciMS\Domain\DatabaseSetting
+         * @return DatabaseSetting
          *  The unique instance of Database object on the project.
          * @static
          * @since SciMS 0.3

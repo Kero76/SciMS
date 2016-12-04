@@ -68,8 +68,9 @@
                     )));
                 } else {
                     $select_category->add(new Option(array(
-                        'value' => $category->getId(),
-                        'label' => $category->getTitle(),
+                        'value'     => $category->getId(),
+                        'label'     => $category->getTitle(),
+                        'selected'  => false,
                     )));
                 }
             }
@@ -78,6 +79,7 @@
             // Status
             $select_status = new Select(array(
                 'id'    => 'status',
+                'name'  => 'status',
                 'label' => 'status',
                 'class' => 'form-control',
             ));
@@ -99,12 +101,44 @@
                     )));
                 } else {
                     $select_status->add(new Option(array(
-                        'value' => $value,
-                        'label' => $key,
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => false,
                     )));
                 }
             }
             $select_status->renderSelect();
+    
+            // Summary
+            $select_summary = new Select(array(
+                'id'    => 'summary',
+                'name'  => 'summary',
+                'label' => 'Display summary',
+                'class' => 'form-control',
+            ));
+    
+            $summary = array(
+                'Display Summary'   => 1,
+                'Undisplay Summary' => 2,
+            );
+    
+            foreach ($summary as $key => $value) {
+                // If the article.category.id == category.id, so selected it directly on view.
+                if ($value === $article->getDisplayedSummary()) {
+                    $select_summary->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => true,
+                    )));
+                } else {
+                    $select_summary->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => false,
+                    )));
+                }
+            }
+            $select_summary->renderSelect();
     
             $domains = array(
                 'forms'  => $services['form.builder']->add(
@@ -116,6 +150,17 @@
                         'class' => 'form-control',
                         'label' => 'Title',
                         'value' => $article->getTitle(),
+                    ))
+                )->add(
+                // Abstract
+                    new TextArea(array(
+                        'id'        => 'abstract',
+                        'name'      => 'abstract',
+                        'class'     => 'form-control',
+                        'label'     => 'Abstract',
+                        'rows'      => '10',
+                        'cols'      => '50',
+                        'content'   => $article->getAbstract(),
                     ))
                 )->add(
                 // Content
@@ -170,6 +215,9 @@
                         'name'  => 'article_id',
                         'value' => $services['get.handler']->getRequestField('article'),
                     ))
+                )->add(
+                // Summary
+                    $select_summary
                 )->add(
                 // Submit
                     new InputSubmit(array(

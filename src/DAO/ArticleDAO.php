@@ -204,39 +204,48 @@
         /**
          * Method use for register an article.
          *
+         * ->V1.1 :
+         *  - Added abstract attribute on request and article instance creation.
+         *
          * @param \SciMS\Domain\Article $article
          *  The article to add on Database.
          * @since SciMS 0.2
-         * @version 1.0
+         * @version 1.1
          */
         public function saveArticle(Article $article) {
             // Stored article informations into on associative array.
             $infoUser = array(
-                'title'         => $article->getTitle(),
-                'content'       => $article->getContent(),
-                'authors'       => $article->getAuthors(),
-                'categories'    => $article->getCategories()->getId(),
-                'tags'          => $article->getTags(),
-                'status'        => $article->getStatus(),
-                'writter'       => $article->getWritter()->getId(),
+                'title'             => $article->getTitle(),
+                'abstract'          => $article->getAbstract(),
+                'content'           => $article->getContent(),
+                'authors'           => $article->getAuthors(),
+                'categories'        => $article->getCategories()->getId(),
+                'tags'              => $article->getTags(),
+                'status'            => $article->getStatus(),
+                'writter'           => $article->getWritter()->getId(),
+                'displayed_summary' => $article->getDisplayedSummary(),
             );
         
-            $sql = "INSERT INTO `articles` (title, content, authors, categories, tags, status, writter) VALUES (:title, :content, :authors, :categories, :tags, :status, :writter)";
+            $sql = "INSERT INTO `articles` (title, abstract, content, authors, categories, tags, status, writter, displayed_summary) VALUES (:title, :abstract, :content, :authors, :categories, :tags, :status, :writter, :displayed_summary)";
             $this->getDatabase()->update($sql, $infoUser);
         }
     
         /**
          * Method use for update an user.
          *
+         * ->V1.1 :
+         *  - Added abstract attribute on request and article instance creation.
+         *
          * @param \SciMS\Domain\Article $article
          *  The user at update on Database.
          * @since SciMS 0.2
-         * @version 1.0
+         * @version 1.1
          */
         public function updateArticle(Article $article) {
             // Stored users informations into on associative array.
             $infoArticle = array(
                 'title'             => $article->getTitle(),
+                'abstract'          => $article->getAbstract(),
                 'content'           => $article->getContent(),
                 'authors'           => $article->getAuthors(),
                 'categories'        => $article->getCategories()->getId(),
@@ -244,10 +253,11 @@
                 'status'            => $article->getStatus(),
                 'date_modified'     => $article->getDateModified(),
                 'writter'           => $article->getWritter()->getId(),
+                'displayed_summary' => $article->getDisplayedSummary(),
                 'id'                => $article->getId(),
             );
             
-            $sql = "UPDATE `articles` SET title = :title, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :status, date_modified = :date_modified, writter = :writter WHERE id = :id";
+            $sql = "UPDATE `articles` SET title = :title, abstract = :abstract, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :status, date_modified = :date_modified, writter = :writter, displayed_summary = :displayed_summary WHERE id = :id";
             $this->getDatabase()->update($sql, $infoArticle);
         }
     

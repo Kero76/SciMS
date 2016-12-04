@@ -12,6 +12,8 @@
      *
      * -> V1.1 :
      *  Added constantes attributes representing status.
+     * -> V1.2 :
+     *  Added abstract attributes on Article.
      *
      * @author Kero76
      * @package SciMS\Domain
@@ -51,7 +53,6 @@
          *
          * @var integer
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_id;
     
@@ -60,16 +61,22 @@
          *
          * @var string
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_title;
+    
+        /**
+         * Abstract of the Article.
+         *
+         * @var string
+         * @since SciMS 0.4
+         */
+        private $_abstract;
     
         /**
          * Content of the Article.
          *
          * @var string
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_content;
     
@@ -78,7 +85,6 @@
          *
          * @var string
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_authors;
     
@@ -87,7 +93,6 @@
          *
          * @var \SciMS\Domain\Category
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_categories;
     
@@ -96,7 +101,6 @@
          *
          * @var array
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_tags;
     
@@ -105,7 +109,6 @@
          *
          * @var integer
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_status;
     
@@ -114,7 +117,6 @@
          *
          * @var timestamp
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $date_creation;
     
@@ -123,7 +125,6 @@
          *
          * @var timestamp
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $date_modified;
     
@@ -132,9 +133,15 @@
          *
          * @var \SciMS\Domain\User
          * @since SciMS 0.1
-         * @version 1.0
          */
         private $_writter;
+    
+        /**
+         * Indicate if the summary is display or not.
+         * @var bool
+         * @since SciMS 0.4
+         */
+        private $displayed_summary;
     
         /**
          * Article constructor.
@@ -198,6 +205,29 @@
             $this->_title = $title;
         }
     
+        /**
+         * Return the Abstract of the Article.
+         * @return string
+         *  The abstract of the article.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function getAbstract() {
+            return $this->_abstract;
+        }
+    
+        /**
+         * Set the abstract of the article.
+         *
+         * @param string $abstract
+         *  The abstract of the article.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function setAbstract($abstract) {
+            $this->_abstract = $abstract;
+        }
+        
         /**
          * Return the content of the Article.
          *
@@ -400,6 +430,30 @@
          */
         public function setWritter(User $writter) {
             $this->_writter = $writter;
+        }
+    
+        /**
+         * Return if the summary can display or not.
+         *
+         * @return boolean
+         *  A boolean who indicate if the article is displayed or not.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function getDisplayedSummary() {
+            return $this->displayed_summary;
+        }
+    
+        /**
+         * Set if the summary is display or not.
+         *
+         * @param boolean $displayed_summary
+         *  A boolean who indicate if the article is displayed or not.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function setDisplayedSummary($displayed_summary) {
+            $this->displayed_summary = $displayed_summary;
         }
         
         /**

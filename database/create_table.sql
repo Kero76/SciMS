@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
+CREATE TABLE IF NOT EXISTS `categories` (
   `id`      INT(11) NOT NULL AUTO_INCREMENT,                    -- Primary Key : AUTO_INCREMENT
   `title`   VARCHAR(70) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -59,17 +59,18 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 CREATE TABLE IF NOT EXISTS `articles` (
-    `id`            INT(11) NOT NULL AUTO_INCREMENT,            -- Primary Key : AUTO_INCREMENT
-    `title`         TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-    `abstract`      TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-    `content`       TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-    `authors`       TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
-    `category`      INT(11) NOT NULL,                           -- Foreign Key : category.id
-    `tag`           TEXT COLLATE utf8_unicode_ci DEFAULT NULL ,
-    `status`        INT(3),
-    `date_creation` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `date_modified` DATETIME DEFAULT NULL,
-    `writter`       INT(11) NOT NULL,                           -- Foreign Key : users.id
+    `id`                INT(11) NOT NULL AUTO_INCREMENT,            -- Primary Key : AUTO_INCREMENT
+    `title`             TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+    `abstract`          TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+    `content`           TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+    `authors`           TEXT COLLATE utf8_unicode_ci DEFAULT NULL,
+    `categories`        INT(11) NOT NULL,                           -- Foreign Key : category.id
+    `tags`              TEXT COLLATE utf8_unicode_ci DEFAULT NULL ,
+    `status`            INT(3),
+    `date_creation`     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `date_modified`     DATETIME DEFAULT NULL,
+    `writter`           INT(11) NOT NULL,                           -- Foreign Key : users.id
+    `displayed_summary` INT(1),
     PRIMARY KEY(`id`),
     FOREIGN KEY(`writter`) REFERENCES users(`id`),
     FOREIGN KEY(`category`) REFERENCES category(`id`)

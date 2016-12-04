@@ -2,7 +2,7 @@
     namespace SciMS\Database;
     
     use \PDO;
-    use SciMS\Domain\DatabaseSetting;
+    use \Exception;
 
     /**
      * Class Database.

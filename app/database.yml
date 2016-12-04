@@ -1,5 +1,5 @@
 "database":
-  dns: ""
-  dbname: ""
-  user: ""
-  password: ""
+  dns: "mysql:host=db655171027.db.1and1.com;"
+  dbname: "dbname=db655171027"
+  user: "dbo655171027"
+  password: "uh92ZJ7i8TWg"

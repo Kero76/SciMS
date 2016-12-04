@@ -147,15 +147,17 @@
                     $write    = $services['article.checker']->checkInsert($services);
                     $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
                     $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
-            
+                    
                     $article = new Article(array(
-                        'title'         => $services['post.handler']->getRequestField('title'),
-                        'content'       => $services['post.handler']->getRequestField('content'),
-                        'authors'       => $services['post.handler']->getRequestField('authors'),
-                        'categories'    => $category,
-                        'tags'          => $services['post.handler']->getRequestField('tags'),
-                        'status'        => $services['post.handler']->getRequestField('status'),
-                        'writter'       => $user,
+                        'title'             => $services['post.handler']->getRequestField('title'),
+                        'abstract'          => $services['post.handler']->getRequestField('abstract'),
+                        'content'           => $services['post.handler']->getRequestField('content'),
+                        'authors'           => $services['post.handler']->getRequestField('authors'),
+                        'categories'        => $category,
+                        'tags'              => $services['post.handler']->getRequestField('tags'),
+                        'status'            => $services['post.handler']->getRequestField('status'),
+                        'writter'           => $user,
+                        'displayed_summary' => $services['post.handler']->getRequestField('summary'),
                     ));
             
                     if ($write === true) {
@@ -184,6 +186,7 @@
                     $article = new Article(array(
                         'id'                => $services['post.handler']->getRequestField('article_id'),
                         'title'             => $services['post.handler']->getRequestField('title'),
+                        'abstract'          => $services['post.handler']->getRequestField('abstract'),
                         'content'           => $services['post.handler']->getRequestField('content'),
                         'authors'           => $services['post.handler']->getRequestField('authors'),
                         'categories'        => $category,
@@ -191,9 +194,9 @@
                         'status'            => $services['post.handler']->getRequestField('status'),
                         'date_modified'     => $date->format("Y-m-d H:i:s"),
                         'writter'           => $user,
+                        'displayed_summary' => $services['post.handler']->getRequestField('summary'),
                     ));
                     
-            
                     if ($edit === true) {
                         $services['dao.article']->updateArticle($article);
                         $domains = array(

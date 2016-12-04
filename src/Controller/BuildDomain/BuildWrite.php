@@ -67,6 +67,7 @@
             // Status
             $select_status = new Select(array(
                 'id'    => 'status',
+                'name'  => 'status',
                 'label' => 'status',
                 'class' => 'form-control',
             ));
@@ -85,6 +86,27 @@
                 )));
             }
             $select_status->renderSelect();
+            
+            // Summary
+            $select_summary = new Select(array(
+                'id'    => 'summary',
+                'name'  => 'summary',
+                'label' => 'Display summary',
+                'class' => 'form-control',
+            ));
+            
+            $summary = array(
+                'Display Summary'   => 1,
+                'Undisplay Summary' => 2,
+            );
+            
+            foreach ($summary as $key => $value) {
+                $select_summary->add(new Option(array(
+                    'value' => $value,
+                    'label' => $key,
+                )));
+            }
+            $select_summary->renderSelect();
     
             $domains = array(
                 'forms'  => $services['form.builder']->add(
@@ -95,6 +117,16 @@
                         'name'  => 'title',
                         'class' => 'form-control',
                         'label' => 'Title',
+                    ))
+                )->add(
+                // Abstract
+                    new TextArea(array(
+                        'id'    => 'abstract',
+                        'name'  => 'abstract',
+                        'class' => 'form-control',
+                        'label' => 'Abstract',
+                        'rows'  => '10',
+                        'cols'  => '50',
                     ))
                 )->add(
                 // Content
@@ -139,6 +171,9 @@
                         'name'  => 'writter',
                         'value' => $user->getId(),
                     ))
+                )->add(
+                // Summary
+                    $select_summary
                 )->add(
                 // Submit
                     new InputSubmit(array(

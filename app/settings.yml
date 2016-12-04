@@ -3,5 +3,5 @@
   subtitle: "Simplify the writting of Your research articles"
   copyright: "Nicolas GILLE, Grégoire POMMIER, &copy; 2016, SciMS : Simplify the writting of Your research articles."
   last_article: 10
-  article_status: {release: 0, pending: 1, hidden: 2}
-  user_role: {administrator: 0, moderator: 1, writter: 2}
+  article_status: {release: 100, pending: 50, hidden: 0}
+  user_role: {administrator: 100, moderator: 50, writter: 0}

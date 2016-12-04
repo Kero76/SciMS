@@ -49,8 +49,8 @@
         public function __construct(array $attributes) {
             $this->_hydrate($attributes);
             $render  = '<option';
-            $render .= ($this->getValue() == ''    ) ? '' : ' value="' . $this->getValue() . '"';
-            $render .= ($this->getValue() == false ) ? '' : ' selected"';
+            $render .= ($this->getValue()    == ''    ) ? '' : ' value="' . $this->getValue() . '"';
+            $render .= ($this->getSelected() == false ) ? '' : ' selected';
             $render .= '>' . ucfirst($this->getLabel()) . '</option>';
             $this->setRender($render);
         }

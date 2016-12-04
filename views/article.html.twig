@@ -15,6 +15,7 @@
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
         {% autoescape false %}
+            {{ article.abstract }}
             {{ article.content }}
         {% endautoescape %}
 
