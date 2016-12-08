@@ -37,17 +37,26 @@
          */
         public function buildDomain(array $services) {
             $website = $services['dao.website']->findSettings('../app/settings.yml');
+            
+            $category_articles = array();
+            $categories = $services['dao.category']->findAll();
+            foreach($categories as $category) {
+                $category_articles[$category->getTitle()] = $services['dao.category']->findById($category->getId());
+            }
+            
             if ($services['session.handler']->requestFieldExist('user_id')) {
                 $domains = array(
-                    'articles' => $services['dao.article']->findLastArticle($website->getLastArticle()),
-                    'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                    'connect'  => true,
-                    'website'  => $website,
+                    'last_articles'         => $services['dao.article']->findLastArticle($website->getLastArticle()),
+                    'user'                  => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                    'connect'               => true,
+                    'website'               => $website,
+                    'categories_articles'   => $category_articles,
                 );
             } else {
                 $domains = array(
-                    'articles' => $services['dao.article']->findLastArticle($website->getLastArticle()),
-                    'website'  => $website,
+                    'last_articles'         => $services['dao.article']->findLastArticle($website->getLastArticle()),
+                    'website'               => $website,
+                    'categories_articles'   => $category_articles,
                 );
             }
     

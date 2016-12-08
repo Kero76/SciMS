@@ -118,7 +118,7 @@
          * @var timestamp
          * @since SciMS 0.1
          */
-        private $date_creation;
+        private $_date_creation;
     
         /**
          * Modification date of the Article.
@@ -126,7 +126,7 @@
          * @var timestamp
          * @since SciMS 0.1
          */
-        private $date_modified;
+        private $_date_modified;
     
         /**
          * Writter of the Article.
@@ -141,7 +141,7 @@
          * @var bool
          * @since SciMS 0.4
          */
-        private $displayed_summary;
+        private $_displayed_summary;
     
         /**
          * Article constructor.
@@ -369,7 +369,7 @@
          * @version 1.0
          */
         public function getDateCreation() {
-            return $this->date_creation;
+            return $this->_date_creation;
         }
     
         /**
@@ -381,7 +381,7 @@
          * @version 1.0
          */
         public function setDateCreation($date_creation) {
-            $this->date_creation = $date_creation;
+            $this->_date_creation = $date_creation;
         }
     
         /**
@@ -393,7 +393,7 @@
          * @version 1.0
          */
         public function getDateModified() {
-            return $this->date_modified;
+            return $this->_date_modified;
         }
     
         /**
@@ -405,7 +405,7 @@
          * @version 1.0
          */
         public function setDateModified($date_modified) {
-            $this->date_modified = $date_modified;
+            $this->_date_modified = $date_modified;
         }
     
         /**
@@ -441,7 +441,7 @@
          * @version 1.0
          */
         public function getDisplayedSummary() {
-            return $this->displayed_summary;
+            return $this->_displayed_summary;
         }
     
         /**
@@ -453,7 +453,7 @@
          * @version 1.0
          */
         public function setDisplayedSummary($displayed_summary) {
-            $this->displayed_summary = $displayed_summary;
+            $this->_displayed_summary = $displayed_summary;
         }
         
         /**

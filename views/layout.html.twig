@@ -40,22 +40,24 @@
                 </div>
 
                 <!-- Body of webpage -->
-                <div class="row">
+                <div id="scims-body-page" class="row">
                     {% block content %}{% endblock %}
                 </div>
 
                 <!-- Loading script section -->
-                <script src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
-                <script src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
+                <script type="text/javascript" src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
+                <script type="text/javascript" src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
                 {% block javascripts %}{% endblock %}
             </div>
         </section>
 
         <!-- Footer of the webpage. -->
-        <div class="row">
-            <footer class="col-md-12 col-sm-12 col-xs-12">
-                <p class="scims-italic scims-header-page-subtitle">{% autoescape false %}{{ website.copyright }}{% endautoescape %}</p>
-            </footer>
+        <div class="container">
+            <div class="row">
+                <footer class="scims-footer-page col-md-12 col-sm-12 col-xs-12">
+                    <p class="scims-italic scims-header-page-subtitle">{% autoescape false %}{{ website.copyright }}{% endautoescape %}</p>
+                </footer>
+            </div>
         </div>
     </body>
 </html>

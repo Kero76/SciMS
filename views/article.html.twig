@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}SciMS - {{ article.title }}{% endblock %}
+{% block title %}{{ website.title }} - {{ article.title }}{% endblock %}
 
 {% block page_title %}
     <!-- Header of the webpage. -->
@@ -14,6 +14,17 @@
 
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
+
+        {# Show summary if is activate on article #}
+        {% if article.displayedSummary == 1 %}
+            <nav id="summary">
+                <h4>Summary</h4>
+                <ul id="list-summary">
+
+                </ul>
+            </nav>
+        {% endif %}
+
         {% autoescape false %}
             {{ article.abstract }}
             {{ article.content }}
@@ -33,12 +44,24 @@
                     <li>{{ tag }}</li>
                 {% endfor %}
             </ul>
+
+            <p>Article written by {{ article.writter.username }}, {{ article.dateCreation|date("d/m/y", "Europe/Paris") }}</p>
         </section>
 
+        {# Display edit button only if the user is a writter of this article. #}
         {% if connect == true and user.id == author_id %}
-            <!-- User = writter, button update available. -->
             <a href="/web/index.php?action=edit&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
         {% endif %}
 
+        {% if article.displayedSummary == 1 %}
+            {% block javascripts %}
+                <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+                <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+                <script type="text/javascript" src="../web/js/summary.js"></script>
+            {% endblock %}
+        {% else %}
+            <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+            <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+        {% endif %}
     </section>
 {% endblock %}

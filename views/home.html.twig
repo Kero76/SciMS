@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}SciMS - Home{% endblock %}
+{% block title %}{{ website.title }} - Home{% endblock %}
 
 {% block page_title %}
     <!-- Header of the webpage. -->
@@ -16,9 +16,21 @@
     <section class="col-md-8 col-sm-8 col-xs-8">
         <h2>Last articles</h2>
         <ul>
-            {% for article in articles %}
+            {% for article in last_articles %}
                 <li><a href="/web/index.php?action=article&id={{ article.id }}" >{{ article.title }}</a></li>
             {% endfor %}
         </ul>
     </section>
+
+    {# Fix it #}
+    {% for category_article in categories_articles %}
+        <section class="col-md-8 col-sm-8 col-xs-8">
+            <h2>{{ category_article.category.title }}</h2>
+            <ul>
+                {% for article in category_article %}
+                    <li><a href="/web/index.php?action=article&id={{ article.id }}" >{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endfor %}
 {% endblock %}
