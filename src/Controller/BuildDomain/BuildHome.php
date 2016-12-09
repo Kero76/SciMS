@@ -14,8 +14,9 @@
     class BuildHome extends AbstractBuildDomain  {
     
         /**
-         * BuildCategory constructor.
+         * BuildHome constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

@@ -14,8 +14,9 @@
     class BuildConsultArticle extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildConsultArticle constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3
@@ -53,6 +54,7 @@
                     'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             }
+            
             return $domains;
         }
     }

@@ -14,8 +14,9 @@
     class Build404 extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * Build404 constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

@@ -12,8 +12,9 @@
     class BuildConsultProfile extends AbstractBuildDomain {
     
         /**
-         * BuildProfile constructor.
+         * BuildConsultProfile constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.4
@@ -47,7 +48,7 @@
                 );
             } else {
                 $domains = array(
-                    '$writter' => $writter,
+                    'writter' => $writter,
                     'articles' => $services['dao.article']->findByOwnership($writter->getId()),
                     'website'  => $services['dao.website']->findSettings('../app/settings.yml'),
                 );

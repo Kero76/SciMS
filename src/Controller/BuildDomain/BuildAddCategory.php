@@ -5,9 +5,9 @@
     use \SciMS\Form\Input\InputText;
     
     /**
-     * Class BuildCategory.
+     * Class BuildAddCategory.
      *
-     * This class build domain objects present on Category page.
+     * This class build domain objects present on Add Category page.
      *
      * @author Kero76
      * @package SciMS\Controller\BuildDomain
@@ -17,8 +17,9 @@
     class BuildAddCategory extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildAddCategory constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

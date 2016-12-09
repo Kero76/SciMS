@@ -19,8 +19,9 @@
     class BuildInscription extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildInscription constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

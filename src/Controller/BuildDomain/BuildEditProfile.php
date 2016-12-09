@@ -11,7 +11,7 @@
     use \SciMS\Form\TextArea;
 
     /**
-     * Class BuildAccount.
+     * Class BuildEditProfile.
      *
      * This class build domain objects present on Account page.
      *
@@ -23,8 +23,9 @@
     class BuildEditProfile extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildEditProfile constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

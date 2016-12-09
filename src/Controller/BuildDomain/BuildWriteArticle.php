@@ -10,7 +10,7 @@
     use \SciMS\Form\TextArea;
 
     /**
-     * Class BuildWrite
+     * Class BuildWriteArticle.
      *
      * This class build domain objects present on Write page.
      *
@@ -22,8 +22,9 @@
     class BuildWriteArticle extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildWriteArticle constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

@@ -19,8 +19,9 @@
     class BuildVerification extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildVerification constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

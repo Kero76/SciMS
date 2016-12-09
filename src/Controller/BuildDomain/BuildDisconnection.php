@@ -16,8 +16,9 @@
     class BuildDisconnection extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildDisconnection constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

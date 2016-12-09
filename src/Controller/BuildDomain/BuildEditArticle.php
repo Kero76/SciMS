@@ -10,7 +10,7 @@
     use \SciMS\Form\TextArea;
 
     /**
-     * Class BuildEdit
+     * Class BuildEditArticle
      *
      * This class build domain objects present on Edit page.
      *
@@ -22,8 +22,9 @@
     class BuildEditArticle extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildEditArticle constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3

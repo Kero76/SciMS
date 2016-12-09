@@ -18,8 +18,9 @@
     class BuildConnection extends AbstractBuildDomain {
     
         /**
-         * BuildCategory constructor.
+         * BuildConnection constructor.
          *
+         * @constructor
          * @param $template
          *  Name of the template.
          * @since SciMS 0.3
