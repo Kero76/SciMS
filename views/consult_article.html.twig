@@ -25,6 +25,7 @@
             </nav>
         {% endif %}
 
+        <h2>Abstract</h2>
         {% autoescape false %}
             {{ article.abstract }}
             {{ article.content }}
@@ -45,12 +46,18 @@
                 {% endfor %}
             </ul>
 
-            <p>Article written by {{ article.writter.username }}, {{ article.dateCreation|date("d/m/y", "Europe/Paris") }}</p>
+            <p>Article written by
+                {% if connect == true %}
+                    <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}&user={{ user.id }}">{{ article.writter.username }}</a>,
+                {% else %}
+                    <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}">{{ article.writter.username }}</a>,
+                {% endif %}
+            {{ article.dateCreation|date("d/m/y \\a\\t H:i:s") }}</p>
         </section>
 
         {# Display edit button only if the user is a writter of this article. #}
         {% if connect == true and user.id == author_id %}
-            <a href="/web/index.php?action=edit&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
+            <a href="/web/index.php?action=edit_article&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
         {% endif %}
 
         {% if article.displayedSummary == 1 %}

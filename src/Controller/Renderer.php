@@ -1,5 +1,7 @@
 <?php
     namespace SciMS\Controller;
+    
+    use \Twig_Extensions_Extension_Text;
 
     /**
      * Class Renderer.
@@ -39,9 +41,12 @@
          * This constructor create an instance of Twig and this instance use for render the good view
          * in function of the corresponding template.
          *
+         * ->V 1.1 :
+         *  - Added Text extension on Twig to truncate abstract on home page.
+         *
          * @constructor
          * @since SciMS 0.1
-         * @version 1.0
+         * @version 1.1
          */
         public function __construct() {
             $path = realpath('../');
@@ -52,6 +57,7 @@
                 'debug' => true,
                 'cache' => false,
             ));
+            $this->_twig->addExtension(new Twig_Extensions_Extension_Text());
         }
     
         /**

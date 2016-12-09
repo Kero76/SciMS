@@ -5,3 +5,4 @@
   last_article: 10
   article_status: {release: 100, pending: 50, hidden: 0}
   user_role: {administrator: 100, moderator: 50, writter: 0}
+  abstract: 125

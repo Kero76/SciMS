@@ -20,7 +20,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class BuildAccount extends AbstractBuildDomain {
+    class BuildEditProfile extends AbstractBuildDomain {
     
         /**
          * BuildCategory constructor.

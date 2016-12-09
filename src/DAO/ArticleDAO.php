@@ -132,8 +132,8 @@
         public function findByTag(array $tags) {
             $rows = array();
             foreach ($tags as $tag) {
-                $sql = "SELECT * FROM `articles` WHERE tags like %?%";
-                $rows.push($this->getDatabase()->execute($sql, $tag, PDO::FETCH_ASSOC));
+                $sql = "SELECT * FROM `articles` WHERE tags like %$tag%";
+                $rows.push($this->getDatabase()->query($sql, PDO::FETCH_ASSOC));
             }
             $rows = array_unique($rows);
             $articles = array();
@@ -158,8 +158,8 @@
             $user_dao     = new UserDAO();
             $category_dao = new CategoryDAO();
             
-            $sql = "SELECT * FROM `articles` WHERE categories = ?";
-            $rows = $this->getDatabase()->execute($sql, array($category), PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM `articles` WHERE categories = $category";
+            $rows = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
             
             $articles = array();
             foreach ($rows as $row) {
@@ -179,19 +179,27 @@
          *
          * @param $userid
          *  The id of the writter research on Database.
-         * @return \SciMS\Domain\Article
-         *  Return an colection of Article, as found.
+         * @return array
+         *  Return an collection of Article, as found.
          * @since SciMS 0.2
          * @version 1.0
          */
         public function findByOwnership($userid) {
-            $sql = "SELECT * FROM `articles` WHERE writter = ?";
-            $row = $this->getDatabase()->execute($sql, array($userid), PDO::FETCH_ASSOC);
+            $user_dao     = new UserDAO();
+            $category_dao = new CategoryDAO();
+            $sql          = "SELECT * FROM `articles` WHERE writter = $userid";
+            $rows         = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+    
             $articles = array();
-            foreach ($row as $result) {
-                $id = $result['id'];
-                $articles[$id] = $this->buildDomain($row);
+            foreach ($rows as $row) {
+                $id                 = $row['id'];
+                $user               = $user_dao->findById($row['writter']);
+                $category           = $category_dao->findById($row['categories']);
+                $row['writter']     = $user;
+                $row['categories']  = $category;
+                $articles[$id]  = $this->buildDomain($row);
             }
+    
             return $articles;
         }
         

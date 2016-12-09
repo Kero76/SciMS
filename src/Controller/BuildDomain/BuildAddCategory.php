@@ -14,7 +14,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class BuildCategory extends AbstractBuildDomain {
+    class BuildAddCategory extends AbstractBuildDomain {
     
         /**
          * BuildCategory constructor.

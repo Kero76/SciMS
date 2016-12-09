@@ -2,16 +2,17 @@
     namespace SciMS\Controller;
     
     use \SciMS\Controller\BuildDomain\Build404;
-    use \SciMS\Controller\BuildDomain\BuildAccount;
-    use \SciMS\Controller\BuildDomain\BuildArticle;
-    use \SciMS\Controller\BuildDomain\BuildCategory;
+    use \SciMS\Controller\BuildDomain\BuildAddCategory;
+    use \SciMS\Controller\BuildDomain\BuildConsultArticle;
     use \SciMS\Controller\BuildDomain\BuildConnection;
     use \SciMS\Controller\BuildDomain\BuildDisconnection;
-    use \SciMS\Controller\BuildDomain\BuildEdit;
+    use \SciMS\Controller\BuildDomain\BuildEditArticle;
+    use \SciMS\Controller\BuildDomain\BuildEditProfile;
     use \SciMS\Controller\BuildDomain\BuildHome;
     use \SciMS\Controller\BuildDomain\BuildInscription;
+    use \SciMS\Controller\BuildDomain\BuildConsultProfile;
     use \SciMS\Controller\BuildDomain\BuildVerification;
-    use \SciMS\Controller\BuildDomain\BuildWrite;
+    use \SciMS\Controller\BuildDomain\BuildWriteArticle;
     use \SciMS\Controller\Checker\FileChecker;
     use \SciMS\Controller\Checker\Form\ArticleChecker;
     use \SciMS\Controller\Checker\Form\CategoryChecker;
@@ -123,30 +124,32 @@
          */
         public function __construct() {
             $this->_routes = array(
-                'home'          => '#\/web\/index\.php(\?user=[0-9]+)?$#',
-                'connection'    => '#\/web\/index\.php\?action=connection$#',
-                'disconnection' => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
-                'inscription'   => '#\/web\/index\.php\?action=inscription$#',
-                'verification'  => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|update|write|edit|category)+$#', // Change it when you add new Form.
-                'article'       => '#\/web\/index\.php\?action=article&id=[0-9]+(&user=[0-9]+)?$#',
-                'account'       => '#\/web\/index\.php\?action=account&user=[0-9]+$#',
-                'write'         => '#\/web\/index\.php\?action=write&user=[0-9]+$#',
-                'category'      => '#\/web\/index\.php\?action=category&user=[0-9]+$#',
-                'edit'          => '#\/web\/index\.php\?action=edit&user=[0-9]+&article=[0-9]+$#',
+                'home'              => '#\/web\/index\.php(\?user=[0-9]+)?$#',
+                'connection'        => '#\/web\/index\.php\?action=connection$#',
+                'disconnection'     => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
+                'inscription'       => '#\/web\/index\.php\?action=inscription$#',
+                'verification'      => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|add_category)+$#', // Change it when you add new Form.
+                'consult_article'   => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
+                'consult_profile'   => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
+                'write_article'     => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
+                'edit_article'      => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
+                'add_category'      => '#\/web\/index\.php\?action=add_category&user=[0-9]+$#',
+                'edit_profile'      => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+$#',
             );
             
             $this->_domains = array(
-                'home'          => new BuildHome('home.html.twig'),
-                'connection'    => new BuildConnection('connection.html.twig'),
-                'disconnection' => new BuildDisconnection('disconnection.html.twig'),
-                'inscription'   => new BuildInscription('inscription.html.twig'),
-                'verification'  => new BuildVerification('verification.html.twig'),
-                'article'       => new BuildArticle('article.html.twig'),
-                'account'       => new BuildAccount('admin/account.html.twig'),
-                'write'         => new BuildWrite('admin/article.html.twig'),
-                'edit'          => new BuildEdit('admin/article.html.twig'),
-                'category'      => new BuildCategory('admin/category.html.twig'),
-                '404'           => new Build404('404.html.twig'),
+                'home'              => new BuildHome('home.html.twig'),
+                'connection'        => new BuildConnection('connection.html.twig'),
+                'disconnection'     => new BuildDisconnection('disconnection.html.twig'),
+                'inscription'       => new BuildInscription('inscription.html.twig'),
+                'verification'      => new BuildVerification('verification.html.twig'),
+                'consult_article'   => new BuildConsultArticle('consult_article.html.twig'),
+                'consult_profile'   => new BuildConsultProfile('consult_profile.html.twig'),
+                'edit_profile'      => new BuildEditProfile('admin/edit_profile.html.twig'),
+                'write_article'     => new BuildWriteArticle('admin/edit_article.html.twig'),
+                'edit_article'      => new BuildEditArticle('admin/edit_article.html.twig'),
+                'add_category'      => new BuildAddCategory('admin/add_category.html.twig'),
+                '404'               => new Build404('404.html.twig'),
             );
     
             $this->_services = array(
@@ -216,7 +219,7 @@
          */
         private function _match($url) {
             $view = null;
-            foreach ($this->_routes AS $key => $value) {
+            foreach ($this->_routes as $key => $value) {
                 // Generate REGEX to recognize good url form.
                 if (preg_match($value, $url) != 0) {
                     $view = $this->_parseUrl($key);

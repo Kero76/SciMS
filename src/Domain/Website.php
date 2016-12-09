@@ -10,6 +10,7 @@
      *  - Number of article at display on home.
      *  - Status of articles available when user create an Article.
      *  - Role of user can receive on website.
+     *  - The number of characters displayed on home page.
      *
      * @author Kero76
      * @package SciMS\Domain
@@ -65,6 +66,8 @@
          * @since SciMS 0.3
          */
         private $_user_role;
+        
+        private $_abstract;
     
         /**
          * Website constructor.
@@ -221,6 +224,29 @@
          */
         public function setUserRole(array $user_role) {
             $this->_user_role = $user_role;
+        }
+    
+        /**
+         * Return the number of characters displayed on home page.
+         * @return integer
+         *  The number of characters displayed on home page.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function getAbstract() {
+            return $this->_abstract;
+        }
+    
+        /**
+         * Set the number of characters displayed on home page.
+         *
+         * @param integer $abstract
+         *  The number of characters displayed on home page.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function setAbstract($abstract) {
+            $this->_abstract = $abstract;
         }
     
         /**

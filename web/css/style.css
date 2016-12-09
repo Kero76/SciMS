@@ -33,7 +33,7 @@ header {
 /* Header page block. */
 .scims-page-header {
     margin-bottom: 10px;
-    border-bottom : 1px solid lightsteelblue;
+    border-bottom : 1px solid lightgray;
 }
 
 /* Title of the article on webpage. */
@@ -64,7 +64,16 @@ header {
 
 .scims-footer-page {
     padding-top: 10px;
-    border-top: 1px solid lightsteelblue;
+    border-top: 1px solid lightgray;
+}
+
+.scims-button-text-color {
+    color: white;
+}
+
+.scims-excerpt-categories-home {
+    display: block;
+    padding-top :10px;
 }
 
 /***********************************/

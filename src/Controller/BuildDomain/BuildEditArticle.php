@@ -10,16 +10,16 @@
     use \SciMS\Form\TextArea;
 
     /**
-     * Class BuildWrite
+     * Class BuildEdit
      *
-     * This class build domain objects present on Write page.
+     * This class build domain objects present on Edit page.
      *
      * @author Kero76
      * @package SciMS\Controller\BuildDomain
      * @since SciMS 0.3
      * @version 1.0
      */
-    class BuildWrite extends AbstractBuildDomain {
+    class BuildEditArticle extends AbstractBuildDomain {
     
         /**
          * BuildCategory constructor.
@@ -44,7 +44,9 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
-            $user = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
+            $services['get.handler']->setRequest($_GET);         // Retrieve $_GET.
+            $user    = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
+            $article = $services['dao.article']->findById($services['get.handler']->getRequestField('article'));
     
             // Create the object datalist for the category.
             $categories = $services['dao.category']->findAll();
@@ -57,10 +59,20 @@
     
             // Fill option in Select object.
             foreach ($categories as $category) {
-                $select_category->add(new Option(array(
-                    'value' => $category->getId(),
-                    'label' => $category->getTitle(),
-                )));
+                // If the article.category.id == category.id, so selected it directly on view.
+                if ($category->getId() == $article->getCategories()->getId()) {
+                    $select_category->add(new Option(array(
+                        'value'     => $category->getId(),
+                        'label'     => $category->getTitle(),
+                        'selected'  => true,
+                    )));
+                } else {
+                    $select_category->add(new Option(array(
+                        'value'     => $category->getId(),
+                        'label'     => $category->getTitle(),
+                        'selected'  => false,
+                    )));
+                }
             }
             $select_category->renderSelect();
     
@@ -80,13 +92,23 @@
             );
     
             foreach ($status as $key => $value) {
-                $select_status->add(new Option(array(
-                    'value' => $value,
-                    'label' => $key,
-                )));
+                // If the article.category.id == category.id, so selected it directly on view.
+                if ($value == $article->getStatus()) {
+                    $select_status->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => true,
+                    )));
+                } else {
+                    $select_status->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => false,
+                    )));
+                }
             }
             $select_status->renderSelect();
-            
+    
             // Summary
             $select_summary = new Select(array(
                 'id'    => 'summary',
@@ -94,17 +116,27 @@
                 'label' => 'Display summary',
                 'class' => 'form-control',
             ));
-            
+    
             $summary = array(
                 'Display Summary'   => 1,
                 'Undisplay Summary' => 2,
             );
-            
+    
             foreach ($summary as $key => $value) {
-                $select_summary->add(new Option(array(
-                    'value' => $value,
-                    'label' => $key,
-                )));
+                // If the article.category.id == category.id, so selected it directly on view.
+                if ($value === $article->getDisplayedSummary()) {
+                    $select_summary->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => true,
+                    )));
+                } else {
+                    $select_summary->add(new Option(array(
+                        'value'     => $value,
+                        'label'     => $key,
+                        'selected'  => false,
+                    )));
+                }
             }
             $select_summary->renderSelect();
     
@@ -117,36 +149,40 @@
                         'name'  => 'title',
                         'class' => 'form-control',
                         'label' => 'Title',
+                        'value' => $article->getTitle(),
                     ))
                 )->add(
                 // Abstract
                     new TextArea(array(
-                        'id'    => 'abstract',
-                        'name'  => 'abstract',
-                        'class' => 'form-control',
-                        'label' => 'Abstract',
-                        'rows'  => '10',
-                        'cols'  => '50',
+                        'id'        => 'abstract',
+                        'name'      => 'abstract',
+                        'class'     => 'form-control',
+                        'label'     => 'Abstract',
+                        'rows'      => '10',
+                        'cols'      => '50',
+                        'content'   => $article->getAbstract(),
                     ))
                 )->add(
                 // Content
                     new TextArea(array(
-                        'id'    => 'content',
-                        'name'  => 'content',
-                        'class' => 'form-control',
-                        'label' => 'Content',
-                        'rows'  => '10',
-                        'cols'  => '50',
+                        'id'        => 'content',
+                        'name'      => 'content',
+                        'class'     => 'form-control',
+                        'label'     => 'Content',
+                        'rows'      => '10',
+                        'cols'      => '50',
+                        'content'   => $article->getContent(),
                     ))
                 )->add(
                 // Authors
                     new TextArea(array(
-                        'id'    => 'authors',
-                        'name'  => 'authors',
-                        'class' => 'form-control',
-                        'label' => 'Authors',
-                        'rows'  => '5',
-                        'cols'  => '50',
+                        'id'        => 'authors',
+                        'name'      => 'authors',
+                        'class'     => 'form-control',
+                        'label'     => 'Authors',
+                        'rows'      => '5',
+                        'cols'      => '50',
+                        'content'   => $article->getAuthors(),
                     ))
                 )->add(
                 // Category
@@ -159,6 +195,7 @@
                         'name'  => 'tags',
                         'class' => 'form-control',
                         'label' => 'Tags',
+                        'value' => $article->getTags(),
                     ))
                 )->add(
                 // Status
@@ -172,6 +209,13 @@
                         'value' => $user->getId(),
                     ))
                 )->add(
+                    new InputHidden(array(
+                        'type'  => 'hidden',
+                        'id'    => 'article_id',
+                        'name'  => 'article_id',
+                        'value' => $services['get.handler']->getRequestField('article'),
+                    ))
+                )->add(
                 // Summary
                     $select_summary
                 )->add(
@@ -181,11 +225,12 @@
                         'id'    => 'submit',
                         'name'  => 'submit',
                         'class' => 'form-control btn btn-primary',
-                        'value' => 'Submit'
+                        'value' => 'Submit',
                     ))
                 )->getForms(),
-                'user'    => $user,
-                'connect' => true,
+                'user'       => $user,
+                'connect'    => true,
+                'article_id' => true,
                 'website' => $services['dao.website']->findSettings('../app/settings.yml'),
             );
     

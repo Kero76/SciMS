@@ -14,7 +14,7 @@
 
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <form action="/web/index.php?action=verification&form=category" method="post" class="form-horizontal">
+        <form action="/web/index.php?action=verification&form=add_category" method="post" class="form-horizontal">
         {% for form in forms %}
             <div class="form-group">
                 <label for="{{ form.id }}" class="control-label col-md-2 col-sm-4 col-xs-4">{{ form.label }}</label>

@@ -1,0 +1,49 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ website.title }} - {{ writter.username }}'s Profile{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ website.title }} : {{ writter.username }}'s Profile
+            <small class="scims-italic scims-header-page-subtitle">Consult {{ writter.username }}'s Profile consultation</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>{{ writter.username }}'s profile</h2>
+
+        <!-- Avatar -->
+        <div class="form-group">
+            {% if writter.avatar == '' %}
+                <img class="scims-avatar" src="../../web/images/default-avatar.png" alt="default avatar" width="128" height="128">
+            {% else %}
+                <img class="scims-avatar" src="../../web/uploads/avatar/{{ writter.avatar }}" alt="{{ writter.username }}'s avatar">
+            {% endif %}
+        </div>
+
+        <h3>Informations about {{ writter.username }}</h3>
+        <ul class="list-unstyled">
+            <li>Username : {{ writter.username }}</li>
+            <li>First name : {{ writter.firstName }}</li>
+            <li>Last name : {{ writter.lastName }}</li>
+            <li>Birthday : {{ writter.birthday }}</li>
+        </ul>
+
+        <h3>Biography : </h3>
+        {% if writter.biography == '' %}
+            <p>No biography written by the user.</p>
+        {% else %}
+            {% autoescape false %}{{ writter.biography }}{% endautoescape %}
+        {% endif %}
+
+        <h3>{{ writter.username }} articles</h3>
+        <ul class="list-unstyled">
+            {% for article in articles %}
+                <li><a href="/web/index.php?action=consult_article&id={{ article.id }}" >{{ article.title }}</a></li>
+            {% endfor %}
+        </ul>
+{% endblock %}

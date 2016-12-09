@@ -2,16 +2,16 @@
     namespace SciMS\Controller\BuildDomain;
 
     /**
-     * Class Build404.
+     * Class BuildConsultArticle.
      *
-     * This class build domain objects present on 404 page.
+     * This class build domain objects present on Article page.
      *
      * @author Kero76
      * @package SciMS\Controller\BuildDomain
      * @since SciMS 0.3
      * @version 1.0
      */
-    class Build404 extends AbstractBuildDomain {
+    class BuildConsultArticle extends AbstractBuildDomain {
     
         /**
          * BuildCategory constructor.
@@ -36,20 +36,23 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
-            if (($services['session.handler']->requestFieldExist('user_id'))) {
+            $services['get.handler']->setRequest($_GET); // Retrieve $_GET.
+            
+            if ($services['session.handler']->requestFieldExist('user_id')) {
+                $article = $services['dao.article']->findById($services['get.handler']->getRequestField('id'));
                 $domains = array(
-                    'message' => $services['message.handler']->getMessage('404'),
-                    'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                    'connect' => true,
+                    'article'       => $article,
+                    'user'          => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                    'connect'       => true,
+                    'author_id'     => $article->getWritter()->getId(),
                     'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             } else {
                 $domains = array(
-                    'message' => $services['message.handler']->getMessage('404'),
+                    'article' => $services['dao.article']->findById($services['get.handler']->getRequestField('id')),
                     'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                 );
             }
-            
             return $domains;
         }
     }

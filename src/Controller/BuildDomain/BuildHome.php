@@ -41,7 +41,7 @@
             $category_articles = array();
             $categories = $services['dao.category']->findAll();
             foreach($categories as $category) {
-                $category_articles[$category->getTitle()] = $services['dao.category']->findById($category->getId());
+                $category_articles[$category->getTitle()] = $services['dao.article']->findByCategories($category->getId());
             }
             
             if ($services['session.handler']->requestFieldExist('user_id')) {

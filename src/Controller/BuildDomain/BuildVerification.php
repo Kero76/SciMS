@@ -110,7 +110,7 @@
                     break;
         
                 // Update user.
-                case 'update' :
+                case 'edit_profile' :
                     // File upload.
                     $services['avatar.upload']->moveFile($services, strtolower($services['post.handler']->getRequestField('username')));
                     $file_extension = $services['avatar.upload']->splitExtensionFile($services['file.handler']->getRequest(), 'avatar');
@@ -143,7 +143,7 @@
                     break;
         
                 // Write an Article
-                case 'write' :
+                case 'write_article' :
                     $write    = $services['article.checker']->checkInsert($services);
                     $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
                     $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
@@ -177,7 +177,7 @@
                     break;
         
                 // Edit an Article.
-                case 'edit' :
+                case 'edit_article' :
                     $edit     = $services['article.checker']->checkUpdate($services);
                     $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
                     $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
@@ -214,7 +214,7 @@
                     break;
         
                 // Create a Category.
-                case 'category' :
+                case 'add_category' :
                     $insertCategory = $services['category.checker']->checkInsert($services);
                     $category = new Category(array(
                         'title' => $services['post.handler']->getRequestField('title'),
@@ -240,7 +240,7 @@
                 default:
                     $domains = array(
                         'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                        'message' => $services['message.handler']->getError('404'),
+                        'message' => $services['message.handler']->getMessage('404'),
                         'website' => $services['dao.website']->findSettings('../app/settings.yml'),
                     );
                     break;
