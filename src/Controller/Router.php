@@ -11,6 +11,7 @@
     use \SciMS\Controller\BuildDomain\BuildHome;
     use \SciMS\Controller\BuildDomain\BuildInscription;
     use \SciMS\Controller\BuildDomain\BuildConsultProfile;
+    use SciMS\Controller\BuildDomain\BuildSearchResultDomain;
     use \SciMS\Controller\BuildDomain\BuildVerification;
     use \SciMS\Controller\BuildDomain\BuildWriteArticle;
     use \SciMS\Controller\Checker\FileChecker;
@@ -131,10 +132,11 @@
                 'verification'      => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|add_category)+$#', // Change it when you add new Form.
                 'consult_article'   => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
                 'consult_profile'   => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
+                'search'            => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
                 'write_article'     => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
                 'edit_article'      => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
-                'add_category'      => '#\/web\/index\.php\?action=add_category&user=[0-9]+$#',
                 'edit_profile'      => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+$#',
+                'add_category'      => '#\/web\/index\.php\?action=add_category&user=[0-9]+$#',
             );
             
             $this->_domains = array(
@@ -145,9 +147,10 @@
                 'verification'      => new BuildVerification('verification.html.twig'),
                 'consult_article'   => new BuildConsultArticle('consult_article.html.twig'),
                 'consult_profile'   => new BuildConsultProfile('consult_profile.html.twig'),
-                'edit_profile'      => new BuildEditProfile('admin/edit_profile.html.twig'),
+                'search'            => new BuildSearchResultDomain('search_results.html.twig'),
                 'write_article'     => new BuildWriteArticle('admin/edit_article.html.twig'),
                 'edit_article'      => new BuildEditArticle('admin/edit_article.html.twig'),
+                'edit_profile'      => new BuildEditProfile('admin/edit_profile.html.twig'),
                 'add_category'      => new BuildAddCategory('admin/add_category.html.twig'),
                 '404'               => new Build404('404.html.twig'),
             );
@@ -302,6 +305,7 @@
             $this->_services['message.handler']->pushMessage('write_article_fail',  new Error('Write article fail'));
             $this->_services['message.handler']->pushMessage('update_article_fail', new Error('Update article fail'));
             $this->_services['message.handler']->pushMessage('category_fail',       new Error('Category already present or invalid'));
+            $this->_services['message.handler']->pushMessage('research_fail',       new Error('Research not found'));
             $this->_services['message.handler']->pushMessage('404',                 new Error('Page not found'));
         }
     }

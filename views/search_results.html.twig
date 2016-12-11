@@ -1,0 +1,34 @@
+{% extends "layout.html.twig" %}
+
+{% block keywords %}result, research, article results{% endblock %}
+
+{% block title %}{{ website.title }} - Results{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ website.title }} : Results
+            <small class="scims-italic scims-header-page-subtitle">{{ website.websiteAuthors }}</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Last X Article -->
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>Results</h2>
+        {% if articles|length == 0 %}
+            <p>{{ message.message }}</p>
+        {% else %}
+            <p>List of articles found in {{ website.title }}.</p>
+            {% for article in articles %}
+                <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
+                    <h3>{{ article.title }}</h3>
+                    <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
+                    <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                </aside>
+            {% endfor %}
+        {% endif %}
+    </section>
+{% endblock %}

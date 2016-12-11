@@ -2,6 +2,8 @@
 
 {% block title %}{{ website.title }} - Create a Category{% endblock %}
 
+{% block meta_tags %}<meta name="robots" content="noindex">{% endblock %}
+
 {% block page_title %}
     <!-- Header of the webpage. -->
     <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
@@ -14,6 +16,16 @@
 
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>List of all categories already available</h2>
+        {% if categories|length > 0 %}
+            <ul class="list-unstyled list-inline">
+                {% for category in categories %}
+                    <li>{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Not category available on website.</p>
+        {% endif %}
         <form action="/web/index.php?action=verification&form=add_category" method="post" class="form-horizontal">
         {% for form in forms %}
             <div class="form-group">

@@ -2,6 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="author" content="{{ website.websiteAuthors }}">
+        <meta name="copyright" content="{{ website.websiteAuthors }}">
+        <meta name="keywords" content="{{ website.title }}, {% block keywords %}{% endblock %}">
+        <meta name="generator" content="SciMS">
+        {% block meta_tags %}{% endblock %}
 
         <link rel="stylesheet" type="text/css" href="../web/lib/bootstrap/css/bootstrap.min.css"> <!-- Bootstrap.min -->
         <link rel="stylesheet" type="text/css" href="../web/lib/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
@@ -33,6 +38,20 @@
                                         <a class="list-group-item scims-signin"      href="/web/index.php?action=connection"> Sign In</a>
                                         <a class="list-group-item scims-inscription" href="/web/index.php?action=inscription"> Inscription</a>
                                     {% endif %}
+                                    <!-- Search field -->
+                                    {% if connect == true %}
+                                        <form class="form-inline" method="post" action="/web/index.php?action=search&user={{ user.id }}">
+                                    {% else %}
+                                        <form class="form-inline" method="post" action="/web/index.php?action=search">
+                                    {% endif %}
+                                        <div class="form-group">
+                                            <label class="sr-only" for="search-field"></label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input type="text" class="form-control" id="search-field" name="search-field" placeholder="Search article ...">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </nav>

@@ -76,6 +76,11 @@ header {
     padding-top :10px;
 }
 
+.scims-article-homepage {
+    border: solid 1px lightgray;
+    height: 300px;
+}
+
 /***********************************/
 /*       ICONS IN NAVIGATION       */
 /***********************************/

@@ -1,5 +1,7 @@
 {% extends "layout.html.twig" %}
 
+{% block keywords %}{{ article.title }}, {{ article.categories.title }}, {{ article.writter.username }}, article research, articles, research{% endblock %}
+
 {% block title %}{{ website.title }} - {{ article.title }}{% endblock %}
 
 {% block page_title %}

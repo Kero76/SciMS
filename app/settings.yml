@@ -1,6 +1,7 @@
 "website":
   title: "SciMS"
   subtitle: "Simplify the writting of Your research articles"
+  website_authors: "Nicolas GILLE, Grégoire POMMIER"
   copyright: "Nicolas GILLE, Grégoire POMMIER, &copy; 2016, SciMS : Simplify the writting of Your research articles."
   last_article: 10
   article_status: {release: 100, pending: 50, hidden: 0}

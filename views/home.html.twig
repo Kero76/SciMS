@@ -1,5 +1,7 @@
 {% extends "layout.html.twig" %}
 
+{% block keywords %}homepage, home, article, scientist, research{% endblock %}
+
 {% block title %}{{ website.title }} - Home{% endblock %}
 
 {% block page_title %}
@@ -7,35 +9,35 @@
     <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
         <h1 class="scims-page-title">
             {{ website.title }} : {{ website.subtitle }}
-            <small class="scims-italic scims-header-page-subtitle">Nicolas GILLE, Grégoire Pommier</small>
+            <small class="scims-italic scims-header-page-subtitle">{{ website.websiteAuthors }}</small>
         </h1>
     </header>
 {% endblock %}
 
 {% block content %}
+    <!-- Last X Article -->
     <section class="col-md-8 col-sm-8 col-xs-8">
         <h2>Last articles</h2>
         {% for article in last_articles %}
-            <aside class="col-md-4 col-sm-4 col-xs-4">
+            <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
                 <h3>{{ article.title }}</h3>
                 <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
                 <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
             </aside>
         {% endfor %}
     </section>
-
-    {% for category_article in categories_articles %}
-        <section class="col-md-8 col-sm-8 col-xs-8 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 ">
+    <!-- Article by Category -->
+    <section class="col-md-8 col-sm-8 col-xs-8 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 ">
+    <h2>Articles by Category</h2>
+        {% for category_article in categories_articles %}
             {% for article in category_article %}
-                <aside class="col-md-4 col-sm-4 col-xs-4">
+                <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
                     <h3>{{ article.title }}</h3>
                     <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
                     <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
                     <span class="scims-excerpt-categories scims-excerpt-categories-home"> {{ article.categories.title }}</span>
                 </aside>
             {% endfor %}
-        </section>
     {% endfor %}
-
-
+    </section>
 {% endblock %}

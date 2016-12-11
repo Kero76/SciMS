@@ -11,6 +11,7 @@
      *  - Status of articles available when user create an Article.
      *  - Role of user can receive on website.
      *  - The number of characters displayed on home page.
+     *  - The name of the website authors.
      *
      * @author Kero76
      * @package SciMS\Domain
@@ -66,8 +67,21 @@
          * @since SciMS 0.3
          */
         private $_user_role;
-        
+    
+        /**
+         * Contains abstract available on Homepage.
+         *
+         * @var string
+         * @since SciMS 0.4
+         */
         private $_abstract;
+    
+        /**
+         * Authors of the website available on subtitle of website.
+         * @var string
+         * @since SciMS 0.4
+         */
+        private $_website_authors;
     
         /**
          * Website constructor.
@@ -249,6 +263,30 @@
             $this->_abstract = $abstract;
         }
     
+        /**
+         * Return the name of the website authors.
+         *
+         * @return string
+         *  The name of the website authors.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function getWebsiteAuthors() {
+            return $this->_website_authors;
+        }
+    
+        /**
+         * Set the name of the website author's name.
+         *
+         * @param string $website_authors
+         *  Website authors names.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function setWebsiteAuthors($website_authors) {
+            $this->_website_authors = $website_authors;
+        }
+        
         /**
          * Method use for hydrate object directly thanks the data from the Database.
          *

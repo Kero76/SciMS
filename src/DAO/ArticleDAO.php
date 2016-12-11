@@ -202,6 +202,35 @@
     
             return $articles;
         }
+    
+        /**
+         * Method use to get articles when user type a research on research field.
+         *
+         * @param $field_research
+         *  The string research by user.
+         * @return array
+         *  Return an collection of Article, as found.
+         * @since SciMS 0.4
+         * @version 1.0
+         */
+        public function findByResearch($field_research) {
+            $user_dao     = new UserDAO();
+            $category_dao = new CategoryDAO();
+            $sql          = "SELECT * FROM `articles` WHERE content LIKE '%$field_research%' OR abstract LIKE '%$field_research%' OR tags LIKE '%$field_research%' OR authors LIKE '%$field_research%'";
+            $rows         = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+    
+            $articles = array();
+            foreach ($rows as $row) {
+                $id                 = $row['id'];
+                $user               = $user_dao->findById($row['writter']);
+                $category           = $category_dao->findById($row['categories']);
+                $row['writter']     = $user;
+                $row['categories']  = $category;
+                $articles[$id]  = $this->buildDomain($row);
+            }
+    
+            return $articles;
+        }
         
         /**
          * Method use for return last id present on Database.

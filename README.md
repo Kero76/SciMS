@@ -12,12 +12,14 @@ Creation of CMS like for post research article.
     * password : Password of your Database access.<br>
     
     and fill the file app/settings.yml with :
-    * title        : Title of your website between quote like "My Website"
-    * subtitle     : The subtitle of your website, if you have a subtitle.
-    * copyright    : The footer content of your website between quote like "&copy; 2016"
-    * last_article : The number of article at display on your home page.
-    * article_status: An array of all article status possible for your future article.
-    * user_role: An array with all role for your future user register.
+    * title             : Title of your website between quote like "My Website"
+    * subtitle          : The subtitle of your website, if you have a subtitle.
+    * website_authors   : Name of all authors who created the website.
+    * copyright         : The footer content of your website between quote like "&copy; 2016"
+    * last_article      : The number of article at display on your home page.
+    * article_status    : An array of all article status possible for your future article.
+    * user_role         : An array with all role for your future user register.
+    * abstract          : Number of characters displayed on home and result page.    
 5. Create the table on the Database with the file database/create_table.sql.
 6. Register your account and SciMS is ready to work.
 
@@ -50,31 +52,28 @@ Creation of CMS like for post research article.
 
 #### Framework manual
 * Website of Bootstrap : [http://getbootstrap.com/](http://getbootstrap.com/)
-* API of JQuery : [http://api.jquery.com/](http://api.jquery.com/)
 * Website of Font-Awesome : [http://fontawesome.io/](http://fontawesome.io/)
 
-#### Templates
+#### Templates engine
 * Website of Twig : [http://twig.sensiolabs.org/](http://twig.sensiolabs.org/)
 
 #### JavaScript Libraries
+* API of JQuery : [http://api.jquery.com/](http://api.jquery.com/)
 * Website of Mathjax : [https://www.mathjax.org/](https://www.mathjax.org/)
 * Website of TinyMCE [https://www.tinymce.com/](https://www.tinymce.com/)
 
 ### Tools
 * Website of Composer : [https://getcomposer.org/](https://getcomposer.org/)
 * Website of Gravatar : [http://fr.gravatar.com/](http://fr.gravatar.com/)
-* A website to test Regular Expression : [https://regex101.com/](https://regex101.com/)
-
-#### TinyMCE plugins
-* LaTex plugin : [http://moonwave99.github.io/TinyMCELatexPlugin/](http://moonwave99.github.io/TinyMCELatexPlugin/)
-* Math integration plugin : [http://www.wiris.com/solutions/tinymce](http://www.wiris.com/solutions/tinymce)
-* Latex integration plugin : [http://moonwave99.github.io/TinyMCELatexPlugin/](http://moonwave99.github.io/TinyMCELatexPlugin/)
+* Yaml extension : [https://symfony.com/doc/3.1/components/yaml.html](https://symfony.com/doc/3.1/components/yaml.html)
+* Gravatar's plugin : [https://packagist.org/packages/forxer/gravatar#user-content-singleGravatar](https://packagist.org/packages/forxer/gravatar#user-content-singleGravatar)
 
 ### Links
+* A website to test Regular Expression : [https://regex101.com/](https://regex101.com/)
 * An article to manage Composer dependency : [http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer](http://www.umanit.fr/En-ce-moment/UmaNotes/Gerer-ses-dependances-PHP-avec-Composer)
 * A large article to help with PDO operation : [https://phpdelusions.net/pdo](https://phpdelusions.net/pdo)
 * A list of all package available with Composer : [https://packagist.org/](https://packagist.org/)
 * A good practice to develop with PSR-X : [http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/](http://severin-bruhat.com/blog/php-bonnes-pratiques-et-conventions/)
 * An article to see more informations about URL Rewriting : [https://craym.eu/tutoriels/referencement/url_rewriting.html](https://craym.eu/tutoriels/referencement/url_rewriting.html)
-* Yaml extension : [https://symfony.com/doc/3.1/components/yaml.html](https://symfony.com/doc/3.1/components/yaml.html)
+* Yaml explaination : [http://sweetohm.net/article/introduction-yaml.html](http://sweetohm.net/article/introduction-yaml.html)
 

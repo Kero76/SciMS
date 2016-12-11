@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% block keywords %}disconnection{% endblock %}
+
 {% block title %}{{ website.title }} - Disconnection{% endblock %}
 
 {% block page_title %}
@@ -13,6 +15,8 @@
 
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>Disconnection</h2>
+        <p>Would you like disconnected from {{ website.title }} ? </p>
         <form action="/web/index.php?action=verification&form=disconnection" method="post" class="form-horizontal">
             {% for form in forms %}
                 <div class="form-group">
