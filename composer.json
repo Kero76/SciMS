@@ -1,7 +1,6 @@
 {
   "name": "scims",
   "description": "SciMS is a CMS like to post research articles.",
-  "version": "0.4.1",
   "license": "GPL-3.0",
   "type": "project",
   "keywords": ["SciMS", "CMS", "Research", "Framework", "PHP", "TinyMCE", "MathJax", "Kero76", "Nicolas GILLE"],

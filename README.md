@@ -77,3 +77,4 @@ Creation of CMS like for post research article.
 * An article to see more informations about URL Rewriting : [https://craym.eu/tutoriels/referencement/url_rewriting.html](https://craym.eu/tutoriels/referencement/url_rewriting.html)
 * Yaml explaination : [http://sweetohm.net/article/introduction-yaml.html](http://sweetohm.net/article/introduction-yaml.html)
 * More informations abouts all themes availables on SciMS : [https://www.bootstrapcdn.com/bootswatch/](https://www.bootstrapcdn.com/bootswatch/)
+* How to write a composer.json file : [https://getcomposer.org/doc/04-schema.md#json-schema](https://getcomposer.org/doc/04-schema.md#json-schema)
