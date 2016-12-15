@@ -36,6 +36,16 @@
          */
         public function buildDomain(array $services) {
             $services['get.handler']->setRequest($_GET); // Retrieve $_GET.
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
     
             $writter = $services['dao.user']->findById($services['get.handler']->getRequestField('id'));
             if ($services['session.handler']->requestFieldExist('user_id')) {
@@ -44,13 +54,15 @@
                     'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                     'articles' => $services['dao.article']->findByOwnership($writter->getId()),
                     'connect'  => true,
-                    'website'  => $services['dao.website']->findSettings('../app/settings.yml'),
+                    'website'  => $website,
+                    'theme'    => $theme,
                 );
             } else {
                 $domains = array(
                     'writter' => $writter,
                     'articles' => $services['dao.article']->findByOwnership($writter->getId()),
-                    'website'  => $services['dao.website']->findSettings('../app/settings.yml'),
+                    'website'  => $website,
+                    'theme'    => $theme,
                 );
             }
             return $domains;

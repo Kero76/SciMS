@@ -11,7 +11,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class GetHandler implements RequestHandler {
+    class GetHandler implements RequestHandlerInterface {
     
         /**
          * An array which contains $_GET content.

@@ -11,7 +11,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class SessionHandler implements RequestHandler {
+    class SessionHandler implements RequestHandlerInterface {
     
         /**
          * An array which contains $_SESSION content.

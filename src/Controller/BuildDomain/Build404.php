@@ -37,17 +37,30 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
+    
             if (($services['session.handler']->requestFieldExist('user_id'))) {
                 $domains = array(
                     'message' => $services['message.handler']->getMessage('404'),
                     'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                     'connect' => true,
-                    'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                    'website' => $website,
+                    'theme'   => $theme,
                 );
             } else {
                 $domains = array(
                     'message' => $services['message.handler']->getMessage('404'),
-                    'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                    'website' => $website,
+                    'theme'   => $theme,
                 );
             }
             

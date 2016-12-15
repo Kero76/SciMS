@@ -4,8 +4,8 @@
     /**
      * Class AbstractChecker.
      *
-     * This is an abstract class use for inehrit method emptyString on a child classes.
-     * It must extends for all subclasses create to check element on website.
+     * This is an abstract class use for inherit method emptyString on a child classes.
+     * It must extends for all subclasses created for check elements on website.
      *
      * @author Kero76
      * @package SciMS\Controller\Checker

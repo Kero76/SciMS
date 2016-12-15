@@ -47,7 +47,7 @@
          * @version 1.0
          */
         public function __construct(array $attributes) {
-            $this->_hydrate($attributes);
+            $this->hydrate($attributes);
             $render  = '<option';
             $render .= ($this->getValue()    == ''    ) ? '' : ' value="' . $this->getValue() . '"';
             $render .= ($this->getSelected() == false ) ? '' : ' selected';

@@ -10,7 +10,7 @@
      * @since SciMS 0.1
      * @version 1.0
      */
-    class Category {
+    class Category extends AbstractDomain {
     
         /**
          * Id of the Category.
@@ -41,7 +41,7 @@
          * @version 1.0
          */
         public function __construct(array $data) {
-            $this->_hydrate($data);
+            $this->hydrate($data);
         }
     
         /**
@@ -90,30 +90,5 @@
          */
         public function setTitle($title) {
             $this->_title = $title;
-        }
-        
-        /**
-         * Method use for hydrate an instance of Category.
-         *
-         * This method is calling in the constructor of a Category instance to
-         * fill all attributes with the good value from the Database.
-         *
-         * @access private
-         * @param array $data
-         *  An array with all Data for hydrate the current instance of Category.
-         * @since SciMS 0.1
-         * @version 1.0
-         */
-        private function _hydrate(array $data) {
-            foreach($data as $key => $value) {
-                $method = 'set';
-                $keySplit = explode("_", $key);
-                for ($i = 0; $i < count($keySplit); $i++ ) {
-                    $method .= ucfirst($keySplit[$i]);
-                }
-                if(method_exists($this, $method)) {
-                    $this->$method($value);
-                }
-            }
         }
     }

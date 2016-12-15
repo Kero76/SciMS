@@ -49,6 +49,21 @@
             $user    = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
             $article = $services['dao.article']->findById($services['get.handler']->getRequestField('article'));
     
+            $services['post.handler']->setRequest($_POST);  // Retrieve $_POST.
+            $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
+            $services['file.handler']->setRequest($_FILES); // Retrieve $_SESSION.
+    
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
+    
             // Create the object datalist for the category.
             $categories = $services['dao.category']->findAll();
             $select_category = new Select(array(
@@ -232,7 +247,8 @@
                 'user'       => $user,
                 'connect'    => true,
                 'article_id' => true,
-                'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                'website'    => $website,
+                'theme'      => $theme,
             );
     
             return $domains;

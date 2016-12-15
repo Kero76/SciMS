@@ -11,10 +11,10 @@
     use \SciMS\Controller\BuildDomain\BuildHome;
     use \SciMS\Controller\BuildDomain\BuildInscription;
     use \SciMS\Controller\BuildDomain\BuildConsultProfile;
-    use SciMS\Controller\BuildDomain\BuildSearchResultDomain;
+    use \SciMS\Controller\BuildDomain\BuildSearchResultDomain;
     use \SciMS\Controller\BuildDomain\BuildVerification;
     use \SciMS\Controller\BuildDomain\BuildWriteArticle;
-    use \SciMS\Controller\Checker\FileChecker;
+    use \SciMS\Controller\Builder\FormBuilder;
     use \SciMS\Controller\Checker\Form\ArticleChecker;
     use \SciMS\Controller\Checker\Form\CategoryChecker;
     use \SciMS\Controller\Checker\Form\ConnectionChecker;
@@ -30,10 +30,10 @@
     use \SciMS\Controller\Handler\RequestHandler\SessionHandler;
     use \SciMS\DAO\ArticleDAO;
     use \SciMS\DAO\CategoryDAO;
+    use \SciMS\DAO\ThemeDAO;
     use \SciMS\DAO\UserDAO;
     use \SciMS\DAO\WebsiteDAO;
     use \SciMS\File\FileAvatar;
-    use \SciMS\Form\FormBuilder;
     use \SciMS\Message\Error;
     use \SciMS\Message\Success;
 
@@ -125,72 +125,72 @@
          */
         public function __construct() {
             $this->_routes = array(
-                'home'              => '#\/web\/index\.php(\?user=[0-9]+)?$#',
-                'connection'        => '#\/web\/index\.php\?action=connection$#',
-                'disconnection'     => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
-                'inscription'       => '#\/web\/index\.php\?action=inscription$#',
-                'verification'      => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|add_category)+$#', // Change it when you add new Form.
-                'consult_article'   => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
-                'consult_profile'   => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
-                'search'            => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
-                'write_article'     => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
-                'edit_article'      => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
-                'edit_profile'      => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+$#',
-                'add_category'      => '#\/web\/index\.php\?action=add_category&user=[0-9]+$#',
+                'home'            => '#\/web\/index\.php(\?user=[0-9]+)?$#',
+                'connection'      => '#\/web\/index\.php\?action=connection$#',
+                'disconnection'   => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
+                'inscription'     => '#\/web\/index\.php\?action=inscription$#',
+                'verification'    => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|add_category)+$#', // Change it when you add new Form.
+                'consult_article' => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
+                'consult_profile' => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
+                'search'          => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
+                'write_article'   => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
+                'edit_article'    => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
+                'edit_profile'    => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+$#',
+                'add_category'    => '#\/web\/index\.php\?action=add_category&user=[0-9]+$#',
             );
             
             $this->_domains = array(
-                'home'              => new BuildHome('home.html.twig'),
-                'connection'        => new BuildConnection('connection.html.twig'),
-                'disconnection'     => new BuildDisconnection('disconnection.html.twig'),
-                'inscription'       => new BuildInscription('inscription.html.twig'),
-                'verification'      => new BuildVerification('verification.html.twig'),
-                'consult_article'   => new BuildConsultArticle('consult_article.html.twig'),
-                'consult_profile'   => new BuildConsultProfile('consult_profile.html.twig'),
-                'search'            => new BuildSearchResultDomain('search_results.html.twig'),
-                'write_article'     => new BuildWriteArticle('admin/edit_article.html.twig'),
-                'edit_article'      => new BuildEditArticle('admin/edit_article.html.twig'),
-                'edit_profile'      => new BuildEditProfile('admin/edit_profile.html.twig'),
-                'add_category'      => new BuildAddCategory('admin/add_category.html.twig'),
-                '404'               => new Build404('404.html.twig'),
+                'home'            => new BuildHome('home.html.twig'),
+                'connection'      => new BuildConnection('connection.html.twig'),
+                'disconnection'   => new BuildDisconnection('disconnection.html.twig'),
+                'inscription'     => new BuildInscription('inscription.html.twig'),
+                'verification'    => new BuildVerification('verification.html.twig'),
+                'consult_article' => new BuildConsultArticle('consult_article.html.twig'),
+                'consult_profile' => new BuildConsultProfile('consult_profile.html.twig'),
+                'search'          => new BuildSearchResultDomain('search_results.html.twig'),
+                'write_article'   => new BuildWriteArticle('admin/edit_article.html.twig'),
+                'edit_article'    => new BuildEditArticle('admin/edit_article.html.twig'),
+                'edit_profile'    => new BuildEditProfile('admin/edit_profile.html.twig'),
+                'add_category'    => new BuildAddCategory('admin/add_category.html.twig'),
+                '404'             => new Build404('404.html.twig'),
             );
     
             $this->_services = array(
                 // Dao section.
-                'dao.article'       => new ArticleDAO(),
-                'dao.category'      => new CategoryDAO(),
-                'dao.user'          => new UserDAO(),
-                'dao.website'       => new WebsiteDAO(),
+                'dao.article'  => new ArticleDAO(),
+                'dao.category' => new CategoryDAO(),
+                'dao.theme'    => new ThemeDAO(),
+                'dao.user'     => new UserDAO(),
+                'dao.website'  => new WebsiteDAO(),
                 
                 // Builder section.
-                'form.builder'      => new FormBuilder(),
+                'form.builder' => new FormBuilder(),
                 
                 // checker section.
-                'article.checker'       => new ArticleChecker(),
-                'category.checker'      => new CategoryChecker(),
-                'connection.checker'    => new ConnectionChecker(),
-                'file.checker'          => new FileChecker(),
-                'mail.checker'          => new MailChecker(),
-                'password.checker'      => new PasswordChecker(),
-                'user.checker'          => new UserChecker(),
-                'url.checker'           => new URLChecker(),
+                'article.checker'    => new ArticleChecker(),
+                'category.checker'   => new CategoryChecker(),
+                'connection.checker' => new ConnectionChecker(),
+                'mail.checker'       => new MailChecker(),
+                'password.checker'   => new PasswordChecker(),
+                'user.checker'       => new UserChecker(),
+                'url.checker'        => new URLChecker(),
                 
                 // Handler section.
-                'cookie.handler'    => new CookieHandler(),
-                'file.handler'      => new FileHandler(),
-                'get.handler'       => new GetHandler(),
-                'message.handler'   => new MessageHandler(),
-                'post.handler'      => new PostHandler(),
-                'session.handler'   => new SessionHandler(),
+                'cookie.handler'  => new CookieHandler(),
+                'file.handler'    => new FileHandler(),
+                'get.handler'     => new GetHandler(),
+                'message.handler' => new MessageHandler(),
+                'post.handler'    => new PostHandler(),
+                'session.handler' => new SessionHandler(),
                 
                 // File section.
-                'avatar.upload'     => new FileAvatar(),
+                'avatar.upload' => new FileAvatar(),
                 
                 // Renderer section.
-                'renderer'          => new Renderer(),
+                'renderer' => new Renderer(),
             );
     
-            $this->_initializeMessageHandler();
+            $this->initializeMessageHandler();
         }
     
         /**
@@ -205,7 +205,7 @@
          */
         public function render($url) {
             $view = null;
-            $view = $this->_match($url);
+            $view = $this->match($url);
             return $view;
         }
     
@@ -220,16 +220,16 @@
          * @since SciMS 0.1
          * @version 1.0
          */
-        private function _match($url) {
+        private function match($url) {
             $view = null;
             foreach ($this->_routes as $key => $value) {
                 // Generate REGEX to recognize good url form.
                 if (preg_match($value, $url) != 0) {
-                    $view = $this->_parseUrl($key);
+                    $view = $this->parseUrl($key);
                 }
             }
             if ($view === null) {
-                $view = $this->_parseUrl('404');
+                $view = $this->parseUrl('404');
             }
             return $view;
         }
@@ -255,7 +255,7 @@
          * @since SciMS 0.1
          * @version 1.3
          */
-        private function _parseUrl($key) {
+        private function parseUrl($key) {
             $domains = null;
             $this->_services['session.handler']->setRequest($_SESSION); // Retrieve $_SESSION
             
@@ -286,7 +286,7 @@
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function _initializeMessageHandler() {
+        private function initializeMessageHandler() {
             // Success messages.
             $this->_services['message.handler']->pushMessage('inscription',     new Success('Inscription success'));
             $this->_services['message.handler']->pushMessage('connection',      new Success('Connection success'));

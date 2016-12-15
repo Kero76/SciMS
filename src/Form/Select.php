@@ -31,7 +31,7 @@
          * @version 1.0
          */
         public function __construct(array $attributes) {
-            $this->_hydrate($attributes);
+            $this->hydrate($attributes);
             $this->_options = array();
         }
     

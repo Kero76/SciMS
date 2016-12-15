@@ -59,12 +59,10 @@
             try {
                 $this->_pdo = new PDO(DatabaseSetting::getInstance()->getDns() . DatabaseSetting::getInstance()->getDbname(),
                                       DatabaseSetting::getInstance()->getUser(), DatabaseSetting::getInstance()->getPassword());
-                //$this->_pdo = new PDO(self::DNS, self::USER, self::PASSWORD);
                 $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 echo 'Erreur : ' . $e->getMessage().'<br />';
                 echo 'N° : '.$e->getCode();
-                die();
             }
         }
     

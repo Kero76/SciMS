@@ -14,7 +14,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    abstract class AbstractBuildDomain implements BuildDomain {
+    abstract class AbstractBuildDomain implements BuildDomainInterface {
     
         /**
          * The name of the Template.

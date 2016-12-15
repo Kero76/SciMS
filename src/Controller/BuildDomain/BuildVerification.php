@@ -46,7 +46,18 @@
             $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
             $services['file.handler']->setRequest($_FILES); // Retrieve $_SESSION.
             $entry_form = $services['get.handler']->getRequestField('form');
-            
+    
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
+    
             switch ($entry_form) {
                 // Connection section.
                 case 'connection' :
@@ -62,12 +73,14 @@
                         $domains = array(
                             'user'    => $user->setConnect(true),
                             'message' => $services['message.handler']->getMessage('connection'),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('connection_fail'),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     }
                     break;
@@ -88,12 +101,14 @@
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('inscription'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('inscription_fail'),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     }
                     break;
@@ -106,7 +121,8 @@
                     }
                     $domains = array(
                         'message' => $services['message.handler']->getMessage('disconnection'),
-                        'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                        'website' => $website,
+                        'theme'   => $theme,
                     );
                     break;
         
@@ -132,13 +148,15 @@
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('update'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('update_failed'),
                             'user'    => $services['dao.user']->findByUsername($user->getUsername()),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     }
                     break;
@@ -166,13 +184,15 @@
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('write_article'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('write_article_fail'),
                             'user'    => $services['dao.user']->findById($services['post.handler']->getRequestField('user_id')),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     }
                     break;
@@ -203,13 +223,15 @@
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('update_article'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('update_article_fail'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     }
                     break;
@@ -226,13 +248,15 @@
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('category_create'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('category_fail'),
                             'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                            'website' => $website,
+                            'theme'   => $theme,
                         );
                     }
                     break;
@@ -242,7 +266,8 @@
                     $domains = array(
                         'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         'message' => $services['message.handler']->getMessage('404'),
-                        'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                        'website' => $website,
+                        'theme'   => $theme,
                     );
                     break;
             }

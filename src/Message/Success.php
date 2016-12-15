@@ -12,7 +12,7 @@
      * @since SciMS 0.2
      * @version 1.0
      */
-    class Success implements Message {
+    class Success implements MessageInterface {
         
         /**
          * A string which represent the message at display on view.

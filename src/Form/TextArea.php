@@ -48,7 +48,7 @@
          * @version 1.0
          */
         public function __construct(array $attributes) {
-            $this->_hydrate($attributes);
+            $this->hydrate($attributes);
             $render  = '<textarea ';
             $render .= ($this->getClass()    == ''   ) ? '' : ' class="'  . $this->getClass() . '"';
             $render .= ($this->getId()       == ''   ) ? '' : ' id="'     . $this->getId()    . '"';

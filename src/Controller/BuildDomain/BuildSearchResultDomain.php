@@ -38,8 +38,18 @@
             $services['post.handler']->setRequest($_POST);  // Retrieve $_POST.
             $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
             $services['file.handler']->setRequest($_FILES); // Retrieve $_SESSION.
-            $website = $services['dao.website']->findSettings('../app/settings.yml');
             
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
+    
             // If search-field exists, so search result on Database.
             if ($services['post.handler']->requestFieldExist('search-field') == true && $services['post.handler']->getRequestField('search-field') != '') {
                 if ($services['session.handler']->requestFieldExist('user_id')) {
@@ -47,12 +57,14 @@
                         'articles' => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),
                         'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         'connect'  => true,
-                        'website'  => $website,
+                        'website' => $website,
+                        'theme'   => $theme,
                     );
                 } else {
                     $domains = array(
                         'articles' => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),
                         'website' => $website,
+                        'theme'   => $theme,
                     );
                 }
             } else {
@@ -62,11 +74,13 @@
                         'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                         'connect' => true,
                         'website' => $website,
+                        'theme'   => $theme,
                     );
                 } else {
                     $domains = array(
                         'message' => $services['message.handler']->getMessage('research_fail'),
                         'website' => $website,
+                        'theme'   => $theme,
                     );
                 }
             }

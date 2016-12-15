@@ -40,7 +40,7 @@
          * @version 1.0
          */
         public function __construct(array $attributes, $input) {
-            $this->_hydrate($attributes);
+            $this->hydrate($attributes);
             $this->_options = array();
             $this->_input = $input;
         }

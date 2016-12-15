@@ -18,7 +18,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class Website {
+    class Website extends AbstractDomain {
     
         /**
          * Title of the website.
@@ -78,10 +78,19 @@
     
         /**
          * Authors of the website available on subtitle of website.
+         *
          * @var string
          * @since SciMS 0.4
          */
         private $_website_authors;
+    
+        /**
+         * The theme name.
+         *
+         * @var string
+         * @since SciMS 0.4.1
+         */
+        private $_theme;
     
         /**
          * Website constructor.
@@ -93,7 +102,7 @@
          * @version 1.0
          */
         public function __construct(array $data) {
-            $this->_hydrate($data);
+            $this->hydrate($data);
         }
     
         /**
@@ -286,27 +295,28 @@
         public function setWebsiteAuthors($website_authors) {
             $this->_website_authors = $website_authors;
         }
-        
+    
         /**
-         * Method use for hydrate object directly thanks the data from the Database.
+         * Return the theme name use to display on website.
          *
-         * @access private
-         * @param array $data
-         *  An array with all data from the Database.
-         * @since SciMS 0.3
+         * @return string
+         *  The theme name.
+         * @since SciMS 0.4.1
          * @version 1.0
          */
-        private function _hydrate(array $data) {
-            foreach($data as $key => $value) {
-                $method = 'set';
-                $keySplit = explode("_", $key); // split key name if contains XXX_XXX_XXX
-                for ($i = 0; $i < count($keySplit); $i++ ) {
-                    $method .= ucfirst($keySplit[$i]); // Replace first characters of each word in uppercase form.
-                }
-                // Execute method if exists on is object.
-                if(method_exists($this, $method)) {
-                    $this->$method($value);
-                }
-            }
+        public function getTheme() {
+            return $this->_theme;
+        }
+    
+        /**
+         * Set the theme name use to display on website.
+         *
+         * @param string $theme
+         *  the theme name.
+         * @since SciMS 0.4.1
+         * @version 1.0
+         */
+        public function setTheme($theme) {
+            $this->_theme = $theme;
         }
     }

@@ -45,6 +45,17 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
+    
             $user = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
     
             // Create the object datalist for the category.
@@ -187,9 +198,10 @@
                 )->getForms(),
                 'user'    => $user,
                 'connect' => true,
-                'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                'website' => $website,
+                'theme'   => $theme,
             );
-    
+            
             return $domains;
         }
     }

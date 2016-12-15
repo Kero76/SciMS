@@ -13,7 +13,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class MailChecker extends AbstractChecker  {
+    class MailChecker extends AbstractChecker {
     
         /**
          * Regex use to check email address.

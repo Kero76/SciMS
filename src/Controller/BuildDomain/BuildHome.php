@@ -38,6 +38,15 @@
          */
         public function buildDomain(array $services) {
             $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+            
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
             
             $category_articles = array();
             $categories = $services['dao.category']->findAll();
@@ -51,6 +60,7 @@
                     'user'                  => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                     'connect'               => true,
                     'website'               => $website,
+                    'theme'                 => $theme,
                     'categories_articles'   => $category_articles,
                 );
             } else {
@@ -58,6 +68,7 @@
                     'last_articles'         => $services['dao.article']->findLastArticle($website->getLastArticle()),
                     'website'               => $website,
                     'categories_articles'   => $category_articles,
+                    'theme'                 => $theme,
                 );
             }
     

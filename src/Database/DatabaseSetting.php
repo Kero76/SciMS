@@ -78,7 +78,7 @@
          */
         private function __construct() {
             $database_setting = Yaml::parse(file_get_contents(self::DB_SETTING_PATH))['database'];
-            $this->_hydrate($database_setting);
+            $this->hydrate($database_setting);
         }
         
         /**
@@ -214,7 +214,7 @@
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function _hydrate(array $data) {
+        private function hydrate(array $data) {
             foreach($data as $key => $value) {
                 $method = 'set';
                 $keySplit = explode("_", $key); // split key name if contains XXX_XXX_XXX
@@ -227,5 +227,4 @@
                 }
             }
         }
-        
     }

@@ -9,7 +9,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class FileAvatar implements FileUpload {
+    class FileAvatar implements FileUploadInterface {
     
         /**
          * All right use for create directory if not exists on server.
@@ -17,7 +17,7 @@
          * @var integer
          * @since SciMS 0.3
          */
-        static $ALL_RIGHT = 0777;
+        public static $ALL_RIGHT = 0777;
     
         /**
          * Right apply at the folder to authorize php and server to browse directory and files.
@@ -25,7 +25,7 @@
          * @var integer
          * @since SciMS 0.3
          */
-        static $CHMOD_RIGHT = 0745;
+        public static $CHMOD_RIGHT = 0745;
     
         /**
          * A list of all image extension file available on website.
@@ -81,9 +81,9 @@
          */
         public function checkFile(array $services, $form_image_name) {
             return (
-                $this->_checkUnuploadFile($services['file.handler']->getRequestField($form_image_name)['error']) &&
-                $this->_checkFileExtension($services['file.handler']->getRequestField($form_image_name)['name']) &&
-                $this->_checkFileSize($services['file.handler']->getRequestField($form_image_name)['size'])
+                $this->checkUnuploadFile($services['file.handler']->getRequestField($form_image_name)['error']) &&
+                $this->checkFileExtension($services['file.handler']->getRequestField($form_image_name)['name']) &&
+                $this->checkFileSize($services['file.handler']->getRequestField($form_image_name)['size'])
             );
         }
     
@@ -148,7 +148,7 @@
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function _checkUnuploadFile($file_error) {
+        private function checkUnuploadFile($file_error) {
             if ($file_error > 0) {
                 return false;
             }
@@ -166,7 +166,7 @@
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function _checkFileSize($file_size) {
+        private function checkFileSize($file_size) {
             if ($file_size > $this->_image_max_size) {
                 return false;
             }
@@ -185,7 +185,7 @@
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function _checkFileExtension($file_extension) {
+        private function checkFileExtension($file_extension) {
             // strrchr return the extension with '.'.
             // substr return the substring without the first character ('.').
             // strtolower return the extension in lower case.

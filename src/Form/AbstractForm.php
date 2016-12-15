@@ -277,7 +277,7 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        protected function _hydrate(array $data) {
+        protected function hydrate(array $data) {
             foreach($data as $key => $value) {
                 $method = 'set';
                 $keySplit = explode("_", $key); // split key name if contains XXX_XXX_XXX

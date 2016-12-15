@@ -11,7 +11,7 @@
      *  - HIDDEN  : Totally hidden.
      *
      * -> V1.1 :
-     *  Added constantes attributes representing status.
+     *  Added constants attributes representing status.
      * -> V1.2 :
      *  Added abstract attributes on Article.
      *
@@ -20,7 +20,7 @@
      * @since SciMS 0.1
      * @version 1.1
      */
-    class Article {
+    class Article extends AbstractDomain {
     
         /**
          * Release status of the Article.
@@ -154,7 +154,7 @@
          * @version 1.0
          */
         public function __construct(array $data) {
-            $this->_hydrate($data);
+            $this->hydrate($data);
         }
     
         /**
@@ -454,28 +454,5 @@
          */
         public function setDisplayedSummary($displayed_summary) {
             $this->_displayed_summary = $displayed_summary;
-        }
-        
-        /**
-         * Method use for hydrate object directly thanks the data from the Database.
-         *
-         * @access private
-         * @param array $data
-         *  An array with all data from the Database.
-         * @since SciMS 0.1
-         * @version 1.0
-         */
-        private function _hydrate(array $data) {
-            foreach($data as $key => $value) {
-                $method = 'set';
-                $keySplit = explode("_", $key); // split key name if contains XXX_XXX_XXX
-                for ($i = 0; $i < count($keySplit); $i++ ) {
-                    $method .= ucfirst($keySplit[$i]); // Replace first characters of each word in uppercase form.
-                }
-                // Execute method if exists on is object.
-                if(method_exists($this, $method)) {
-                    $this->$method($value);
-                }
-            }
         }
     }

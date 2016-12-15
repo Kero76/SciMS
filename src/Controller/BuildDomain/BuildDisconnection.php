@@ -39,6 +39,17 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
+            $website = $services['dao.website']->findSettings('../app/settings.yml');
+            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $theme   = "";
+    
+            foreach($themes as $t) {
+                if (strtolower($t->getName()) === strtolower($website->getTheme())) {
+                    $theme = $t;
+                    break;
+                }
+            }
+    
             $domains = array(
                 'forms' => $services['form.builder']->add(
                     new InputSubmit(array(
@@ -49,7 +60,8 @@
                         'class'         => 'form-control btn btn-primary',
                     ))
                 )->getForms(),
-                'website' => $services['dao.website']->findSettings('../app/settings.yml'),
+                'website' => $website,
+                'theme'   => $theme,
             );
     
             return $domains;

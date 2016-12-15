@@ -8,9 +8,12 @@
         <meta name="generator" content="SciMS">
         {% block meta_tags %}{% endblock %}
 
-        <link rel="stylesheet" type="text/css" href="../web/lib/bootstrap/css/bootstrap.min.css"> <!-- Bootstrap.min -->
-        <link rel="stylesheet" type="text/css" href="../web/lib/font-awesome/css/font-awesome.min.css"> <!-- Font Awesome -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="{{ theme.link }}" rel="stylesheet" integrity="{{ theme.integrity }}" crossorigin="anonymous"> <!-- Theme Stylesheet -->
+
         <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
+
         {% block stylesheets %}{% endblock %}
 
         <title>{% block title %}{% endblock %}</title>
@@ -64,8 +67,8 @@
                 </div>
 
                 <!-- Loading script section -->
-                <script type="text/javascript" src="../web/lib/jquery/jquery-3.1.1.min.js"></script>    <!-- jquery    -->
-                <script type="text/javascript" src="../web/lib/bootstrap/js/bootstrap.min.js"></script> <!-- bootstrap -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!-- jquery    -->
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> <!-- bootstrap -->
                 {% block javascripts %}{% endblock %}
             </div>
         </section>

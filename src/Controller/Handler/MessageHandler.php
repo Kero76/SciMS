@@ -1,5 +1,7 @@
 <?php
     namespace SciMS\Controller\Handler;
+    
+    use \SciMS\Message\MessageInterface;
 
     /**
      * Class MessageHandler.
@@ -53,14 +55,14 @@
         /**
          * Add a message on MessageHandler.
          *
-         * @param $key
+         * @param                  $key
          *  The key of the message.
-         * @param \SciMS\Message\Message $message
+         * @param MessageInterface $message
          *  The message at add.
          * @since SciMS 0.3
          * @version 1.0
          */
-        public function pushMessage($key, \SciMS\Message\Message $message) {
+        public function pushMessage($key, MessageInterface $message) {
             $this->_messages[$key] = $message;
         }
     }

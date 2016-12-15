@@ -20,7 +20,7 @@
         {# Show summary if is activate on article #}
         {% if article.displayedSummary == 1 %}
             <nav id="summary">
-                <h4>Summary</h4>
+                <h4>Table of Content</h4>
                 <ul id="list-summary">
 
                 </ul>
@@ -66,7 +66,7 @@
             {% block javascripts %}
                 <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
                 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-                <script type="text/javascript" src="../web/js/summary.js"></script>
+                <script type="text/javascript" src="../web/js/table_of_content.js"></script>
             {% endblock %}
         {% else %}
             <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>

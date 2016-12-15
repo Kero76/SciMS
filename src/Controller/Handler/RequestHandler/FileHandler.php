@@ -11,7 +11,7 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class FileHandler implements RequestHandler {
+    class FileHandler implements RequestHandlerInterface {
     
         /**
          * An array which contains $_FILES content.

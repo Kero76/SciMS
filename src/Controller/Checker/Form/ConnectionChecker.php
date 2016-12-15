@@ -12,10 +12,10 @@
      * @since SciMS 0.3
      * @version 1.0
      */
-    class ConnectionChecker extends AbstractChecker implements FormChecker {
+    class ConnectionChecker extends AbstractChecker implements FormCheckerInterface {
     
         /**
-         * Method use to check insertion the differents forms present on website.
+         * Method use to check insertion the different forms present on website.
          *
          * @param array $services
          *  The array with all services available on website.
@@ -48,7 +48,7 @@
         }
     
         /**
-         * Method use to check update the differents forms present on website.
+         * Method use to check update the different forms present on website.
          *
          * @param array $services
          *  The array with all services available on website.
@@ -85,7 +85,7 @@
         }
     
         /**
-         * Method use to check delete the differents forms present on website.
+         * Method use to check delete the different forms present on website.
          *
          * @param array $services
          *  The array with all services available on website.

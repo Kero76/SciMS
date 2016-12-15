@@ -14,7 +14,7 @@
     class InputList extends Input {
         
         /**
-         * Stored list attributs in object InputList.
+         * Stored list attributes in object InputList.
          *
          * @var string
          * @since SciMS 0.2
@@ -31,9 +31,9 @@
          * @version 1.0
          */
         public function __construct(array $attributes) {
-            $this->_hydrate($attributes);
+            $this->hydrate($attributes);
             $render  = '<input ';
-            $render .= ($this->getList()         == ''   ) ? '' : ' list="'           . $this->getList()          . '"';
+            $render .= ($this->getList() == '') ? '' : ' list="' . $this->getList() . '"';
             $render .= '>';
             $this->setRender($render);
         }
