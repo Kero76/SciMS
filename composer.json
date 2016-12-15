@@ -1,5 +1,5 @@
 {
-  "name": "SciMS",
+  "name": "scims",
   "description": "SciMS is a CMS like to post research articles.",
   "version": "0.4.1",
   "license": "GPL-3.0",
@@ -20,11 +20,7 @@
   "support": {
     "email": "nic.gille@gmail.com",
     "issues": "https://github.com/Kero76/SciMS/issues",
-    "forum": "",
-    "wiki": "",
-    "irc": "",
-    "source": "https://github.com/Kero76/SciMS",
-    "docs": ""
+    "source": "https://github.com/Kero76/SciMS"
   },
   "require": {
     "symfony/yaml": "~v3.2.0-RC2",

@@ -3,7 +3,6 @@
     
     use SciMS\Domain\Theme;
     use \Symfony\Component\Yaml\Yaml;
-    use \SciMS\Domain\Website;
     
     /**
      * Class WebsiteDAO.

@@ -63,7 +63,7 @@
         public function findLastArticle($last_nb) {
             $user_dao     = new UserDAO();
             $category_dao = new CategoryDAO();
-            $sql          = "SELECT * FROM `articles` ORDER BY `id` DESC LIMIT 0," . $last_nb;
+            $sql          = "SELECT * FROM `articles` ORDER BY `id` DESC LIMIT 0, $last_nb";
             $result       = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();
@@ -94,14 +94,14 @@
          */
         public function findById($id) {
             // Retrieve writter id from the database.
-            $writter_id = $this->_findWritterById($id);
+            $writter_id = $this->findWritterById($id);
             
             // Create the user from the database.
             $user_dao = new UserDAO();
             $user     = $user_dao->findById($writter_id);
             
             // Retrieve Category id from the Database.
-            $category_id = $this->_findCategoryById($id);
+            $category_id = $this->findCategoryById($id);
             
             // Create the Category from the Database.
             $category_dao = new CategoryDAO();
@@ -124,7 +124,7 @@
          *
          * @param $tags
          *  A list of tag to search in the Database.
-         * @return \SciMS\Domain\Article
+         * @return array \SciMS\Domain\Article
          *  Return a collection of Article, as found.
          * @since SciMS 0.2
          * @version 1.0
@@ -319,7 +319,7 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        private function _findWritterById($id) {
+        private function findWritterById($id) {
             $sql = "SELECT writter FROM `articles` WHERE id = ?";
             $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
             return $row['writter'];
@@ -336,7 +336,7 @@
          * @since SciMS 0.2
          * @version 1.0
          */
-        private function _findCategoryById($id) {
+        private function findCategoryById($id) {
             $sql = "SELECT categories FROM `articles` WHERE id = ?";
             $row = $this->getDatabase()->execute($sql, array($id), PDO::FETCH_ASSOC);
             return $row['categories'];

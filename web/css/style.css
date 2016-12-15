@@ -134,6 +134,6 @@ header {
 
 /* Category on article page icon */
 .scims-excerpt-categories:before {
-    font-family: FontAwesome;
-    content: "\f02e";
+    font-family : FontAwesome;
+    content     : "\f02e";
 }

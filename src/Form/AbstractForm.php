@@ -281,7 +281,8 @@
             foreach($data as $key => $value) {
                 $method = 'set';
                 $keySplit = explode("_", $key); // split key name if contains XXX_XXX_XXX
-                for ($i = 0; $i < count($keySplit); $i++ ) {
+                $count = count($keySplit);
+                for ($i = 0; $i < $count; $i++ ) {
                     $method .= ucfirst($keySplit[$i]); // Replace first characters of each word in uppercase form.
                 }
                 // Execute method if exists on is object.

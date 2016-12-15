@@ -11,4 +11,3 @@
     
     // Display the corresponding view.
     echo $view;
-    
