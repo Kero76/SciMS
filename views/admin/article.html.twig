@@ -1,0 +1,59 @@
+{% extends "layout.admin.html.twig" %}
+
+{% block keywords %}homepage, home, article, scientist, research{% endblock %}
+
+{% block meta_tags %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block title %}{{ website.title }} - Administration Home{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ website.title }} : {{ website.subtitle }}
+            <small class="scims-italic scims-header-page-subtitle">{{ website.websiteAuthors }}</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- All articles available -->
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>Articles available</h2>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <td class="text-center">Title</td>
+                    <td class="text-center">Abstract</td>
+                    <td class="text-center">Category</td>
+                    <td class="text-center">Tags</td>
+                    <td class="text-center">Writter</td>
+                    <td class="text-center">Edit</td>
+                    <td class="text-center">Delete</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.title }}</td>
+                        <td>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</td>
+                        <td class="text-center align-middle">{{ article.categories.title }}</td>
+                        <td class="text-center align-middle">{{ article.tags }}</td>
+                        <td class="text-center align-middle">{{ article.writter.username }}</td>
+                        <td class="text-center align-middle"><a href="/web/index.php?action=edit_article&user={{ user.id }}&article={{ article.id }}" class="scims-edit-article-btn" role="button">Edit</a></td>
+                        <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_article&user={{ user.id }}&article={{ article.id }}" class="scims-delete-article-btn" role="button">Delete</a></td>
+                    </tr>
+                {% endfor %}
+                    <tr>
+                        <td colspan="7" class="text-center"><a href="/web/index.php?action=write_article&user={{ user.id }}"> Write an Article</a></td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+{% endblock %}

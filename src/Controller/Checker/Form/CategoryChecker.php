@@ -42,7 +42,10 @@
          * @version 1.0
          */
         public function checkUpdate(array $services) {
-            
+            if ($this->emptyString($services['post.handler']->getRequestField('title'))) {
+                return false;
+            }
+            return true;
         }
     
         /**

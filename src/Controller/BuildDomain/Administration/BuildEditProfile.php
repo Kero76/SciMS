@@ -1,6 +1,7 @@
 <?php
-    namespace SciMS\Controller\BuildDomain;
-    
+    namespace SciMS\Controller\BuildDomain\Administration;
+
+    use \SciMS\Controller\BuildDomain\AbstractBuildDomain;
     use \SciMS\Form\Input\InputDate;
     use \SciMS\Form\Input\InputEmail;
     use \SciMS\Form\Input\InputFile;

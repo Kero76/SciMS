@@ -1,0 +1,31 @@
+{% extends "layout.admin.html.twig" %}
+
+{% block keywords %}homepage, home, article, scientist, research{% endblock %}
+
+{% block meta_tags %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block title %}{{ website.title }} - Administration{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ website.title }} : {{ website.subtitle }}
+            <small class="scims-italic scims-header-page-subtitle">{{ website.websiteAuthors }}</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- All articles available -->
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>Articles</h2>
+        <h2>Categories</h2>
+        <h2>Users</h2>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+{% endblock %}

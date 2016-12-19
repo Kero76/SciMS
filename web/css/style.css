@@ -19,6 +19,14 @@ header {
     height: 100px;
 }
 
+thead {
+    font-weight: bold;
+}
+
+.scims-vertical-align {
+    vertical-align: middle;
+}
+
 /* Transform text in italic. */
 .scims-italic {
     font-style: italic;
@@ -126,6 +134,12 @@ header {
     content: "\f02e";
 }
 
+/* users creation icon */
+.scims-user:before {
+    font-family: FontAwesome;
+    content: "\f0c0";
+}
+
 /* Tags on article page icon */
 .scims-excerpt-tags:before {
     font-family: FontAwesome;
@@ -136,4 +150,9 @@ header {
 .scims-excerpt-categories:before {
     font-family : FontAwesome;
     content     : "\f02e";
+}
+
+.scims-administration:before {
+    font-family : FontAwesome;
+    content: "\f085";
 }

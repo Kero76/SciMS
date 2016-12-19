@@ -1,22 +1,24 @@
 <?php
-    namespace SciMS\Controller\BuildDomain;
-
+    namespace SciMS\Controller\BuildDomain\Administration;
+    
+    use \SciMS\Controller\BuildDomain\AbstractBuildDomain;
     use \SciMS\Form\Input\InputSubmit;
-
+    use \SciMS\Form\Input\InputText;
+    
     /**
-     * Class BuildDisconnection
+     * Class BuildAddCategory.
      *
-     * This class build domain objects present on Disconnection page.
+     * This class build domain objects present on Add Category page.
      *
      * @author Kero76
      * @package SciMS\Controller\BuildDomain
      * @since SciMS 0.3
      * @version 1.0
      */
-    class BuildDisconnection extends AbstractBuildDomain {
+    class BuildAddCategory extends AbstractBuildDomain {
     
         /**
-         * BuildDisconnection constructor.
+         * BuildAddCategory constructor.
          *
          * @constructor
          * @param $template
@@ -50,18 +52,31 @@
                 }
             }
     
+            $user    = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
             $domains = array(
                 'forms' => $services['form.builder']->add(
+                // Title
+                    new InputText(array(
+                        'type'  => 'text',
+                        'id'    => 'title',
+                        'name'  => 'title',
+                        'class' => 'form-control',
+                        'label' => 'Title',
+                    ))
+                )->add(
+                // Submit
                     new InputSubmit(array(
-                        'type'          => 'submit',
-                        'id'            => 'submit',
-                        'name'          => 'submit',
-                        'value'         => 'Sign out',
-                        'class'         => 'form-control btn btn-primary',
+                        'type'  => 'submit',
+                        'id'    => 'submit',
+                        'name'  => 'submit',
+                        'class' => 'form-control btn btn-primary',
+                        'value' => 'Submit',
                     ))
                 )->getForms(),
-                'website' => $website,
-                'theme'   => $theme,
+                'user'       => $user,
+                'connect'    => true,
+                'website'    => $website,
+                'theme'      => $theme,
             );
     
             return $domains;

@@ -17,10 +17,10 @@
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
         {# Check if the article_id exist, and if exists change form content #}
-        {% if article_id %}
-            <form action="/web/index.php?action=verification&form=edit_article" method="post" class="form-horizontal">
+        {% if category_id %}
+            <form action="/web/index.php?action=verification&form=edit_category" method="post" class="form-horizontal">
         {% else %}
-            <form action="/web/index.php?action=verification&form=write_article" method="post" class="form-horizontal">
+            <form action="/web/index.php?action=verification&form=add_category" method="post" class="form-horizontal">
         {% endif %}
             {% for form in forms %}
                 <div class="form-group">

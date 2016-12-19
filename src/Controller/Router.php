@@ -1,19 +1,22 @@
 <?php
     namespace SciMS\Controller;
     
+    use SciMS\Controller\BuildDomain\Administration\BuildArticles;
+    use SciMS\Controller\BuildDomain\Administration\BuildCategories;
     use \SciMS\Controller\BuildDomain\Build404;
-    use \SciMS\Controller\BuildDomain\BuildAddCategory;
-    use \SciMS\Controller\BuildDomain\BuildConsultArticle;
     use \SciMS\Controller\BuildDomain\BuildConnection;
-    use \SciMS\Controller\BuildDomain\BuildDisconnection;
-    use \SciMS\Controller\BuildDomain\BuildEditArticle;
-    use \SciMS\Controller\BuildDomain\BuildEditProfile;
+    use \SciMS\Controller\BuildDomain\BuildConsultArticle;
+    use \SciMS\Controller\BuildDomain\BuildConsultProfile;
     use \SciMS\Controller\BuildDomain\BuildHome;
     use \SciMS\Controller\BuildDomain\BuildInscription;
-    use \SciMS\Controller\BuildDomain\BuildConsultProfile;
     use \SciMS\Controller\BuildDomain\BuildSearchResultDomain;
     use \SciMS\Controller\BuildDomain\BuildVerification;
-    use \SciMS\Controller\BuildDomain\BuildWriteArticle;
+    use \SciMS\Controller\BuildDomain\Administration\BuildAdministrationHome;
+    use \SciMS\Controller\BuildDomain\Administration\BuildAddCategory;
+    use \SciMS\Controller\BuildDomain\Administration\BuildEditArticle;
+    use \SciMS\Controller\BuildDomain\Administration\BuildEditCategory;
+    use \SciMS\Controller\BuildDomain\Administration\BuildEditProfile;
+    use \SciMS\Controller\BuildDomain\Administration\BuildWriteArticle;
     use \SciMS\Controller\Builder\FormBuilder;
     use \SciMS\Controller\Checker\Form\ArticleChecker;
     use \SciMS\Controller\Checker\Form\CategoryChecker;
@@ -23,6 +26,7 @@
     use \SciMS\Controller\Checker\PasswordChecker;
     use \SciMS\Controller\Checker\URLChecker;
     use \SciMS\Controller\Handler\MessageHandler;
+    use SciMS\Controller\Handler\RedirectHandler;
     use \SciMS\Controller\Handler\RequestHandler\CookieHandler;
     use \SciMS\Controller\Handler\RequestHandler\FileHandler;
     use \SciMS\Controller\Handler\RequestHandler\GetHandler;
@@ -129,30 +133,46 @@
                 'connection'      => '#\/web\/index\.php\?action=connection$#',
                 'disconnection'   => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
                 'inscription'     => '#\/web\/index\.php\?action=inscription$#',
-                'verification'    => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|add_category)+$#', // Change it when you add new Form.
                 'consult_article' => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
                 'consult_profile' => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
                 'search'          => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
+                'verification'    => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|delete_article|add_category|edit_category|delete_category)+(&user=[0-9]+&(article|category)=[0-9]+)?$#', // Change it when you add new Form.
+                
+                // Administration part
+                'administration'  => '#\/web\/index\.php\?action=administration&user=[0-9]+$#',
+                'admin_article'   => '#\/web\/index\.php\?action=admin_article&user=[0-9]+$#',
+                'admin_category'  => '#\/web\/index\.php\?action=admin_category&user=[0-9]+$#',
+                'admin_user'      => '#\/web\/index\.php\?action=admin_user&user=[0-9]+$#',
                 'write_article'   => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
                 'edit_article'    => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
                 'edit_profile'    => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+$#',
-                'add_category'    => '#\/web\/index\.php\?action=add_category&user=[0-9]+$#',
+                'add_category'    => '#\/web\/index\.php\?action=edit_category&user=[0-9]+$#',
+                'edit_category'   => '#\/web\/index\.php\?action=edit_category&user=[0-9]+&category=[0-9]+$#',
             );
             
             $this->_domains = array(
                 'home'            => new BuildHome('home.html.twig'),
                 'connection'      => new BuildConnection('connection.html.twig'),
-                'disconnection'   => new BuildDisconnection('disconnection.html.twig'),
                 'inscription'     => new BuildInscription('inscription.html.twig'),
-                'verification'    => new BuildVerification('verification.html.twig'),
                 'consult_article' => new BuildConsultArticle('consult_article.html.twig'),
                 'consult_profile' => new BuildConsultProfile('consult_profile.html.twig'),
                 'search'          => new BuildSearchResultDomain('search_results.html.twig'),
-                'write_article'   => new BuildWriteArticle('admin/edit_article.html.twig'),
-                'edit_article'    => new BuildEditArticle('admin/edit_article.html.twig'),
-                'edit_profile'    => new BuildEditProfile('admin/edit_profile.html.twig'),
-                'add_category'    => new BuildAddCategory('admin/add_category.html.twig'),
-                '404'             => new Build404('404.html.twig'),
+                'verification'    => new BuildVerification('verification.html.twig'),
+                
+                // Administration part
+                'administration' => new BuildAdministrationHome('admin/home.html.twig'),
+                'admin_article'  => new BuildArticles('admin/article.html.twig'),
+                'admin_category' => new BuildCategories('admin/category.html.twig'),
+                'admin_user'     => null,
+                
+                'write_article'  => new BuildWriteArticle('admin/edit_article.html.twig'),
+                'edit_article'   => new BuildEditArticle('admin/edit_article.html.twig'),
+                'edit_profile'   => new BuildEditProfile('admin/edit_profile.html.twig'),
+                'add_category'   => new BuildAddCategory('admin/edit_category.html.twig'),
+                'edit_category'  => new BuildEditCategory('admin/edit_category.html.twig'),
+                
+                // 404 Page not found !
+                '404' => new Build404('404.html.twig'),
             );
     
             $this->_services = array(
@@ -176,12 +196,13 @@
                 'url.checker'        => new URLChecker(),
                 
                 // Handler section.
-                'cookie.handler'  => new CookieHandler(),
-                'file.handler'    => new FileHandler(),
-                'get.handler'     => new GetHandler(),
-                'message.handler' => new MessageHandler(),
-                'post.handler'    => new PostHandler(),
-                'session.handler' => new SessionHandler(),
+                'cookie.handler'    => new CookieHandler(),
+                'file.handler'      => new FileHandler(),
+                'get.handler'       => new GetHandler(),
+                'message.handler'   => new MessageHandler(),
+                'post.handler'      => new PostHandler(),
+                'redirect.handler'  => new RedirectHandler(),
+                'session.handler'   => new SessionHandler(),
                 
                 // File section.
                 'avatar.upload' => new FileAvatar(),
@@ -223,7 +244,7 @@
         private function match($url) {
             $view = null;
             foreach ($this->_routes as $key => $value) {
-                // Generate REGEX to recognize good url form.
+                // Generate REGEX to recognize right url form.
                 if (preg_match($value, $url) != 0) {
                     $view = $this->parseUrl($key);
                 }

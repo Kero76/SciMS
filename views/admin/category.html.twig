@@ -1,0 +1,51 @@
+{% extends "layout.admin.html.twig" %}
+
+{% block keywords %}homepage, home, article, scientist, research{% endblock %}
+
+{% block meta_tags %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block title %}{{ website.title }} - Categories{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ website.title }} : {{ website.subtitle }}
+            <small class="scims-italic scims-header-page-subtitle">{{ website.websiteAuthors }}</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- All categories available -->
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>Categories available</h2>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+                <td class="text-center">Title</td>
+                <td class="text-center">Edit</td>
+                <td class="text-center">Delete</td>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.title }}</td>
+                    <td class="text-center align-middle"><a href="/web/index.php?action=edit_category&user={{ user.id }}&category={{ category.id }}" class="scims-edit-category-btn" role="button">Edit</a></td>
+                    <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_category&user={{ user.id }}&category={{ category.id }}" class="scims-delete-category-btn" role="button">Delete</a></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" class="text-center"><a href="/web/index.php?action=edit_category&user={{ user.id }}">Create a Category</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+{% endblock %}

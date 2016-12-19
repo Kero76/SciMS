@@ -31,14 +31,14 @@
         public function findAll() {
             $user_dao     = new UserDAO();
             $category_dao = new CategoryDAO();
-            $sql          = "SELECT * FROM `articles`";
+            $sql          = "SELECT * FROM `articles` ORDER BY `id` ASC";
             $result       = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $articles = array();
             foreach ($result as $row) {
                 $id                 = $row['id'];
                 $user               = $user_dao->findById($row['writter']);
-                $category           = $category_dao->findById($row['category']);
+                $category           = $category_dao->findById($row['categories']);
                 $row['writter']     = $user;
                 $row['categories']  = $category;
                 $articles[$id]      = $this->buildDomain($row);
@@ -306,8 +306,20 @@
             $sql = "UPDATE `articles` SET title = :title, abstract = :abstract, content = :content, authors = :authors, categories = :categories, tags = :tags, status = :status, date_modified = :date_modified, writter = :writter, displayed_summary = :displayed_summary WHERE id = :id";
             $this->getDatabase()->update($sql, $infoArticle);
         }
-    
-    
+        
+        /**
+         * Method use for delete article from Database.
+         *
+         * @param $id
+         *  The id of the article at remove.
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function deleteArticle($id) {
+            $sql = "DELETE FROM `articles` WHERE id = ?";
+            $this->getDatabase()->update($sql, array($id));
+        }
+        
         /**
          * Method use for search a writter thanks to the article id.
          *

@@ -1,23 +1,23 @@
 <?php
-    namespace SciMS\Controller\BuildDomain;
+    namespace SciMS\Controller\BuildDomain\Administration;
     
+    use SciMS\Controller\BuildDomain\AbstractBuildDomain;
+    use \SciMS\Form\Input\InputHidden;
     use \SciMS\Form\Input\InputSubmit;
     use \SciMS\Form\Input\InputText;
-    
+
     /**
-     * Class BuildAddCategory.
-     *
-     * This class build domain objects present on Add Category page.
+     * Class BuildEditCategory.
      *
      * @author Kero76
-     * @package SciMS\Controller\BuildDomain
-     * @since SciMS 0.3
+     * @package SciMS\Controller\BuildDomain\Administration
+     * @since SciMS 0.5
      * @version 1.0
      */
-    class BuildAddCategory extends AbstractBuildDomain {
+    class BuildEditCategory extends AbstractBuildDomain {
     
         /**
-         * BuildAddCategory constructor.
+         * BuildEditCategory constructor.
          *
          * @constructor
          * @param $template
@@ -40,19 +40,21 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
+            $services['get.handler']->setRequest($_GET);         // Retrieve $_GET.
             $website = $services['dao.website']->findSettings('../app/settings.yml');
             $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
             $theme   = "";
-    
+        
             foreach($themes as $t) {
                 if (strtolower($t->getName()) === strtolower($website->getTheme())) {
                     $theme = $t;
                     break;
                 }
             }
-    
-            $user    = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
-            $domains = array(
+        
+            $category = $services['dao.category']->findById($services['get.handler']->getRequestField('category'));
+            $user     = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
+            $domains  = array(
                 'forms' => $services['form.builder']->add(
                 // Title
                     new InputText(array(
@@ -61,6 +63,7 @@
                         'name'  => 'title',
                         'class' => 'form-control',
                         'label' => 'Title',
+                        'value' => $category->getTitle(),
                     ))
                 )->add(
                 // Submit
@@ -71,14 +74,21 @@
                         'class' => 'form-control btn btn-primary',
                         'value' => 'Submit',
                     ))
+                )->add(
+                    new InputHidden(array(
+                        'type'  => 'hidden',
+                        'id'    => 'category_id',
+                        'name'  => 'category_id',
+                        'value' => $services['get.handler']->getRequestField('category'),
+                    ))
                 )->getForms(),
-                'user'       => $user,
-                'connect'    => true,
-                'categories' => $services['dao.category']->findAll(),
-                'website'    => $website,
-                'theme'      => $theme,
+                'user'        => $user,
+                'connect'     => true,
+                'category_id' => true,
+                'website'     => $website,
+                'theme'       => $theme,
             );
-    
+        
             return $domains;
         }
     }

@@ -61,21 +61,19 @@
             switch ($entry_form) {
                 // Connection section.
                 case 'connection' :
-                    $user = $services['dao.user']->findByEmail($services['post.handler']->getRequestField('email'));
                     $connection = $services['connection.checker']->checkUpdate($services);
 
                     if ($connection) {
+                        $user = $services['dao.user']->findByEmail($services['post.handler']->getRequestField('email'));
                         // Create session with session.handler.
                         $services['session.handler']->createSession(array(
                             'user_id'       => $user->getId(),
                             'user_connect'  => true,
                         ));
-                        $domains = array(
-                            'user'    => $user->setConnect(true),
-                            'message' => $services['message.handler']->getMessage('connection'),
-                            'website' => $website,
-                            'theme'   => $theme,
-                        );
+                        
+                        // Redirect connected user.
+                        $url = '/web/index.php?user=' . $user->getId();
+                        $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('connection_fail'),
@@ -87,23 +85,29 @@
         
                 // Inscription section.
                 case 'inscription' :
-                    $user = new User(array(
-                        'email'     => $services['post.handler']->getRequestField('email'),
-                        'username'  => $services['post.handler']->getRequestField('username'),
-                        'password'  => password_hash($services['post.handler']->getRequestField('password'), PASSWORD_DEFAULT),
-                        'role'      => User::WRITTER,
-                        'connect'   => true,
-                    ));
-                    
                     $inscription = $services['user.checker']->checkInsert($services);
-                    if ($inscription === true)  {
+                    if ($inscription === true) {
+                        // Create an user instance.
+                        $user = new User(array(
+                            'email'    => $services['post.handler']->getRequestField('email'),
+                            'username' => $services['post.handler']->getRequestField('username'),
+                            'password' => password_hash($services['post.handler']->getRequestField('password'), PASSWORD_DEFAULT),
+                            'role'     => User::WRITTER,
+                            'connect'  => true,
+                        ));
+                        
+                        // Save user on Database
                         $services['dao.user']->saveUser($user);
-                        $domains = array(
-                            'message' => $services['message.handler']->getMessage('inscription'),
-                            'user'    => $services['dao.user']->findByUsername($user->getUsername()),
-                            'website' => $website,
-                            'theme'   => $theme,
-                        );
+                        
+                        // Create session with session.handler.
+                        $services['session.handler']->createSession(array(
+                            'user_id'      => $services['dao.user']->findByEmail($services['post.handler']->getRequestField('email'))->getId(),
+                            'user_connect' => true,
+                        ));
+                        
+                        // Redirect user with connection.
+                        $url = '/web/index.php?user=' . $services['dao.user']->findByEmail($services['post.handler']->getRequestField('email'))->getId();
+                        $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('inscription_fail'),
@@ -119,11 +123,8 @@
                     if ($disconnection === true) {
                         $services['session.handler']->destroySession();
                     }
-                    $domains = array(
-                        'message' => $services['message.handler']->getMessage('disconnection'),
-                        'website' => $website,
-                        'theme'   => $theme,
-                    );
+                    $url = '/web/index.php';
+                    $services['redirect.handler']->redirect($url);
                     break;
         
                 // Update user.
@@ -163,30 +164,26 @@
         
                 // Write an Article
                 case 'write_article' :
-                    $write    = $services['article.checker']->checkInsert($services);
-                    $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
-                    $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
-                    
-                    $article = new Article(array(
-                        'title'             => $services['post.handler']->getRequestField('title'),
-                        'abstract'          => $services['post.handler']->getRequestField('abstract'),
-                        'content'           => $services['post.handler']->getRequestField('content'),
-                        'authors'           => $services['post.handler']->getRequestField('authors'),
-                        'categories'        => $category,
-                        'tags'              => $services['post.handler']->getRequestField('tags'),
-                        'status'            => $services['post.handler']->getRequestField('status'),
-                        'writter'           => $user,
-                        'displayed_summary' => $services['post.handler']->getRequestField('summary'),
-                    ));
-            
+                    $write = $services['article.checker']->checkInsert($services);
                     if ($write === true) {
+                        $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
+                        $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
+    
+                        $article = new Article(array(
+                            'title'             => $services['post.handler']->getRequestField('title'),
+                            'abstract'          => $services['post.handler']->getRequestField('abstract'),
+                            'content'           => $services['post.handler']->getRequestField('content'),
+                            'authors'           => $services['post.handler']->getRequestField('authors'),
+                            'categories'        => $category,
+                            'tags'              => $services['post.handler']->getRequestField('tags'),
+                            'status'            => $services['post.handler']->getRequestField('status'),
+                            'writter'           => $user,
+                            'displayed_summary' => $services['post.handler']->getRequestField('summary'),
+                        ));
+                        
                         $services['dao.article']->saveArticle($article);
-                        $domains = array(
-                            'message' => $services['message.handler']->getMessage('write_article'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
-                        );
+                        $url = '/web/index.php?action=consult_article&id=' . $services['dao.article']->findLastId() . '&user=' . $services['session.handler']->getRequestField('user_id');
+                        $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('write_article_fail'),
@@ -199,33 +196,29 @@
         
                 // Edit an Article.
                 case 'edit_article' :
-                    $edit     = $services['article.checker']->checkUpdate($services);
-                    $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
-                    $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
-                    
-                    $date = new DateTime();
-                    $article = new Article(array(
-                        'id'                => $services['post.handler']->getRequestField('article_id'),
-                        'title'             => $services['post.handler']->getRequestField('title'),
-                        'abstract'          => $services['post.handler']->getRequestField('abstract'),
-                        'content'           => $services['post.handler']->getRequestField('content'),
-                        'authors'           => $services['post.handler']->getRequestField('authors'),
-                        'categories'        => $category,
-                        'tags'              => $services['post.handler']->getRequestField('tags'),
-                        'status'            => $services['post.handler']->getRequestField('status'),
-                        'date_modified'     => $date->format("Y-m-d H:i:s"),
-                        'writter'           => $user,
-                        'displayed_summary' => $services['post.handler']->getRequestField('summary'),
-                    ));
-                    
+                    $edit = $services['article.checker']->checkUpdate($services);
                     if ($edit === true) {
+                        $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
+                        $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
+    
+                        $date = new DateTime();
+                        $article = new Article(array(
+                            'id'                => $services['post.handler']->getRequestField('article_id'),
+                            'title'             => $services['post.handler']->getRequestField('title'),
+                            'abstract'          => $services['post.handler']->getRequestField('abstract'),
+                            'content'           => $services['post.handler']->getRequestField('content'),
+                            'authors'           => $services['post.handler']->getRequestField('authors'),
+                            'categories'        => $category,
+                            'tags'              => $services['post.handler']->getRequestField('tags'),
+                            'status'            => $services['post.handler']->getRequestField('status'),
+                            'date_modified'     => $date->format("Y-m-d H:i:s"),
+                            'writter'           => $user,
+                            'displayed_summary' => $services['post.handler']->getRequestField('summary'),
+                        ));
+    
                         $services['dao.article']->updateArticle($article);
-                        $domains = array(
-                            'message' => $services['message.handler']->getMessage('update_article'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
-                        );
+                        $url = '/web/index.php?action=consult_article&id=' . $article->getId() . '&user=' . $services['session.handler']->getRequestField('user_id');
+                        $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('update_article_fail'),
@@ -235,22 +228,25 @@
                         );
                     }
                     break;
-        
+                
+                // Delete an Article
+                case 'delete_article' :
+                    $services['dao.article']->deleteArticle($services['get.handler']->getRequestField('article'));
+                    $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
+                    $services['redirect.handler']->redirect($url);
+                    break;
+    
                 // Create a Category.
                 case 'add_category' :
                     $insertCategory = $services['category.checker']->checkInsert($services);
-                    $category = new Category(array(
-                        'title' => $services['post.handler']->getRequestField('title'),
-                    ));
-            
                     if ($insertCategory === true) {
+                        $category = new Category(array(
+                            'title' => $services['post.handler']->getRequestField('title'),
+                        ));
+                        
                         $services['dao.category']->saveCategory($category);
-                        $domains = array(
-                            'message' => $services['message.handler']->getMessage('category_create'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
-                        );
+                        $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
+                        $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('category_fail'),
@@ -260,7 +256,34 @@
                         );
                     }
                     break;
+                
+                case 'edit_category' :
+                    $edit = $services['category.checker']->checkUpdate($services);
+                    if ($edit === true) {
+                        $category = new Category(array(
+                            'id'    => $services['post.handler']->getRequestField('category_id'),
+                            'title' => $services['post.handler']->getRequestField('title'),
+                        ));
         
+                        $services['dao.category']->updateCategory($category);
+                        $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
+                        $services['redirect.handler']->redirect($url);
+                    } else {
+                        $domains = array(
+                            'message' => $services['message.handler']->getMessage('update_article_fail'),
+                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'website' => $website,
+                            'theme'   => $theme,
+                        );
+                    }
+                    break;
+    
+                case 'delete_category':
+                    $services['dao.category']->deleteCategory($services['get.handler']->getRequestField('category'));
+                    $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
+                    $services['redirect.handler']->redirect($url);
+                    break;
+                
                 // Default case : $_GET['form'] not exists or not corresponding with possible choices.
                 default:
                     $domains = array(

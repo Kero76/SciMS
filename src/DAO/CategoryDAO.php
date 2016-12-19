@@ -26,7 +26,7 @@
          * @version 1.0
          */
         public function findAll() {
-            $sql = "SELECT * FROM `categories`";
+            $sql = "SELECT * FROM `categories` ORDER BY `id` ASC";
             $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $categories = array();
@@ -111,6 +111,40 @@
         
             $sql = "INSERT INTO `categories` (title) VALUES (:title)";
             $this->getDatabase()->update($sql, $infoCategory);
+        }
+        
+        /**
+         * Method use for update a category.
+         *
+         * ->V1.1 :
+         *  - Added abstract attribute on request and article instance creation.
+         * @param \SciMS\Domain\Category $category
+         *  The user at update on Database.
+         * @since SciMS 0.5
+         * @version 1.1
+         */
+        public function updateCategory(Category $category) {
+            // Stored users informations into on associative array.
+            $infoCategory = array(
+                'title'             => $category->getTitle(),
+                'id'                => $category->getId(),
+            );
+        
+            $sql = "UPDATE `categories` SET title = :title WHERE id = :id";
+            $this->getDatabase()->update($sql, $infoCategory);
+        }
+    
+        /**
+         * Method use for delete article from Database.
+         *
+         * @param $id
+         *  The id of the article at remove.
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function deleteCategory($id) {
+            $sql = "DELETE FROM `categories` WHERE id = ?";
+            $this->getDatabase()->update($sql, array($id));
         }
     
         /**
