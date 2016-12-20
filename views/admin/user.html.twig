@@ -4,7 +4,7 @@
 
 {% block meta_tags %}<meta name="robots" content="noindex">{% endblock %}
 
-{% block title %}{{ website.title }} - Categories{% endblock %}
+{% block title %}{{ website.title }} - Users{% endblock %}
 
 {% block page_title %}
     <!-- Header of the webpage. -->
@@ -19,31 +19,28 @@
 {% block content %}
     <!-- All categories available -->
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <h2>Categories available</h2>
+        <h2>Users subscribe</h2>
         <table class="table table-bordered table-hover table-striped">
             <thead>
             <tr>
                 <td class="text-center">Username</td>
-                <td class="text-center">First name</td>
-                <td class="text-center">Last name</td>
-                <td class="text-center">Birthday</td>
-                <td class="text-center">Biography</td>
-                <td class="text-center">Edit</td>
+                <td class="text-center">First Name</td>
+                <td class="text-center">Last Name</td>
+                <td class="text-center">Update</td>
                 <td class="text-center">Delete</td>
             </tr>
             </thead>
 
             <tbody>
-            {% for user in users %}
+            {% for u in users %}
                 <tr>
-                    <td>{{ user.username }}</td>
-                    <td class="text-center align-middle"><a href="/web/index.php?action=edit_category&user={{ user.id }}" class="scims-edit-user-btn" role="button">Edit</a></td>
-                    <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_category&user={{ user.id }}" class="scims-delete-user-btn" role="button">Delete</a></td>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.fName }}</td>
+                    <td>{{ u.lName }}</td>
+                    <td class="text-center align-middle"><a href="/web/index.php?action=edit_profile&user={{ user.id }}&user_update={{ u.id }}" class="scims-edit-user-btn" role="button">Edit</a></td>
+                    <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_user&user={{ user.id }}&user_delete={{ u.id }}" class="scims-delete-user-btn" role="button">Delete</a></td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td colspan="3" class="text-center"><a href="/web/index.php?action=add_category&user={{ user.id }}">Create a Category</a></td>
-            </tr>
             </tbody>
         </table>
     </section>

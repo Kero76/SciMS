@@ -22,7 +22,9 @@
             <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
                 <h3>{{ article.title }}</h3>
                 <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
-                <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                <p>
+                    <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                </p>
             </aside>
         {% endfor %}
     </section>
@@ -34,8 +36,10 @@
                 <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
                     <h3>{{ article.title }}</h3>
                     <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
-                    <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
-                    <span class="scims-excerpt-categories scims-excerpt-categories-home"> {{ article.categories.title }}</span>
+                    <p>
+                        <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                        <span class="scims-excerpt-categories scims-excerpt-categories-home"> {{ article.categories.title }}</span>
+                    </p>
                 </aside>
             {% endfor %}
     {% endfor %}

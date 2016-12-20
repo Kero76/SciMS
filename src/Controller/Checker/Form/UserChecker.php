@@ -58,8 +58,7 @@
          */
         public function checkUpdate(array $services) {
             // Check if string is empty.
-            if ($this->emptyString($services['post.handler']->getRequestField('username')) &&
-                $this->emptyString($services['post.handler']->getRequestField('password'))) {
+            if ($this->emptyString($services['post.handler']->getRequestField('username'))) {
                 return false;
             }
     

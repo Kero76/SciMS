@@ -26,7 +26,7 @@
          * @version 1.0
          */
         public function findAll() {
-            $sql = "SELECT * FROM `users`";
+            $sql = "SELECT * FROM `users` ORDER BY `id` ASC";
             $result = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
     
             $users = array();
@@ -178,7 +178,7 @@
          */
         public function deleteUser($id) {
             $sql = "DELETE FROM `users` WHERE id = ?";
-            $this->getDatabase()->execute($sql, array($id));
+            $this->getDatabase()->update($sql, array($id));
         }
     
         /**

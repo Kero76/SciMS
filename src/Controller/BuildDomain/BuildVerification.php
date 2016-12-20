@@ -44,8 +44,7 @@
         public function buildDomain(array $services) {
             $services['post.handler']->setRequest($_POST);  // Retrieve $_POST.
             $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
-            $services['file.handler']->setRequest($_FILES); // Retrieve $_SESSION.
-            $entry_form = $services['get.handler']->getRequestField('form');
+            $services['file.handler']->setRequest($_FILES); // Retrieve $_FILES.
     
             $website = $services['dao.website']->findSettings('../app/settings.yml');
             $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
@@ -58,6 +57,7 @@
                 }
             }
     
+            $entry_form = $services['get.handler']->getRequestField('form');
             switch ($entry_form) {
                 // Connection section.
                 case 'connection' :
@@ -127,35 +127,35 @@
                     $services['redirect.handler']->redirect($url);
                     break;
         
-                // Update user.
+                // Update my user profile.
                 case 'edit_profile' :
-                    // File upload.
-                    $services['avatar.upload']->moveFile($services, strtolower($services['post.handler']->getRequestField('username')));
-                    $file_extension = $services['avatar.upload']->splitExtensionFile($services['file.handler']->getRequest(), 'avatar');
-                    
-                    // Check user update.
                     $update = $services['user.checker']->checkUpdate($services);
-            
-                    $user = $services['dao.user']->findByUsername($services['post.handler']->getRequestField('username'));
-                    $user->setUsername($services['post.handler']->getRequestField('username'));
-                    $user->setFname($services['post.handler']->getRequestField('fname'));
-                    $user->setLname($services['post.handler']->getRequestField('lname'));
-                    $user->setBirthday($services['post.handler']->getRequestField('birthday'));
-                    $user->setBiography($services['post.handler']->getRequestField('biography'));
-                    $user->setAvatar(strtolower($user->getUsername() . $file_extension));
-                    
                     if ($update === true)  {
+                        // File upload.
+                        $services['avatar.upload']->moveFile($services, 'avatar', strtolower($services['post.handler']->getRequestField('username')));
+                        $file_extension = $services['avatar.upload']->splitExtensionFile($services['file.handler']->getRequest(), 'avatar');
+                        
+                        // Create a user instance.
+                        $user = $services['dao.user']->findByUsername($services['post.handler']->getRequestField('username'));
+                        $user->setUsername($services['post.handler']->getRequestField('username'));
+                        $user->setFname($services['post.handler']->getRequestField('fname'));
+                        $user->setLname($services['post.handler']->getRequestField('lname'));
+                        $user->setBirthday($services['post.handler']->getRequestField('birthday'));
+                        $user->setBiography($services['post.handler']->getRequestField('biography'));
+                        $user->setAvatar(strtolower($user->getUsername() . $file_extension));
+                        
                         $services['dao.user']->updateUser($user);
-                        $domains = array(
-                            'message' => $services['message.handler']->getMessage('update'),
-                            'user'    => $services['dao.user']->findByUsername($user->getUsername()),
-                            'website' => $website,
-                            'theme'   => $theme,
-                        );
+                        
+                        if ($services['get.handler']->requestFieldExist('user_update')) {
+                            $url = '/web/index.php?action=consult_profile&id=' . $services['get.handler']->getRequestField('user_update') . '&user=' . $services['session.handler']->getRequestField('user_id');
+                        } else {
+                            $url = '/web/index.php?action=consult_profile&id=' . $services['session.handler']->getRequestField('user_id') . '&user=' . $services['session.handler']->getRequestField('user_id');
+                        }
+                        $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
                             'message' => $services['message.handler']->getMessage('update_failed'),
-                            'user'    => $services['dao.user']->findByUsername($user->getUsername()),
+                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
                             'website' => $website,
                             'theme'   => $theme,
                         );
@@ -257,6 +257,7 @@
                     }
                     break;
                 
+                // Edit a Category
                 case 'edit_category' :
                     $edit = $services['category.checker']->checkUpdate($services);
                     if ($edit === true) {
@@ -278,8 +279,16 @@
                     }
                     break;
     
-                case 'delete_category':
+                // Delete a Category
+                case 'delete_category' :
                     $services['dao.category']->deleteCategory($services['get.handler']->getRequestField('category'));
+                    $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
+                    $services['redirect.handler']->redirect($url);
+                    break;
+                
+                // Delete an User
+                case 'delete_user' :
+                    $services['dao.user']->deleteUser($services['get.handler']->getRequestField('user_delete'));
                     $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
                     $services['redirect.handler']->redirect($url);
                     break;

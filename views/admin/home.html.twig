@@ -19,9 +19,32 @@
 {% block content %}
     <!-- All articles available -->
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <h2>Articles</h2>
-        <h2>Categories</h2>
-        <h2>Users</h2>
+        <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
+            <h2>Articles</h2>
+            <p>
+                You can write, edit or remove on article thanks to the following link :
+                <a href="/web/index.php?action=admin_article&user={{ user.id }}" >All articles</a>
+            </p>
+
+        </aside>
+
+        <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
+            <h2>Categories</h2>
+            <p>
+                You can xreate, update or delete categories thanks to the following link :
+                <a href="/web/index.php?action=admin_category&user={{ user.id }}" >All categories</a>
+            </p>
+
+        </aside>
+
+        <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
+            <h2>Users</h2>
+            <p>
+                You can edit or delete user thanks to the following link :
+                <a href="/web/index.php?action=admin_user&user={{ user.id }}" >All users subscribed</a>
+            </p>
+
+        </aside>
     </section>
 {% endblock %}
 

@@ -16,7 +16,11 @@
 
 {% block content %}
     <section class="col-md-8 col-sm-8 col-xs-8">
-        <form action="/web/index.php?action=verification&form=edit_profile" method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% if user.id == user_id %}
+            <form action="/web/index.php?action=verification&form=edit_profile" method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% else %}
+            <form action="/web/index.php?action=verification&form=edit_profile&user_update={{ user.id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% endif %}
             <!-- Avatar -->
             <div class="form-group">
                 {% if user.avatar == '' %}

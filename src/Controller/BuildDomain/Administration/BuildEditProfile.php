@@ -47,6 +47,7 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
+            $services['get.handler']->setRequest($_GET); // Retrieve $_GET.
             $website = $services['dao.website']->findSettings('../app/settings.yml');
             $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
             $theme   = "";
@@ -57,8 +58,13 @@
                     break;
                 }
             }
+            
+            if ($services['get.handler']->requestFieldExist('user_update')) {
+                $user = $services['dao.user']->findById($services['get.handler']->getRequestField('user_update'));
+            } else {
+                $user = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
+            }
     
-            $user = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
             $domains = array(
                 'forms' => $services['form.builder']->add(
                 // Username
@@ -164,6 +170,7 @@
                     ))
                 )->getForms(),
                 'user'     => $user,
+                'user_id'  => $services['session.handler']->getRequestField('user_id'),
                 'connect'  => true,
                 'website'  => $website,
                 'theme'    => $theme,

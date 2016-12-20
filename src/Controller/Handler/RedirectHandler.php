@@ -31,6 +31,7 @@
             $this->_redirection_url = array(
                 'home'           => '#\/web\/index\.php(\?user=[0-9]+)?$#',
                 'article'        => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
+                'user'           => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
                 'administration' => '#\/web\/index\.php\?action=administration&user=[0-9]+$#',
             );
         }

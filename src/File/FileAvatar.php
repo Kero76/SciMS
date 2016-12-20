@@ -80,10 +80,9 @@
          * @version 1.0
          */
         public function checkFile(array $services, $form_image_name) {
-            return (
-                $this->checkUnuploadFile($services['file.handler']->getRequestField($form_image_name)['error']) &&
-                $this->checkFileExtension($services['file.handler']->getRequestField($form_image_name)['name']) &&
-                $this->checkFileSize($services['file.handler']->getRequestField($form_image_name)['size'])
+            return ($this->checkUploadFile($services['file.handler']->getRequestField($form_image_name)['error']) &&
+                    $this->checkFileExtension($services['file.handler']->getRequestField($form_image_name)['name']) &&
+                    $this->checkFileSize($services['file.handler']->getRequestField($form_image_name)['size'])
             );
         }
     
@@ -110,8 +109,12 @@
                     mkdir($this->_upload_dir . 'avatar/', FileAvatar::$ALL_RIGHT);
                     chmod($this->_upload_dir . 'avatar/', FileAvatar::$CHMOD_RIGHT);
                 }
-                // Moved image on this directory.
-                if (move_uploaded_file($services['file.handler']->getRequestField($form_image_name)['tmp_name'], $this->_upload_dir . 'avatar/' . $image_name . $this->splitExtensionFile($services['file.handler']->getRequestField($form_image_name), $form_image_name))) {
+                
+                // Moved files on avatar folder.
+                $file_name = $services['file.handler']->getRequestField($form_image_name)['tmp_name'];
+                $extension = $this->splitExtensionFile($services['file.handler']->getRequest(), $form_image_name);
+                $path_file = $this->_upload_dir . 'avatar/' . $image_name . $extension;
+                if (move_uploaded_file($file_name, $path_file)) {
                     return true;
                 } else {
                     return false;
@@ -134,7 +137,7 @@
          * @version 1.0
          */
         public function splitExtensionFile(array $file, $form_id) {
-            return strrchr($file[$form_id]['name'], '.');
+            return strtolower(strrchr($file[$form_id]['name'], '.'));
         }
         
         /**
@@ -148,7 +151,7 @@
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function checkUnuploadFile($file_error) {
+        private function checkUploadFile($file_error) {
             if ($file_error > 0) {
                 return false;
             }
@@ -175,22 +178,22 @@
     
         /**
          * Check the file extension before upload it on website. The server accept only the image with
-         * 'png, 'jpg' and 'jpeg' extension to avoid to add potential hack script.
+         * 'png, 'jpg' and 'jpeg' extension to avoid to add potentially hacking scripts.
          *
          * @access private
-         * @param $file_extension
-         *  The file extension.
+         * @param $file_name
+         *  The file name.
          * @return bool
          *  If the extension file is correct, it return true. Otherwise, it return false.
          * @since SciMS 0.3
          * @version 1.0
          */
-        private function checkFileExtension($file_extension) {
+        private function checkFileExtension($file_name) {
             // strrchr return the extension with '.'.
             // substr return the substring without the first character ('.').
             // strtolower return the extension in lower case.
-            $extension_upload = strtolower(substr(strrchr($file_extension, '.'), 1));
-            if (in_array($extension_upload, $this->_image_extension_available)) {
+            $extension = strtolower(substr(strrchr($file_name, '.'), 1));
+            if (in_array($extension, $this->_image_extension_available)) {
                 return true;
             };
             return false;

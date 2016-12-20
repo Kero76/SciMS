@@ -3,6 +3,7 @@
     
     use SciMS\Controller\BuildDomain\Administration\BuildArticles;
     use SciMS\Controller\BuildDomain\Administration\BuildCategories;
+    use SciMS\Controller\BuildDomain\Administration\BuildUsers;
     use \SciMS\Controller\BuildDomain\Build404;
     use \SciMS\Controller\BuildDomain\BuildConnection;
     use \SciMS\Controller\BuildDomain\BuildConsultArticle;
@@ -136,7 +137,7 @@
                 'consult_article' => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
                 'consult_profile' => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
                 'search'          => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
-                'verification'    => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile|write_article|edit_article|delete_article|add_category|edit_category|delete_category)+(&user=[0-9]+&(article|category)=[0-9]+)?$#', // Change it when you add new Form.
+                'verification'    => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile(&user_update=[0-9]+)?|write_article|edit_article|delete_article|add_category|edit_category|delete_category|delete_user)+(&user=[0-9]+&(article|category|user_delete)=[0-9]+)?$#',
                 
                 // Administration part
                 'administration'  => '#\/web\/index\.php\?action=administration&user=[0-9]+$#',
@@ -145,7 +146,7 @@
                 'admin_user'      => '#\/web\/index\.php\?action=admin_user&user=[0-9]+$#',
                 'write_article'   => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
                 'edit_article'    => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
-                'edit_profile'    => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+$#',
+                'edit_profile'    => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+(&user_update=[0-9]+)?$#',
                 'add_category'    => '#\/web\/index\.php\?action=edit_category&user=[0-9]+$#',
                 'edit_category'   => '#\/web\/index\.php\?action=edit_category&user=[0-9]+&category=[0-9]+$#',
             );
@@ -163,7 +164,7 @@
                 'administration' => new BuildAdministrationHome('admin/home.html.twig'),
                 'admin_article'  => new BuildArticles('admin/article.html.twig'),
                 'admin_category' => new BuildCategories('admin/category.html.twig'),
-                'admin_user'     => null,
+                'admin_user'     => new BuildUsers('admin/user.html.twig'),
                 
                 'write_article'  => new BuildWriteArticle('admin/edit_article.html.twig'),
                 'edit_article'   => new BuildEditArticle('admin/edit_article.html.twig'),

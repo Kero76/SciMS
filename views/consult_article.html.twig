@@ -54,12 +54,15 @@
                 {% else %}
                     <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}">{{ article.writter.username }}</a>,
                 {% endif %}
-            {{ article.dateCreation|date("d/m/y \\a\\t H:i:s") }}</p>
+                {{ article.dateCreation|date("d/m/y \\a\\t H:i:s") }}
+            </p>
         </section>
 
         {# Display edit button only if the user is a writter of this article. #}
         {% if connect == true and user.id == author_id %}
-            <a href="/web/index.php?action=edit_article&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
+            <p>
+                <a href="/web/index.php?action=edit_article&user={{ user.id }}&article={{ article.id }}" class="btn btn-link scims-edit-article-btn" role="button">Edit Article</a>
+            </p>
         {% endif %}
 
         {% if article.displayedSummary == 1 %}
