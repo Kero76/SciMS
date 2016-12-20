@@ -69,69 +69,79 @@
                 'forms' => $services['form.builder']->add(
                 // Username
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'username',
-                        'name'  => 'username',
-                        'value' => $user->getUsername(),
-                        'class' => 'form-control',
-                        'label' => 'Username',
+                        'type'     => 'text',
+                        'id'       => 'username',
+                        'name'     => 'username',
+                        'value'    => $user->getUsername(),
+                        'class'    => 'form-control',
+                        'label'    => 'Username',
+                        'readonly' => false,
                     ))
                 )->add(
                 // First name
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'fname',
-                        'name'  => 'fname',
-                        'value' => $user->getFname(),
-                        'class' => 'form-control',
-                        'label' => 'First name',
+                        'type'     => 'text',
+                        'id'       => 'fname',
+                        'name'     => 'fname',
+                        'value'    => $user->getFname(),
+                        'class'    => 'form-control',
+                        'label'    => 'First name',
+                        'readonly' => false,
+                        'required' => false,
                     ))
                 )->add(
                 // Last name
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'lname',
-                        'name'  => 'lname',
-                        'value' => $user->getLname(),
-                        'class' => 'form-control',
-                        'label' => 'Last name',
+                        'type'     => 'text',
+                        'id'       => 'lname',
+                        'name'     => 'lname',
+                        'value'    => $user->getLname(),
+                        'class'    => 'form-control',
+                        'label'    => 'Last name',
+                        'readonly' => false,
+                        'required' => false,
                     ))
                 )->add(
                 // Email - readonly.
                     new InputEmail(array(
-                        'type'      => 'email',
-                        'value'     => $user->getEmail(),
-                        'class' => 'form-control',
-                        'label' => 'Email',
-                        'readonly'  => true,
+                        'type'     => 'email',
+                        'value'    => $user->getEmail(),
+                        'class'    => 'form-control',
+                        'label'    => 'Email',
+                        'readonly' => true,
                     ))
                 )->add(
                 // Password
                     new InputPassword(array(
-                        'type'  => 'password',
-                        'id'    => 'password',
-                        'name'  => 'password',
-                        'class' => 'form-control',
-                        'label' => 'New Password',
+                        'type'     => 'password',
+                        'id'       => 'password',
+                        'name'     => 'password',
+                        'class'    => 'form-control',
+                        'label'    => 'New Password',
+                        'readonly' => false,
+                        'required' => false,
                     ))
                 )->add(
                 // Repeat Password
                     new InputPassword(array(
-                        'type'  => 'password',
-                        'id'    => 'repeat_password',
-                        'name'  => 'repeat_password',
-                        'class' => 'form-control',
-                        'label' => 'Repeat Password',
+                        'type'     => 'password',
+                        'id'       => 'repeat_password',
+                        'name'     => 'repeat_password',
+                        'class'    => 'form-control',
+                        'label'    => 'Repeat Password',
+                        'readonly' => false,
+                        'required' => false,
                     ))
                 )->add(
                 // Birthday
                     new InputDate(array(
-                        'type'  => 'date',
-                        'id'    => 'birthday',
-                        'name'  => 'birthday',
-                        'class' => 'form-control',
-                        'label' => 'Birthday',
-                        'value' => $user->getBirthday(),
+                        'type'     => 'date',
+                        'id'       => 'birthday',
+                        'name'     => 'birthday',
+                        'class'    => 'form-control',
+                        'label'    => 'Birthday',
+                        'value'    => $user->getBirthday(),
+                        'required' => false,
                     ))
                 )->add(
                 // Biography
@@ -143,30 +153,34 @@
                         'content'   => $user->getBiography(),
                         'rows'      => '10',
                         'cols'      => '50',
+                        'required'  => false,
                     ))
                 )->add(
                 // Avatar
                     new InputFile(array(
-                        'type'  => 'file',
-                        'id'    => 'avatar',
-                        'name'  => 'avatar',
-                        'label' => 'Avatar',
+                        'type'     => 'file',
+                        'id'       => 'avatar',
+                        'name'     => 'avatar',
+                        'label'    => 'Avatar',
+                        'required' => false,
                     ))
                 )->add(
                 // Max size of file
                     new InputHidden(array(
-                        'type'  => 'hidden',
-                        'name'  => 'max_size_file',
-                        'value' => '',
+                        'type'     => 'hidden',
+                        'name'     => 'max_size_file',
+                        'value'    => '',
+                        'readonly' => false,
                     ))
                 )->add(
                 // Submit button
                     new InputSubmit(array(
-                        'type'  => 'submit',
-                        'id'    => 'submit',
-                        'name'  => 'submit',
-                        'value' => 'Submit',
-                        'class' => 'form-control btn btn-primary',
+                        'type'     => 'submit',
+                        'id'       => 'submit',
+                        'name'     => 'submit',
+                        'value'    => 'Submit',
+                        'class'    => 'form-control btn btn-primary',
+                        'readonly' => false,
                     ))
                 )->getForms(),
                 'user'     => $user,

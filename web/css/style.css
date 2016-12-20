@@ -23,6 +23,11 @@ thead {
     font-weight: bold;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 .scims-vertical-align {
     vertical-align: middle;
 }
@@ -87,6 +92,25 @@ thead {
 .scims-article-homepage {
     border: solid 1px lightgray;
     height: 300px;
+}
+
+.container-table-of-content {
+    background-color: #F9F9F9;
+    border: 1px solid lightgray;
+}
+
+.scims-avatar {
+    width: 256px;
+}
+
+#toggle-toc {
+    color: #337AB7;
+}
+
+#toggle-toc:hover {
+    text-decoration : underline;
+    color: #195384;
+    cursor: pointer;
 }
 
 /***********************************/

@@ -115,4 +115,15 @@ function _generateSubtitle(max_main_anchor, main_title_lvl, subtitle_lvl) {
 $(document).ready(function() {
     addAnchor('h2', 'h3');
     generateMainTitle('h2', 'h3');
+    
+    $( '#toggle-toc' ).click(function() {
+        $('.scims-table-of-content').toggle();
+        if ($('#toggle-toc').text() == 'hide') {
+            $('#toggle-toc').text('show');
+        } else {
+            $('#toggle-toc').text('hide');
+        }
+    });
+    
 });
+

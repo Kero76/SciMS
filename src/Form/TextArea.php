@@ -50,12 +50,12 @@
         public function __construct(array $attributes) {
             $this->hydrate($attributes);
             $render  = '<textarea ';
-            $render .= ($this->getClass()    == ''   ) ? '' : ' class="'  . $this->getClass() . '"';
-            $render .= ($this->getId()       == ''   ) ? '' : ' id="'     . $this->getId()    . '"';
-            $render .= ($this->getName()     == ''   ) ? '' : ' name="'   . $this->getName()  . '"';
-            $render .= ($this->getCols()     == 0    ) ? '' : ' cols="'   . $this->getCols()  . '"';
-            $render .= ($this->getRows()     == 0    ) ? '' : ' rows="'   . $this->getRows()  . '"';
-            $render .= ($this->getRequired() == false) ? '' : ' required';
+            $render .= ($this->getClass()    == ''    ) ? '' : ' class="'  . $this->getClass() . '"';
+            $render .= ($this->getId()       == ''    ) ? '' : ' id="'     . $this->getId()    . '"';
+            $render .= ($this->getName()     == ''    ) ? '' : ' name="'   . $this->getName()  . '"';
+            $render .= ($this->getCols()     == 0     ) ? '' : ' cols="'   . $this->getCols()  . '"';
+            $render .= ($this->getRows()     == 0     ) ? '' : ' rows="'   . $this->getRows()  . '"';
+            $render .= ($this->getRequired() === false) ? '' : ' required';
             $render .= '>' . $this->getContent() . '</textarea>';
             $this->setRender($render);
         }

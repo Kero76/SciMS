@@ -62,7 +62,6 @@
          * @version 1.0
          */
         private function match($url) {
-            $view = null;
             foreach ($this->_redirection_url as $key => $value) {
                 // Generate REGEX to recognize right url form.
                 if (preg_match($value, $url) != 0) {

@@ -48,7 +48,7 @@
         /**
          * Value of placeholder tags.
          *
-         * @var boolean
+         * @var string
          * @since SciMS 0.2
          */
         private $_placeholder;
@@ -72,7 +72,7 @@
         /**
          * Stored HTML representation.
          *
-         * @var boolean
+         * @var string
          * @since SciMS 0.2
          */
         private $_render;

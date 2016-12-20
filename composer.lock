@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c7f9fe785d68834b2fe94fed9eaef371",
-    "content-hash": "a4d05163d9a61472f4f217756d2bf56c",
+    "hash": "2e522ac9b4c6efd4203fb3f4e7b9a8bd",
+    "content-hash": "51326bc7c306edb2abe606f45b49f788",
     "packages": [
         {
             "name": "forxer/gravatar",

@@ -38,9 +38,9 @@
                     <tr>
                         <td>{{ article.title }}</td>
                         <td>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</td>
-                        <td class="text-center align-middle">{{ article.categories.title }}</td>
+                        <td class="text-center align-middle"><a href="/web/index.php?action=edit_category&user={{ user.id }}&category={{ article.categories.id }}" class="scims-edit-category-btn" role="button">{{ article.categories.title }}</a></td>
                         <td class="text-center align-middle">{{ article.tags }}</td>
-                        <td class="text-center align-middle">{{ article.writter.username }}</td>
+                        <td class="text-center align-middle"><a href="/web/index.php?action=edit_profile&user={{ user.id }}&user_update={{ article.writter.id }}" class="scims-edit-user-btn" role="button">{{ article.writter.username }}</a></td>
                         <td class="text-center align-middle"><a href="/web/index.php?action=edit_article&user={{ user.id }}&article={{ article.id }}" class="scims-edit-article-btn" role="button">Edit</a></td>
                         <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_article&user={{ user.id }}&article={{ article.id }}" class="scims-delete-article-btn" role="button">Delete</a></td>
                     </tr>

@@ -32,8 +32,8 @@
             $render .= ($this->getName()        == ''   ) ? '' : ' name="'        . $this->getName()        . '"';
             $render .= ($this->getPlaceholder() == ''   ) ? '' : ' placeholder="' . $this->getPlaceholder() . '"';
             $render .= ($this->getValue()       == ''   ) ? '' : ' value="'       . $this->getValue()       . '"';
-            $render .= ($this->getReadonly()    == false) ? '' : ' readonly';
-            $render .= ($this->getRequired()    == false) ? '' : ' required';
+            $render .= ($this->getReadonly()   === false) ? '' : ' readonly';
+            $render .= ($this->getRequired()   === false) ? '' : ' required';
             $render .= '>';
             $this->setRender($render);
         }

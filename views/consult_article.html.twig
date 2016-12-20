@@ -19,9 +19,9 @@
 
         {# Show summary if is activate on article #}
         {% if article.displayedSummary == 1 %}
-            <nav id="summary">
-                <h4>Table of Content</h4>
-                <ul id="list-summary">
+            <nav id="summary" class="container-table-of-content">
+                <h4>Table of Content [<span href="#" id="toggle-toc">hide</span>]</h4>
+                <ul id="list-summary" class="scims-table-of-content">
 
                 </ul>
             </nav>

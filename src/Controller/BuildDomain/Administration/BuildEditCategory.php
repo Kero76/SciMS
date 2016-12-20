@@ -58,21 +58,23 @@
                 'forms' => $services['form.builder']->add(
                 // Title
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'title',
-                        'name'  => 'title',
-                        'class' => 'form-control',
-                        'label' => 'Title',
-                        'value' => $category->getTitle(),
+                        'type'     => 'text',
+                        'id'       => 'title',
+                        'name'     => 'title',
+                        'class'    => 'form-control',
+                        'label'    => 'Title',
+                        'value'    => $category->getTitle(),
+                        'readonly' => false,
                     ))
                 )->add(
                 // Submit
                     new InputSubmit(array(
-                        'type'  => 'submit',
-                        'id'    => 'submit',
-                        'name'  => 'submit',
-                        'class' => 'form-control btn btn-primary',
-                        'value' => 'Submit',
+                        'type'     => 'submit',
+                        'id'       => 'submit',
+                        'name'     => 'submit',
+                        'class'    => 'form-control btn btn-primary',
+                        'value'    => 'Submit',
+                        'readonly' => false,
                     ))
                 )->add(
                     new InputHidden(array(

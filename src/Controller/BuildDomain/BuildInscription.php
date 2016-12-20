@@ -62,6 +62,7 @@
                         'placeholder'   => 'Enter your email ...',
                         'class'         => 'form-control',
                         'required'      => true,
+                        'readonly'      => false,
                         'label'         => 'Email',
                     ))
                 )->add(
@@ -72,6 +73,7 @@
                         'placeholder'   => 'Enter your username ...',
                         'class'         => 'form-control',
                         'required'      => true,
+                        'readonly'      => false,
                         'label'         => 'Username',
                     ))
                 )->add( new InputPassword(array(
@@ -81,15 +83,17 @@
                         'placeholder'   => 'Enter your password ...',
                         'class'         => 'form-control',
                         'required'      => true,
+                        'readonly'      => false,
                         'label'         => 'Password',
                     ))
                 )->add(
                     new InputSubmit(array(
-                        'type'          => 'submit',
-                        'id'            => 'submit',
-                        'name'          => 'submit',
-                        'value'         => 'Sign in',
-                        'class'         => 'form-control btn btn-primary',
+                        'type'     => 'submit',
+                        'id'       => 'submit',
+                        'name'     => 'submit',
+                        'value'    => 'Sign in',
+                        'class'    => 'form-control btn btn-primary',
+                        'readonly' => false,
                     ))
                 )->getForms(),
                 'website' => $website,

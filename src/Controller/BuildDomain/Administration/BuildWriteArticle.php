@@ -71,8 +71,9 @@
             // Fill option in Select object.
             foreach ($categories as $category) {
                 $select_category->add(new Option(array(
-                    'value' => $category->getId(),
-                    'label' => $category->getTitle(),
+                    'value'    => $category->getId(),
+                    'label'    => $category->getTitle(),
+                    'selected' => false,
                 )));
             }
             $select_category->renderSelect();
@@ -94,8 +95,9 @@
     
             foreach ($status as $key => $value) {
                 $select_status->add(new Option(array(
-                    'value' => $value,
-                    'label' => $key,
+                    'value'    => $value,
+                    'label'    => $key,
+                    'selected' => false,
                 )));
             }
             $select_status->renderSelect();
@@ -115,8 +117,9 @@
             
             foreach ($summary as $key => $value) {
                 $select_summary->add(new Option(array(
-                    'value' => $value,
-                    'label' => $key,
+                    'value'    => $value,
+                    'label'    => $key,
+                    'selected' => false,
                 )));
             }
             $select_summary->renderSelect();
@@ -125,41 +128,46 @@
                 'forms'  => $services['form.builder']->add(
                 // Title
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'title',
-                        'name'  => 'title',
-                        'class' => 'form-control',
-                        'label' => 'Title',
+                        'type'     => 'text',
+                        'id'       => 'title',
+                        'name'     => 'title',
+                        'class'    => 'form-control',
+                        'label'    => 'Title',
+                        'readonly' => false,
+                        'required' => true,
                     ))
                 )->add(
                 // Abstract
                     new TextArea(array(
-                        'id'    => 'abstract',
-                        'name'  => 'abstract',
-                        'class' => 'form-control',
-                        'label' => 'Abstract',
-                        'rows'  => '10',
-                        'cols'  => '50',
+                        'id'       => 'abstract',
+                        'name'     => 'abstract',
+                        'class'    => 'form-control',
+                        'label'    => 'Abstract',
+                        'rows'     => '10',
+                        'cols'     => '50',
+                        'required' => false,
                     ))
                 )->add(
                 // Content
                     new TextArea(array(
-                        'id'    => 'content',
-                        'name'  => 'content',
-                        'class' => 'form-control',
-                        'label' => 'Content',
-                        'rows'  => '10',
-                        'cols'  => '50',
+                        'id'       => 'content',
+                        'name'     => 'content',
+                        'class'    => 'form-control',
+                        'label'    => 'Content',
+                        'rows'     => '10',
+                        'cols'     => '50',
+                        'required' => false,
                     ))
                 )->add(
                 // Authors
                     new TextArea(array(
-                        'id'    => 'authors',
-                        'name'  => 'authors',
-                        'class' => 'form-control',
-                        'label' => 'Authors',
-                        'rows'  => '5',
-                        'cols'  => '50',
+                        'id'       => 'authors',
+                        'name'     => 'authors',
+                        'class'    => 'form-control',
+                        'label'    => 'Authors',
+                        'rows'     => '5',
+                        'cols'     => '50',
+                        'required' => false,
                     ))
                 )->add(
                 // Category
@@ -167,11 +175,13 @@
                 )->add(
                 // Tags
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'tags',
-                        'name'  => 'tags',
-                        'class' => 'form-control',
-                        'label' => 'Tags',
+                        'type'     => 'text',
+                        'id'       => 'tags',
+                        'name'     => 'tags',
+                        'class'    => 'form-control',
+                        'label'    => 'Tags',
+                        'readonly' => false,
+                        'required' => true,
                     ))
                 )->add(
                 // Status
@@ -179,10 +189,11 @@
                 )->add(
                 // Writter id.
                     new InputHidden(array(
-                        'type'  => 'hidden',
-                        'id'    => 'writter',
-                        'name'  => 'writter',
-                        'value' => $user->getId(),
+                        'type'     => 'hidden',
+                        'id'       => 'writter',
+                        'name'     => 'writter',
+                        'value'    => $user->getId(),
+                        'required' => false,
                     ))
                 )->add(
                 // Summary
@@ -190,11 +201,12 @@
                 )->add(
                 // Submit
                     new InputSubmit(array(
-                        'type'  => 'submit',
-                        'id'    => 'submit',
-                        'name'  => 'submit',
-                        'class' => 'form-control btn btn-primary',
-                        'value' => 'Submit'
+                        'type'     => 'submit',
+                        'id'       => 'submit',
+                        'name'     => 'submit',
+                        'class'    => 'form-control btn btn-primary',
+                        'readonly' => false,
+                        'value'    => 'Submit'
                     ))
                 )->getForms(),
                 'user'    => $user,

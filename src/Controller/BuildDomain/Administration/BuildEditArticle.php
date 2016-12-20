@@ -161,12 +161,13 @@
                 'forms'  => $services['form.builder']->add(
                 // Title
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'title',
-                        'name'  => 'title',
-                        'class' => 'form-control',
-                        'label' => 'Title',
-                        'value' => $article->getTitle(),
+                        'type'     => 'text',
+                        'id'       => 'title',
+                        'name'     => 'title',
+                        'class'    => 'form-control',
+                        'label'    => 'Title',
+                        'value'    => $article->getTitle(),
+                        'readonly' => false,
                     ))
                 )->add(
                 // Abstract
@@ -207,12 +208,13 @@
                 )->add(
                 // Tags
                     new InputText(array(
-                        'type'  => 'text',
-                        'id'    => 'tags',
-                        'name'  => 'tags',
-                        'class' => 'form-control',
-                        'label' => 'Tags',
-                        'value' => $article->getTags(),
+                        'type'     => 'text',
+                        'id'       => 'tags',
+                        'name'     => 'tags',
+                        'class'    => 'form-control',
+                        'label'    => 'Tags',
+                        'value'    => $article->getTags(),
+                        'readonly' => false,
                     ))
                 )->add(
                 // Status
@@ -238,11 +240,12 @@
                 )->add(
                 // Submit
                     new InputSubmit(array(
-                        'type'  => 'submit',
-                        'id'    => 'submit',
-                        'name'  => 'submit',
-                        'class' => 'form-control btn btn-primary',
-                        'value' => 'Submit',
+                        'type'     => 'submit',
+                        'id'       => 'submit',
+                        'name'     => 'submit',
+                        'class'    => 'form-control btn btn-primary',
+                        'value'    => 'Submit',
+                        'readonly' => false,
                     ))
                 )->getForms(),
                 'user'       => $user,
