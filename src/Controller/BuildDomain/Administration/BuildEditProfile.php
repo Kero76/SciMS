@@ -2,13 +2,7 @@
     namespace SciMS\Controller\BuildDomain\Administration;
 
     use \SciMS\Controller\BuildDomain\AbstractBuildDomain;
-    use \SciMS\Form\Input\InputDate;
-    use \SciMS\Form\Input\InputEmail;
-    use \SciMS\Form\Input\InputFile;
-    use \SciMS\Form\Input\InputHidden;
-    use \SciMS\Form\Input\InputPassword;
-    use \SciMS\Form\Input\InputSubmit;
-    use \SciMS\Form\Input\InputText;
+    use \SciMS\Form\Input;
     use \SciMS\Form\TextArea;
 
     /**
@@ -68,7 +62,7 @@
             $domains = array(
                 'forms' => $services['form.builder']->add(
                 // Username
-                    new InputText(array(
+                    new Input(array(
                         'type'     => 'text',
                         'id'       => 'username',
                         'name'     => 'username',
@@ -79,7 +73,7 @@
                     ))
                 )->add(
                 // First name
-                    new InputText(array(
+                    new Input(array(
                         'type'     => 'text',
                         'id'       => 'fname',
                         'name'     => 'fname',
@@ -91,7 +85,7 @@
                     ))
                 )->add(
                 // Last name
-                    new InputText(array(
+                    new Input(array(
                         'type'     => 'text',
                         'id'       => 'lname',
                         'name'     => 'lname',
@@ -103,7 +97,7 @@
                     ))
                 )->add(
                 // Email - readonly.
-                    new InputEmail(array(
+                    new Input(array(
                         'type'     => 'email',
                         'value'    => $user->getEmail(),
                         'class'    => 'form-control',
@@ -112,7 +106,7 @@
                     ))
                 )->add(
                 // Password
-                    new InputPassword(array(
+                    new Input(array(
                         'type'     => 'password',
                         'id'       => 'password',
                         'name'     => 'password',
@@ -123,7 +117,7 @@
                     ))
                 )->add(
                 // Repeat Password
-                    new InputPassword(array(
+                    new Input(array(
                         'type'     => 'password',
                         'id'       => 'repeat_password',
                         'name'     => 'repeat_password',
@@ -134,7 +128,7 @@
                     ))
                 )->add(
                 // Birthday
-                    new InputDate(array(
+                    new Input(array(
                         'type'     => 'date',
                         'id'       => 'birthday',
                         'name'     => 'birthday',
@@ -142,6 +136,7 @@
                         'label'    => 'Birthday',
                         'value'    => $user->getBirthday(),
                         'required' => false,
+                        'readonly' => false,
                     ))
                 )->add(
                 // Biography
@@ -157,7 +152,7 @@
                     ))
                 )->add(
                 // Avatar
-                    new InputFile(array(
+                    new Input(array(
                         'type'     => 'file',
                         'id'       => 'avatar',
                         'name'     => 'avatar',
@@ -165,16 +160,8 @@
                         'required' => false,
                     ))
                 )->add(
-                // Max size of file
-                    new InputHidden(array(
-                        'type'     => 'hidden',
-                        'name'     => 'max_size_file',
-                        'value'    => '',
-                        'readonly' => false,
-                    ))
-                )->add(
                 // Submit button
-                    new InputSubmit(array(
+                    new Input(array(
                         'type'     => 'submit',
                         'id'       => 'submit',
                         'name'     => 'submit',

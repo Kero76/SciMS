@@ -3,6 +3,7 @@
     
     use SciMS\Controller\BuildDomain\Administration\BuildArticles;
     use SciMS\Controller\BuildDomain\Administration\BuildCategories;
+    use SciMS\Controller\BuildDomain\Administration\BuildInstallation;
     use SciMS\Controller\BuildDomain\Administration\BuildUsers;
     use \SciMS\Controller\BuildDomain\Build404;
     use \SciMS\Controller\BuildDomain\BuildConnection;
@@ -19,6 +20,7 @@
     use \SciMS\Controller\BuildDomain\Administration\BuildEditProfile;
     use \SciMS\Controller\BuildDomain\Administration\BuildWriteArticle;
     use \SciMS\Controller\Builder\FormBuilder;
+    use SciMS\Controller\Checker\FileChecker;
     use \SciMS\Controller\Checker\Form\ArticleChecker;
     use \SciMS\Controller\Checker\Form\CategoryChecker;
     use \SciMS\Controller\Checker\Form\ConnectionChecker;
@@ -39,6 +41,7 @@
     use \SciMS\DAO\UserDAO;
     use \SciMS\DAO\WebsiteDAO;
     use \SciMS\File\FileAvatar;
+    use SciMS\File\YamlFile;
     use \SciMS\Message\Error;
     use \SciMS\Message\Success;
 
@@ -124,12 +127,22 @@
          *  - Add RequestHandler classes on services.
          *  - Replace $_template by BuildDomain classes.
          *
+         * -> V1.3 :
+         *  - Add administration backend.
+         *  - Add auto-installation.
+         *  - Add RedirectHandler on services.
+         *  - Add FileChecker on services.
+         *
          * @constructor
          * @since SciMS 0.1
-         * @version 1.2
+         * @version 1.3
          */
         public function __construct() {
             $this->_routes = array(
+                // Installation part
+                'installation'    => '#\/web\/index\.php\?action=installation$#',
+                
+                // Website part
                 'home'            => '#\/web\/index\.php(\?user=[0-9]+)?$#',
                 'connection'      => '#\/web\/index\.php\?action=connection$#',
                 'disconnection'   => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
@@ -137,7 +150,7 @@
                 'consult_article' => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
                 'consult_profile' => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
                 'search'          => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
-                'verification'    => '#\/web\/index\.php\?action=verification&form=(connection|inscription|disconnection|edit_profile(&user_update=[0-9]+)?|write_article|edit_article|delete_article|add_category|edit_category|delete_category|delete_user)+(&user=[0-9]+&(article|category|user_delete)=[0-9]+)?$#',
+                'verification'    => '#\/web\/index\.php\?action=verification&form=(installation|connection|inscription|disconnection|edit_profile(&user_update=[0-9]+)?|write_article|edit_article|delete_article|add_category|edit_category|delete_category|delete_user)+(&user=[0-9]+&(article|category|user_delete)=[0-9]+)?$#',
                 
                 // Administration part
                 'administration'  => '#\/web\/index\.php\?action=administration&user=[0-9]+$#',
@@ -152,6 +165,10 @@
             );
             
             $this->_domains = array(
+                // Installation
+                'installation'    => new BuildInstallation('admin/installation.html.twig'),
+                
+                // Website
                 'home'            => new BuildHome('home.html.twig'),
                 'connection'      => new BuildConnection('connection.html.twig'),
                 'inscription'     => new BuildInscription('inscription.html.twig'),
@@ -191,6 +208,7 @@
                 'article.checker'    => new ArticleChecker(),
                 'category.checker'   => new CategoryChecker(),
                 'connection.checker' => new ConnectionChecker(),
+                'file.checker'       => new FileChecker(),
                 'mail.checker'       => new MailChecker(),
                 'password.checker'   => new PasswordChecker(),
                 'user.checker'       => new UserChecker(),
@@ -207,6 +225,7 @@
                 
                 // File section.
                 'avatar.upload' => new FileAvatar(),
+                'yaml.file'     => new YamlFile(),
                 
                 // Renderer section.
                 'renderer' => new Renderer(),

@@ -3,9 +3,7 @@
 
     use \SciMS\Controller\BuildDomain\AbstractBuildDomain;
     use \SciMS\Domain\Article;
-    use \SciMS\Form\Input\InputHidden;
-    use \SciMS\Form\Input\InputSubmit;
-    use \SciMS\Form\Input\InputText;
+    use \SciMS\Form\Input;
     use \SciMS\Form\Option;
     use \SciMS\Form\Select;
     use \SciMS\Form\TextArea;
@@ -160,7 +158,7 @@
             $domains = array(
                 'forms'  => $services['form.builder']->add(
                 // Title
-                    new InputText(array(
+                    new Input(array(
                         'type'     => 'text',
                         'id'       => 'title',
                         'name'     => 'title',
@@ -207,7 +205,7 @@
                     $select_category
                 )->add(
                 // Tags
-                    new InputText(array(
+                    new Input(array(
                         'type'     => 'text',
                         'id'       => 'tags',
                         'name'     => 'tags',
@@ -221,14 +219,14 @@
                     $select_status
                 )->add(
                 // Writter id.
-                    new InputHidden(array(
+                    new Input(array(
                         'type'  => 'hidden',
                         'id'    => 'writter',
                         'name'  => 'writter',
                         'value' => $user->getId(),
                     ))
                 )->add(
-                    new InputHidden(array(
+                    new Input(array(
                         'type'  => 'hidden',
                         'id'    => 'article_id',
                         'name'  => 'article_id',
@@ -239,7 +237,7 @@
                     $select_summary
                 )->add(
                 // Submit
-                    new InputSubmit(array(
+                    new Input(array(
                         'type'     => 'submit',
                         'id'       => 'submit',
                         'name'     => 'submit',

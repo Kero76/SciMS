@@ -1,9 +1,7 @@
 <?php
     namespace SciMS\Controller\BuildDomain;
 
-    use \SciMS\Form\Input\InputEmail;
-    use \SciMS\Form\Input\InputPassword;
-    use \SciMS\Form\Input\InputSubmit;
+    use \SciMS\Form\Input;
 
     /**
      * Class BuildConnection.
@@ -54,7 +52,7 @@
     
             $domains = array(
                 'forms' => $services['form.builder']->add(
-                    new InputEmail(array(
+                    new Input(array(
                         'type'          => 'email',
                         'id'            => 'email',
                         'name'          => 'email',
@@ -65,7 +63,7 @@
                         'label'         => 'Email',
                     ))
                 )->add(
-                    new InputPassword(array(
+                    new Input(array(
                         'type'          => 'password',
                         'id'            => 'password',
                         'name'          => 'password',
@@ -76,7 +74,7 @@
                         'label'         => 'Password',
                     ))
                 )->add(
-                    new InputSubmit(array(
+                    new Input(array(
                         'type'     => 'submit',
                         'id'       => 'submit',
                         'name'     => 'submit',

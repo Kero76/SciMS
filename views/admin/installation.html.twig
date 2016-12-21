@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="{{ website.websiteAuthors }}">
+    <meta name="copyright" content="{{ website.websiteAuthors }}">
+    <meta name="keywords" content="{{ website.title }}, {% block keywords %}{% endblock %}">
+    <meta name="generator" content="SciMS">
+    {% block meta_tags %}{% endblock %}
+
+    <link rel="icon" href="../../web/favicon.ico">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="{{ theme.link }}" rel="stylesheet" integrity="{{ theme.integrity }}" crossorigin="anonymous"> <!-- Theme Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
+
+    {% block stylesheets %}{% endblock %}
+
+    <title>Rhapsody installation</title>
+</head>
+
+<body>
+<section id="scims-article-body" class="container">
+    <div class="row">
+        <!-- Body of webpage -->
+        <div id="scims-body-page" class="row">
+            <h1 class="text-center">Rhapsody installation</h1>
+            <p class="text-center">Fill all informations to install Rhapsody on your server</p>
+            <form action="/web/index.php?action=verification&form=installation" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <fieldset>
+                    <legend>Database Settings</legend>
+                    {% for form in db_form %}
+                        <div class="form-group">
+                            <label for="{{ form.id }}" class="control-label col-md-2 col-sm-4 col-xs-4">{{ form.label }}</label>
+                            <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                                {% autoescape false %}{{ form.render }}{% endautoescape %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+
+                <fieldset>
+                    <legend>Administrator informations</legend>
+                    {% for form in admin_form %}
+                        <div class="form-group">
+                            <label for="{{ form.id }}" class="control-label col-md-2 col-sm-4 col-xs-4">{{ form.label }}</label>
+                            <div class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                                {% autoescape false %}{{ form.render }}{% endautoescape %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </form>
+        </div>
+
+        <!-- Loading script section -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!-- jquery    -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> <!-- bootstrap -->
+        {% block javascripts %}{% endblock %}
+    </div>
+</section>
+
+<!-- Footer of the webpage. -->
+<div class="container">
+    <div class="row">
+        <footer class="scims-footer-page col-md-12 col-sm-12 col-xs-12">
+            <p class="scims-italic scims-header-page-subtitle">Powered by Rhapsody &copy; 2016</p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

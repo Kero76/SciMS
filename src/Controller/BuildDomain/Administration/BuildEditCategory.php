@@ -2,9 +2,7 @@
     namespace SciMS\Controller\BuildDomain\Administration;
     
     use SciMS\Controller\BuildDomain\AbstractBuildDomain;
-    use \SciMS\Form\Input\InputHidden;
-    use \SciMS\Form\Input\InputSubmit;
-    use \SciMS\Form\Input\InputText;
+    use \SciMS\Form\Input;
 
     /**
      * Class BuildEditCategory.
@@ -57,7 +55,7 @@
             $domains  = array(
                 'forms' => $services['form.builder']->add(
                 // Title
-                    new InputText(array(
+                    new Input(array(
                         'type'     => 'text',
                         'id'       => 'title',
                         'name'     => 'title',
@@ -68,7 +66,7 @@
                     ))
                 )->add(
                 // Submit
-                    new InputSubmit(array(
+                    new Input(array(
                         'type'     => 'submit',
                         'id'       => 'submit',
                         'name'     => 'submit',
@@ -77,7 +75,7 @@
                         'readonly' => false,
                     ))
                 )->add(
-                    new InputHidden(array(
+                    new Input(array(
                         'type'  => 'hidden',
                         'id'    => 'category_id',
                         'name'  => 'category_id',

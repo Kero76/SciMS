@@ -51,7 +51,7 @@
             }
     
             // If search-field exists, so search result on Database.
-            if ($services['post.handler']->requestFieldExist('search-field') == true && $services['post.handler']->getRequestField('search-field') != '') {
+            if ($services['post.handler']->requestFieldExist('search-field') === true && $services['post.handler']->getRequestField('search-field') != '') {
                 if ($services['session.handler']->requestFieldExist('user_id')) {
                     $domains = array(
                         'articles' => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),

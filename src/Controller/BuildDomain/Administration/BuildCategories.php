@@ -1,13 +1,5 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: Kero76
-     * Date: 19/12/16
-     * Time: 17:06
-     */
-    
     namespace SciMS\Controller\BuildDomain\Administration;
-    
     
     use SciMS\Controller\BuildDomain\AbstractBuildDomain;
 

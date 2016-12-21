@@ -16,6 +16,11 @@
         /**
          * BuildHome constructor.
          *
+         * -> V1.1 :
+         *  - Added redirect when the file database.yml not exist because
+         * the website is not installed on server and the configurations are
+         * required to interact with database and created the admin user.
+         *
          * @constructor
          * @param $template
          *  Name of the template.
@@ -29,14 +34,23 @@
         /**
          * Method use for create domains array use to render the view.
          *
+         * -> V1.1 :
+         *  - Add redirect when website not configurate.
+         *
          * @param array $services
          *  Return services.
          * @return array
          *  Return an array who composed by all services present on Router.
          * @since   SciMS 0.3
-         * @version 1.0
+         * @version 1.1
          */
         public function buildDomain(array $services) {
+            // Check if the database file not exist on server, and if not exist redirect the user on the installation page.
+            if (!$services['file.checker']->fileExist('../app/database.yml')) {
+                $url = '/web/index.php?action=installation';
+                $services['redirect.handler']->redirect($url);
+            }
+            
             $website = $services['dao.website']->findSettings('../app/settings.yml');
             $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
             $theme   = "";

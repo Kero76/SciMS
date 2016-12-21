@@ -59,6 +59,42 @@
     
             $entry_form = $services['get.handler']->getRequestField('form');
             switch ($entry_form) {
+                // Installation section
+                case 'installation' :
+                    $database = array(
+                        'database' => array(
+                            'dns'      => $services['post.handler']->getRequestField('db_dns'),
+                            'dbname'   => $services['post.handler']->getRequestField('db_dbname'),
+                            'user'     => $services['post.handler']->getRequestField('db_user'),
+                            'password' => $services['post.handler']->getRequestField('db_password'),
+                        ),
+                    );
+                    $services['yaml.file']->write($database, '../app/database.yml');
+                    
+                    // Create an user instance.
+                    $user = new User(array(
+                        'email'    => $services['post.handler']->getRequestField('admin_email'),
+                        'username' => $services['post.handler']->getRequestField('admin_username'),
+                        'password' => password_hash($services['post.handler']->getRequestField('admin_password'), PASSWORD_DEFAULT),
+                        'role'     => User::ADMINISTRATOR,
+                        'connect'  => true,
+                    ));
+    
+                    // Save user on Database
+                    $services['dao.user']->saveUser($user);
+    
+                    // Create session with session.handler.
+                    $services['session.handler']->createSession(array(
+                        'user_id'      => $services['dao.user']->findByEmail($services['post.handler']->getRequestField('admin_email'))->getId(),
+                        'user_connect' => true,
+                    ));
+    
+                    // Redirect user with connection.
+                    $url = '/web/index.php?user=' . $services['dao.user']->findByEmail($services['post.handler']->getRequestField('admin_email'))->getId();
+                    $services['redirect.handler']->redirect($url);
+                    
+                    break;
+                
                 // Connection section.
                 case 'connection' :
                     $connection = $services['connection.checker']->checkUpdate($services);
