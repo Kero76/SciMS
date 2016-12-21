@@ -11,6 +11,7 @@
         <link rel="icon" href="../web/favicon.ico">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <link href="{{ theme.link }}" rel="stylesheet" integrity="{{ theme.integrity }}" crossorigin="anonymous"> <!-- Theme Stylesheet -->
 
         <link rel="stylesheet" type="text/css" href="../web/css/style.css"> <!-- Personnal Stylesheet -->
@@ -55,6 +56,27 @@
                                             </div>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </nav>
+                    </aside>
+
+                    <aside id="scims-summary" class="scims-anchor-link">
+                        <nav class="navbar">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div id="scims-left-navigation" class="list-group">
+                                    <h3 class="list-group-item">Categories Available</h3>
+                                    {% if connect == true %}
+                                        {% for category in categories %}
+                                            <a class="list-group-item scims-{{ category.title|lower }}" href="/web/index.php?action=consult_article_category&id={{ category.id }}&user={{ user.id }}"> {{ category.title }}</a>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for category in categories %}
+                                            <a class="list-group-item scims-{{ category.title|lower }}" href="/web/index.php?action=consult_article_category&id={{ category.id }}"> {{ category.title }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </nav>

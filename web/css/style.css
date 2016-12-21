@@ -103,6 +103,10 @@ img {
     width: 256px;
 }
 
+.scims-avatar-search {
+    width: 128px;
+}
+
 #toggle-toc {
     color: #337AB7;
 }
@@ -180,3 +184,44 @@ img {
     font-family : FontAwesome;
     content: "\f085";
 }
+
+.scims-mathematical:before {
+    font-family : FontAwesome;
+    content: "\f1ec";
+}
+
+.scims-chimical:before {
+    font-family : FontAwesome;
+    content: "\f0c3";
+}
+
+.scims-physics:before {
+    font-family : FontAwesome;
+    content: "\f0e7";
+}
+
+.scims-computer:before {
+    font-family : FontAwesome;
+    content: "\f108";
+}
+
+.scims-medicine:before {
+    font-family : FontAwesome;
+    content: "\f0fa";
+}
+
+.scims-biology:before {
+    font-family : FontAwesome;
+    content: "\f06c";
+}
+
+.scims-geology:before {
+    font-family : FontAwesome;
+    content: "\f0ac";
+}
+
+.scims-geography:before {
+    font-family : FontAwesome;
+    content: "\f279";
+}
+

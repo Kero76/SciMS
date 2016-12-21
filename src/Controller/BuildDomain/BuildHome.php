@@ -62,12 +62,6 @@
                 }
             }
             
-            $category_articles = array();
-            $categories = $services['dao.category']->findAll();
-            foreach($categories as $category) {
-                $category_articles[$category->getTitle()] = $services['dao.article']->findByCategories($category->getId());
-            }
-            
             if ($services['session.handler']->requestFieldExist('user_id')) {
                 $domains = array(
                     'last_articles'         => $services['dao.article']->findLastArticle($website->getLastArticle()),
@@ -75,13 +69,13 @@
                     'connect'               => true,
                     'website'               => $website,
                     'theme'                 => $theme,
-                    'categories_articles'   => $category_articles,
+                    'categories'            => $services['dao.category']->findAll(),
                 );
             } else {
                 $domains = array(
                     'last_articles'         => $services['dao.article']->findLastArticle($website->getLastArticle()),
                     'website'               => $website,
-                    'categories_articles'   => $category_articles,
+                    'categories'            => $services['dao.category']->findAll(),
                     'theme'                 => $theme,
                 );
             }

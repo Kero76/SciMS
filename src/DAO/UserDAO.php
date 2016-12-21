@@ -115,6 +115,29 @@
             
             return $row['max'];
         }
+        
+        /**
+         * Method use to get users when user type a research on research field.
+         *
+         * @param $field_research
+         *  The string research by user.
+         * @return array
+         *  Return an collection of Users, as found.
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function findByResearch($field_research) {
+            $sql          = "SELECT * FROM `users` WHERE username LIKE '%$field_research%'";
+            $rows         = $this->getDatabase()->query($sql, PDO::FETCH_ASSOC);
+        
+            $users = array();
+            foreach ($rows as $row) {
+                $id                 = $row['id'];
+                $users[$id]  = $this->buildDomain($row);
+            }
+        
+            return $users;
+        }
     
         /**
          * Method use for register an user.

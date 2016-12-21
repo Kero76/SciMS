@@ -23,6 +23,7 @@
         public function __construct($template) {
             $this->setTemplateName($template);
         }
+        
         /**
          * Method use for create domains array use to render the view.
          *
@@ -50,19 +51,21 @@
             $writter = $services['dao.user']->findById($services['get.handler']->getRequestField('id'));
             if ($services['session.handler']->requestFieldExist('user_id')) {
                 $domains = array(
-                    'writter'  => $writter,
-                    'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                    'articles' => $services['dao.article']->findByOwnership($writter->getId()),
-                    'connect'  => true,
-                    'website'  => $website,
-                    'theme'    => $theme,
+                    'writter'    => $writter,
+                    'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                    'articles'   => $services['dao.article']->findByOwnership($writter->getId()),
+                    'connect'    => true,
+                    'categories' => $services['dao.category']->findAll(),
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             } else {
                 $domains = array(
-                    'writter' => $writter,
-                    'articles' => $services['dao.article']->findByOwnership($writter->getId()),
-                    'website'  => $website,
-                    'theme'    => $theme,
+                    'writter'    => $writter,
+                    'articles'   => $services['dao.article']->findByOwnership($writter->getId()),
+                    'categories' => $services['dao.category']->findAll(),
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             }
             return $domains;

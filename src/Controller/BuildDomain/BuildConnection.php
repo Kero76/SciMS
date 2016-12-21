@@ -83,8 +83,9 @@
                         'readonly' => false,
                     ))
                 )->getForms(),
-                'website' => $website,
-                'theme'   => $theme,
+                'categories' => $services['dao.category']->findAll(),
+                'website'    => $website,
+                'theme'      => $theme,
             );
             return $domains;
         }

@@ -52,18 +52,20 @@
             if ($services['session.handler']->requestFieldExist('user_id')) {
                 $article = $services['dao.article']->findById($services['get.handler']->getRequestField('id'));
                 $domains = array(
-                    'article'       => $article,
-                    'user'          => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                    'connect'       => true,
-                    'author_id'     => $article->getWritter()->getId(),
-                    'website'       => $website,
-                    'theme'         => $theme,
+                    'article'    => $article,
+                    'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                    'connect'    => true,
+                    'author_id'  => $article->getWritter()->getId(),
+                    'categories' => $services['dao.category']->findAll(),
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             } else {
                 $domains = array(
-                    'article' => $services['dao.article']->findById($services['get.handler']->getRequestField('id')),
-                    'website' => $website,
-                    'theme'   => $theme,
+                    'article'    => $services['dao.article']->findById($services['get.handler']->getRequestField('id')),
+                    'categories' => $services['dao.category']->findAll(),
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             }
             

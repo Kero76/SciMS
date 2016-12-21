@@ -54,33 +54,43 @@
             if ($services['post.handler']->requestFieldExist('search-field') === true && $services['post.handler']->getRequestField('search-field') != '') {
                 if ($services['session.handler']->requestFieldExist('user_id')) {
                     $domains = array(
-                        'articles' => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),
-                        'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                        'connect'  => true,
-                        'website' => $website,
-                        'theme'   => $theme,
+                        'articles'          => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),
+                        'users'             => $services['dao.user']->findByResearch($services['post.handler']->getRequestField('search-field')),
+                        'user'              => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                        'connect'           => true,
+                        'categories'        => $services['dao.category']->findAll(),
+                        'website'           => $website,
+                        'theme'             => $theme,
+                        'article_not_found' => $services['message.handler']->getMessage('article_not_found'),
+                        'user_not_found'    => $services['message.handler']->getMessage('user_not_found'),
                     );
                 } else {
                     $domains = array(
-                        'articles' => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),
-                        'website' => $website,
-                        'theme'   => $theme,
+                        'articles'          => $services['dao.article']->findByResearch($services['post.handler']->getRequestField('search-field')),
+                        'users'             => $services['dao.user']->findByResearch($services['post.handler']->getRequestField('search-field')),
+                        'categories'        => $services['dao.category']->findAll(),
+                        'website'           => $website,
+                        'theme'             => $theme,
+                        'article_not_found' => $services['message.handler']->getMessage('article_not_found'),
+                        'user_not_found'    => $services['message.handler']->getMessage('user_not_found'),
                     );
                 }
             } else {
                 if ($services['session.handler']->requestFieldExist('user_id')) {
                     $domains = array(
-                        'message' => $services['message.handler']->getMessage('research_fail'),
-                        'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                        'connect' => true,
-                        'website' => $website,
-                        'theme'   => $theme,
+                        'message'    => $services['message.handler']->getMessage('research_fail'),
+                        'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                        'connect'    => true,
+                        'categories' => $services['dao.category']->findAll(),
+                        'website'    => $website,
+                        'theme'      => $theme,
                     );
                 } else {
                     $domains = array(
-                        'message' => $services['message.handler']->getMessage('research_fail'),
-                        'website' => $website,
-                        'theme'   => $theme,
+                        'message'    => $services['message.handler']->getMessage('research_fail'),
+                        'categories' => $services['dao.category']->findAll(),
+                        'website'    => $website,
+                        'theme'      => $theme,
                     );
                 }
             }

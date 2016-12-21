@@ -112,9 +112,10 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('connection_fail'),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('connection_fail'),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -146,9 +147,10 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('inscription_fail'),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('inscription_fail'),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -190,10 +192,11 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('update_failed'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('update_failed'),
+                            'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -222,10 +225,11 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('write_article_fail'),
-                            'user'    => $services['dao.user']->findById($services['post.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('write_article_fail'),
+                            'user'       => $services['dao.user']->findById($services['post.handler']->getRequestField('user_id')),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -257,10 +261,11 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('update_article_fail'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('update_article_fail'),
+                            'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -285,10 +290,11 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('category_fail'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('category_fail'),
+                            'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -307,10 +313,11 @@
                         $services['redirect.handler']->redirect($url);
                     } else {
                         $domains = array(
-                            'message' => $services['message.handler']->getMessage('update_article_fail'),
-                            'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                            'website' => $website,
-                            'theme'   => $theme,
+                            'message'    => $services['message.handler']->getMessage('update_article_fail'),
+                            'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                            'categories' => $services['dao.category']->findAll(),
+                            'website'    => $website,
+                            'theme'      => $theme,
                         );
                     }
                     break;
@@ -332,10 +339,11 @@
                 // Default case : $_GET['form'] not exists or not corresponding with possible choices.
                 default:
                     $domains = array(
-                        'user'    => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                        'message' => $services['message.handler']->getMessage('404'),
-                        'website' => $website,
-                        'theme'   => $theme,
+                        'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                        'message'    => $services['message.handler']->getMessage('404'),
+                        'categories' => $services['dao.category']->findAll(),
+                        'website'    => $website,
+                        'theme'      => $theme,
                     );
                     break;
             }

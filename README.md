@@ -5,23 +5,8 @@ Creation of CMS like for post research article.
 1. Clone or download SciMS sources.
 2. `$ cd SciMS/`
 3. `$ composer install` to download external librairies depedencies.
-4.  After installation, fill the file app/database.yml with :
-    * dns : DNS of your Database access.
-    * dbname : Name of your Database access.
-    * user : Name of the user of your Database access.
-    * password : Password of your Database access.<br>
-    
-    and fill the file app/settings.yml with :
-    * title             : Title of your website between quote like "My Website"
-    * subtitle          : The subtitle of your website, if you have a subtitle.
-    * website_authors   : Name of all authors who created the website.
-    * copyright         : The footer content of your website between quote like "&copy; 2016"
-    * last_article      : The number of article at display on your home page.
-    * article_status    : An array of all article status possible for your future article.
-    * user_role         : An array with all role for your future user register.
-    * abstract          : Number of characters displayed on home and result page.    
-5. Create the table on the Database with the file database/create_table.sql.
-6. Register your account and SciMS is ready to work.
+
+End of the installation coming soon.
 
 ## Features
 * Website registration with unique email, username and password.
@@ -53,6 +38,7 @@ Creation of CMS like for post research article.
 #### Framework manual
 * Website of Bootstrap : [http://getbootstrap.com/](http://getbootstrap.com/)
 * Website of Font-Awesome : [http://fontawesome.io/](http://fontawesome.io/)
+* Personnal Framework Rhapsody : [https://github.com/Kero76/Rhapsody](https://github.com/Kero76/Rhapsody)
 
 #### Templates engine
 * Website of Twig : [http://twig.sensiolabs.org/](http://twig.sensiolabs.org/)
@@ -78,3 +64,4 @@ Creation of CMS like for post research article.
 * Yaml explaination : [http://sweetohm.net/article/introduction-yaml.html](http://sweetohm.net/article/introduction-yaml.html)
 * More informations abouts all themes availables on SciMS : [https://www.bootstrapcdn.com/bootswatch/](https://www.bootstrapcdn.com/bootswatch/)
 * How to write a composer.json file : [https://getcomposer.org/doc/04-schema.md#json-schema](https://getcomposer.org/doc/04-schema.md#json-schema)
+* You search a specific icon : [http://glyphsearch.com/](http://glyphsearch.com/)

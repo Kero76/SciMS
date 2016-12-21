@@ -8,6 +8,7 @@
     use \SciMS\Controller\BuildDomain\Build404;
     use \SciMS\Controller\BuildDomain\BuildConnection;
     use \SciMS\Controller\BuildDomain\BuildConsultArticle;
+    use SciMS\Controller\BuildDomain\BuildConsultArticleCategory;
     use \SciMS\Controller\BuildDomain\BuildConsultProfile;
     use \SciMS\Controller\BuildDomain\BuildHome;
     use \SciMS\Controller\BuildDomain\BuildInscription;
@@ -140,42 +141,44 @@
         public function __construct() {
             $this->_routes = array(
                 // Installation part
-                'installation'    => '#\/web\/index\.php\?action=installation$#',
+                'installation' => '#\/web\/index\.php\?action=installation$#',
                 
                 // Website part
-                'home'            => '#\/web\/index\.php(\?user=[0-9]+)?$#',
-                'connection'      => '#\/web\/index\.php\?action=connection$#',
-                'disconnection'   => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
-                'inscription'     => '#\/web\/index\.php\?action=inscription$#',
-                'consult_article' => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
-                'consult_profile' => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
-                'search'          => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
-                'verification'    => '#\/web\/index\.php\?action=verification&form=(installation|connection|inscription|disconnection|edit_profile(&user_update=[0-9]+)?|write_article|edit_article|delete_article|add_category|edit_category|delete_category|delete_user)+(&user=[0-9]+&(article|category|user_delete)=[0-9]+)?$#',
+                'home'                     => '#\/web\/index\.php(\?user=[0-9]+)?$#',
+                'connection'               => '#\/web\/index\.php\?action=connection$#',
+                'disconnection'            => '#\/web\/index\.php\?action=disconnection&user=([0-9]+)+$#',
+                'inscription'              => '#\/web\/index\.php\?action=inscription$#',
+                'consult_article'          => '#\/web\/index\.php\?action=consult_article&id=[0-9]+(&user=[0-9]+)?$#',
+                'consult_article_category' => '#\/web\/index\.php\?action=consult_article_category&id=[0-9]+(&user=[0-9]+)?$#',
+                'consult_profile'          => '#\/web\/index\.php\?action=consult_profile&id=[0-9]+(&user=[0-9]+)?$#',
+                'search'                   => '#\/web\/index\.php\?action=search(&user=[0-9]+)?$#',
+                'verification'             => '#\/web\/index\.php\?action=verification&form=(installation|connection|inscription|disconnection|edit_profile(&user_update=[0-9]+)?|write_article|edit_article|delete_article|add_category|edit_category|delete_category|delete_user)+(&user=[0-9]+&(article|category|user_delete)=[0-9]+)?$#',
                 
                 // Administration part
-                'administration'  => '#\/web\/index\.php\?action=administration&user=[0-9]+$#',
-                'admin_article'   => '#\/web\/index\.php\?action=admin_article&user=[0-9]+$#',
-                'admin_category'  => '#\/web\/index\.php\?action=admin_category&user=[0-9]+$#',
-                'admin_user'      => '#\/web\/index\.php\?action=admin_user&user=[0-9]+$#',
-                'write_article'   => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
-                'edit_article'    => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
-                'edit_profile'    => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+(&user_update=[0-9]+)?$#',
-                'add_category'    => '#\/web\/index\.php\?action=edit_category&user=[0-9]+$#',
-                'edit_category'   => '#\/web\/index\.php\?action=edit_category&user=[0-9]+&category=[0-9]+$#',
+                'administration' => '#\/web\/index\.php\?action=administration&user=[0-9]+$#',
+                'admin_article'  => '#\/web\/index\.php\?action=admin_article&user=[0-9]+$#',
+                'admin_category' => '#\/web\/index\.php\?action=admin_category&user=[0-9]+$#',
+                'admin_user'     => '#\/web\/index\.php\?action=admin_user&user=[0-9]+$#',
+                'write_article'  => '#\/web\/index\.php\?action=write_article&user=[0-9]+$#',
+                'edit_article'   => '#\/web\/index\.php\?action=edit_article&user=[0-9]+&article=[0-9]+$#',
+                'edit_profile'   => '#\/web\/index\.php\?action=edit_profile&user=[0-9]+(&user_update=[0-9]+)?$#',
+                'add_category'   => '#\/web\/index\.php\?action=edit_category&user=[0-9]+$#',
+                'edit_category'  => '#\/web\/index\.php\?action=edit_category&user=[0-9]+&category=[0-9]+$#',
             );
             
             $this->_domains = array(
                 // Installation
-                'installation'    => new BuildInstallation('admin/installation.html.twig'),
+                'installation' => new BuildInstallation('admin/installation.html.twig'),
                 
                 // Website
-                'home'            => new BuildHome('home.html.twig'),
-                'connection'      => new BuildConnection('connection.html.twig'),
-                'inscription'     => new BuildInscription('inscription.html.twig'),
-                'consult_article' => new BuildConsultArticle('consult_article.html.twig'),
-                'consult_profile' => new BuildConsultProfile('consult_profile.html.twig'),
-                'search'          => new BuildSearchResultDomain('search_results.html.twig'),
-                'verification'    => new BuildVerification('verification.html.twig'),
+                'home'                     => new BuildHome('home.html.twig'),
+                'connection'               => new BuildConnection('connection.html.twig'),
+                'inscription'              => new BuildInscription('inscription.html.twig'),
+                'consult_article'          => new BuildConsultArticle('consult_article.html.twig'),
+                'consult_article_category' => new BuildConsultArticleCategory('consult_article_category.html.twig'),
+                'consult_profile'          => new BuildConsultProfile('consult_profile.html.twig'),
+                'search'                   => new BuildSearchResultDomain('search_results.html.twig'),
+                'verification'             => new BuildVerification('verification.html.twig'),
                 
                 // Administration part
                 'administration' => new BuildAdministrationHome('admin/home.html.twig'),
@@ -347,6 +350,8 @@
             $this->_services['message.handler']->pushMessage('update_article_fail', new Error('Update article fail'));
             $this->_services['message.handler']->pushMessage('category_fail',       new Error('Category already present or invalid'));
             $this->_services['message.handler']->pushMessage('research_fail',       new Error('Research not found'));
+            $this->_services['message.handler']->pushMessage('article_not_found',   new Error('Article not found'));
+            $this->_services['message.handler']->pushMessage('user_not_found',      new Error('User not found'));
             $this->_services['message.handler']->pushMessage('404',                 new Error('Page not found'));
         }
     }

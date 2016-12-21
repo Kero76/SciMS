@@ -1,0 +1,47 @@
+{% extends "layout.html.twig" %}
+
+{% block keywords %}homepage, home, article, scientist, research{% endblock %}
+
+{% block title %}{{ website.title }} - Home{% endblock %}
+
+{% block page_title %}
+    <!-- Header of the webpage. -->
+    <header class="scims-page-header col-md-12 col-sm-12 col-xs-12">
+        <h1 class="scims-page-title">
+            {{ website.title }} : {{ website.subtitle }}
+            <small class="scims-italic scims-header-page-subtitle">{{ website.websiteAuthors }}</small>
+        </h1>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Article by category -->
+    <section class="col-md-8 col-sm-8 col-xs-8">
+        <h2>{{ category.title }} article</h2>
+        {% if articles|length == 0 %}
+            <p>No article available on {{ category.title }}</p>
+        {% else %}
+            {% for article in articles %}
+                <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
+                    <h3>{{ article.title }}</h3>
+                    <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
+                    <p>
+                        <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                        <span class="scims-excerpt-categories scims-excerpt-categories-home"> {{ article.categories.title }}</span>
+                        Article written by
+                        {% if connect == true %}
+                            <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}&user={{ user.id }}">{{ article.writter.username }}</a>,
+                        {% else %}
+                            <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}">{{ article.writter.username }}</a>,
+                        {% endif %}
+                    </p>
+                </aside>
+            {% endfor %}
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+{% endblock %}
