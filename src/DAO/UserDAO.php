@@ -2,7 +2,7 @@
     namespace SciMS\DAO;
 
     use \PDO;
-    use SciMS\Domain\User;
+    use \SciMS\Domain\User;
 
     /**
      * Class UserDAO.

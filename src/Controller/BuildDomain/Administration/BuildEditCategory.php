@@ -1,7 +1,9 @@
 <?php
     namespace SciMS\Controller\BuildDomain\Administration;
     
-    use SciMS\Controller\BuildDomain\AbstractBuildDomain;
+    use \SciMS\Controller\BuildDomain\AbstractBuildDomain;
+    use \SciMS\Domain\Theme;
+    use \SciMS\Domain\Website;
     use \SciMS\Form\Input;
 
     /**
@@ -39,8 +41,8 @@
          */
         public function buildDomain(array $services) {
             $services['get.handler']->setRequest($_GET);         // Retrieve $_GET.
-            $website = $services['dao.website']->findSettings('../app/settings.yml');
-            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $website = $services['dao.website']->findSettings(Website::WEBSITE_SETTING_PATH);
+            $themes  = $services['dao.theme']->findSettings(Theme::THEMES_SETTING_PATH);
             $theme   = "";
         
             foreach($themes as $t) {

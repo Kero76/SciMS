@@ -10,10 +10,13 @@
      * This is a part of the controller app because it can render the good view in function
      * of the routes define in other classes present on package SciMS\Controller.
      *
+     * -> V1.1:
+     *  Add Text extension on Twig to truncate text on website.
+     *
      * @author Kero76
      * @package SciMS\Controller
      * @since SciMS 0.1
-     * @version 1.0
+     * @version 1.1
      */
     class Renderer {
     

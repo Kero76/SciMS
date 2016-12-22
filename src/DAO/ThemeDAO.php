@@ -1,7 +1,7 @@
 <?php
     namespace SciMS\DAO;
     
-    use SciMS\Domain\Theme;
+    use \SciMS\Domain\Theme;
     use \Symfony\Component\Yaml\Yaml;
     
     /**

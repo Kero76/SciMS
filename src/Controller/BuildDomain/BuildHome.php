@@ -1,6 +1,10 @@
 <?php
     namespace SciMS\Controller\BuildDomain;
     
+    use \SciMS\Database\DatabaseSetting;
+    use \SciMS\Domain\Theme;
+    use \SciMS\Domain\Website;
+
     /**
      * Class BuildHome
      *
@@ -46,13 +50,13 @@
          */
         public function buildDomain(array $services) {
             // Check if the database file not exist on server, and if not exist redirect the user on the installation page.
-            if (!$services['file.checker']->fileExist('../app/db.yml')) {
+            if (!$services['file.checker']->fileExist(DatabaseSetting::DB_SETTING_PATH)) {
                 $url = '/web/index.php?action=installation';
                 $services['redirect.handler']->redirect($url);
             }
             
-            $website = $services['dao.website']->findSettings('../app/settings.yml');
-            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $website = $services['dao.website']->findSettings(Website::WEBSITE_SETTING_PATH);
+            $themes  = $services['dao.theme']->findSettings(Theme::THEMES_SETTING_PATH);
             $theme   = "";
             
             foreach($themes as $t) {

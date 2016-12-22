@@ -14,6 +14,14 @@
     class Theme extends AbstractDomain {
     
         /**
+         * Path of the themes present on themes.yml.
+         *
+         * @var string
+         * @since SciMS 0.5
+         */
+        const THEMES_SETTING_PATH = '../app/themes.yml';
+    
+        /**
          * Name of the theme.
          * @var string
          * @since SciMS 0.4.1

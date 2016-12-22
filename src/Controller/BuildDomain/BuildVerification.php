@@ -2,12 +2,15 @@
     namespace SciMS\Controller\BuildDomain;
     
     use \DateTime;
-    use SciMS\DAO\ArticleDAO;
-    use SciMS\DAO\CategoryDAO;
-    use SciMS\DAO\UserDAO;
-    use SciMS\Domain\Article;
-    use SciMS\Domain\Category;
-    use SciMS\Domain\User;
+    use \SciMS\Database\DatabaseSetting;
+    use \SciMS\DAO\ArticleDAO;
+    use \SciMS\DAO\CategoryDAO;
+    use \SciMS\DAO\UserDAO;
+    use \SciMS\Domain\Article;
+    use \SciMS\Domain\Category;
+    use \SciMS\Domain\Theme;
+    use \SciMS\Domain\User;
+    use \SciMS\Domain\Website;
 
     /**
      * Class BuildVerification
@@ -49,8 +52,8 @@
             $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
             $services['file.handler']->setRequest($_FILES); // Retrieve $_FILES.
     
-            $website = $services['dao.website']->findSettings('../app/settings.yml');
-            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $website = $services['dao.website']->findSettings(Website::WEBSITE_SETTING_PATH);
+            $themes  = $services['dao.theme']->findSettings(Theme::THEMES_SETTING_PATH);
             $theme   = "";
     
             foreach($themes as $t) {
@@ -72,7 +75,7 @@
                             'password' => $services['post.handler']->getRequestField('db_password'),
                         ),
                     );
-                    $services['yaml.file']->write($database, '../app/database.yml');
+                    $services['yaml.file']->write($database, DatabaseSetting::DB_SETTING_PATH);
                     
                     $services['dao.article']  = new ArticleDAO();
                     $services['dao.category'] = new CategoryDAO();
@@ -251,8 +254,7 @@
                     if ($edit === true) {
                         $article  = $services['dao.article']->findById($services['post.handler']->getRequestField('article_id'));
                         $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
-                        $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
-    
+                        
                         $date = new DateTime();
                         $article = new Article(array(
                             'id'                => $services['post.handler']->getRequestField('article_id'),

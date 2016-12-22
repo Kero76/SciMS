@@ -21,6 +21,14 @@
     class Website extends AbstractDomain {
     
         /**
+         * Path of the settings file.
+         *
+         * @var string
+         * @since SciMS 0.5
+         */
+        const WEBSITE_SETTING_PATH = '../app/settings.yml';
+    
+        /**
          * Title of the website.
          *
          * @var string

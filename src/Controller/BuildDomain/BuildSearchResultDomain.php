@@ -1,6 +1,9 @@
 <?php
     namespace SciMS\Controller\BuildDomain;
 
+    use \SciMS\Domain\Theme;
+    use \SciMS\Domain\Website;
+    
     /**
      * Class BuildSearchResultDomain.
      *
@@ -38,9 +41,9 @@
             $services['post.handler']->setRequest($_POST);  // Retrieve $_POST.
             $services['get.handler']->setRequest($_GET);    // Retrieve $_GET.
             $services['file.handler']->setRequest($_FILES); // Retrieve $_SESSION.
-            
-            $website = $services['dao.website']->findSettings('../app/settings.yml');
-            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+    
+            $website = $services['dao.website']->findSettings(Website::WEBSITE_SETTING_PATH);
+            $themes  = $services['dao.theme']->findSettings(Theme::THEMES_SETTING_PATH);
             $theme   = "";
     
             foreach($themes as $t) {

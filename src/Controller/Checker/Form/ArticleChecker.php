@@ -1,6 +1,7 @@
 <?php
     namespace SciMS\Controller\Checker\Form;
-    use SciMS\Controller\Checker\AbstractChecker;
+    
+    use \SciMS\Controller\Checker\AbstractChecker;
 
     /**
      * Class ArticleChecker.

@@ -2,7 +2,7 @@
     namespace SciMS\Database;
     
     use \Symfony\Component\Yaml\Yaml;
-    use SciMS\Controller\Checker\FileChecker;
+    use \SciMS\Controller\Checker\FileChecker;
 
     /**
      * Class DatabaseSetting.

@@ -1,7 +1,7 @@
 <?php
     namespace SciMS\DAO;
 
-    use SciMS\Database\Database;
+    use \SciMS\Database\Database;
 
     /**
      * Class DAO.

@@ -1,14 +1,14 @@
 <?php
     namespace SciMS\Controller;
     
-    use SciMS\Controller\BuildDomain\Administration\BuildArticles;
-    use SciMS\Controller\BuildDomain\Administration\BuildCategories;
-    use SciMS\Controller\BuildDomain\Administration\BuildInstallation;
-    use SciMS\Controller\BuildDomain\Administration\BuildUsers;
+    use \SciMS\Controller\BuildDomain\Administration\BuildArticles;
+    use \SciMS\Controller\BuildDomain\Administration\BuildCategories;
+    use \SciMS\Controller\BuildDomain\Administration\BuildInstallation;
+    use \SciMS\Controller\BuildDomain\Administration\BuildUsers;
     use \SciMS\Controller\BuildDomain\Build404;
     use \SciMS\Controller\BuildDomain\BuildConnection;
     use \SciMS\Controller\BuildDomain\BuildConsultArticle;
-    use SciMS\Controller\BuildDomain\BuildConsultArticleCategory;
+    use \SciMS\Controller\BuildDomain\BuildConsultArticleCategory;
     use \SciMS\Controller\BuildDomain\BuildConsultProfile;
     use \SciMS\Controller\BuildDomain\BuildHome;
     use \SciMS\Controller\BuildDomain\BuildInscription;
@@ -21,7 +21,7 @@
     use \SciMS\Controller\BuildDomain\Administration\BuildEditProfile;
     use \SciMS\Controller\BuildDomain\Administration\BuildWriteArticle;
     use \SciMS\Controller\Builder\FormBuilder;
-    use SciMS\Controller\Checker\FileChecker;
+    use \SciMS\Controller\Checker\FileChecker;
     use \SciMS\Controller\Checker\Form\ArticleChecker;
     use \SciMS\Controller\Checker\Form\CategoryChecker;
     use \SciMS\Controller\Checker\Form\ConnectionChecker;
@@ -30,7 +30,7 @@
     use \SciMS\Controller\Checker\PasswordChecker;
     use \SciMS\Controller\Checker\URLChecker;
     use \SciMS\Controller\Handler\MessageHandler;
-    use SciMS\Controller\Handler\RedirectHandler;
+    use \SciMS\Controller\Handler\RedirectHandler;
     use \SciMS\Controller\Handler\RequestHandler\CookieHandler;
     use \SciMS\Controller\Handler\RequestHandler\FileHandler;
     use \SciMS\Controller\Handler\RequestHandler\GetHandler;
@@ -42,7 +42,7 @@
     use \SciMS\DAO\UserDAO;
     use \SciMS\DAO\WebsiteDAO;
     use \SciMS\File\FileAvatar;
-    use SciMS\File\YamlFile;
+    use \SciMS\File\YamlFile;
     use \SciMS\Message\Error;
     use \SciMS\Message\Success;
 

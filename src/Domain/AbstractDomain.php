@@ -1,5 +1,6 @@
 <?php
     namespace SciMS\Domain;
+    
     /**
      * Class AbstractDomain.
      *

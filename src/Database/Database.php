@@ -3,7 +3,7 @@
     
     use \PDO;
     use \Exception;
-    use SciMS\Controller\Checker\FileChecker;
+    use \SciMS\Controller\Checker\FileChecker;
 
     /**
      * Class Database.

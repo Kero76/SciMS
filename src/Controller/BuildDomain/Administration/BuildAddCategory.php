@@ -2,6 +2,8 @@
     namespace SciMS\Controller\BuildDomain\Administration;
     
     use \SciMS\Controller\BuildDomain\AbstractBuildDomain;
+    use \SciMS\Domain\Theme;
+    use \SciMS\Domain\Website;
     use \SciMS\Form\Input;
     
     /**
@@ -40,8 +42,8 @@
          * @version 1.0
          */
         public function buildDomain(array $services) {
-            $website = $services['dao.website']->findSettings('../app/settings.yml');
-            $themes  = $services['dao.theme']->findSettings('../app/themes.yml');
+            $website = $services['dao.website']->findSettings(Website::WEBSITE_SETTING_PATH);
+            $themes  = $services['dao.theme']->findSettings(Theme::THEMES_SETTING_PATH);
             $theme   = "";
     
             foreach($themes as $t) {
