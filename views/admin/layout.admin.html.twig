@@ -33,8 +33,10 @@
                         <div id="scims-left-navigation" class="list-group">
                             <a class="list-group-item scims-brand"    href="/web/index.php?user={{ user.id }}"> Home</a>
                             <a class="list-group-item scims-article"  href="/web/index.php?action=admin_article&user={{ user.id }}"> Articles</a>
-                            <a class="list-group-item scims-category" href="/web/index.php?action=admin_category&user={{ user.id }}"> Category</a>
-                            <a class="list-group-item scims-user"     href="/web/index.php?action=admin_user&user={{ user.id }}"> Users</a>
+                            {% if user.role == 0 %}
+                                <a class="list-group-item scims-category" href="/web/index.php?action=admin_category&user={{ user.id }}"> Category</a>
+                                <a class="list-group-item scims-user"     href="/web/index.php?action=admin_user&user={{ user.id }}"> Users</a>
+                            {% endif %}
                             <a class="list-group-item scims-signout"  href="/web/index.php?action=verification&form=disconnection"> Sign Out</a>
 
                             <!-- Search field -->
@@ -47,6 +49,35 @@
                                     </div>
                                 </div>
                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
+            
+            <aside id="scims-summary" class="scims-anchor-link">
+                <nav class="navbar">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div id="scims-left-navigation" class="list-group">
+                            <h3 class="list-group-item">Categories Available</h3>
+                            {% if connect == true %}
+                                {% if categories|length == 0 %}
+                                    <p class="list-group-item">No category currently available</p>
+                                {% else %}
+                                    {% for category in categories %}
+                                        <a class="list-group-item scims-{{ category.title|lower }}" href="/web/index.php?action=consult_article_category&id={{ category.id }}&user={{ user.id }}"> {{ category.title }}</a>
+                                    {% endfor %}
+                                {% endif %}
+                            {% else %}
+                                {% if categories|length == 0 %}
+                                    <p class="list-group-item">No category currently available</p>
+                                {% else %}
+                                    {% for category in categories %}
+                                        <a class="list-group-item scims-{{ category.title|lower }}" href="/web/index.php?action=consult_article_category&id={{ category.id }}"> {{ category.title }}</a>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+
                         </div>
                     </div>
                 </nav>

@@ -2,6 +2,10 @@
 
 {% block keywords %}{{ writter.username }}, user profile, writter, article writter{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
+{% endblock %}
+
 {% block title %}{{ website.title }} - {{ writter.username }}'s Profile{% endblock %}
 
 {% block page_title %}
@@ -47,10 +51,30 @@
         <fieldset>
             <legend>Articles written by {{ writter.username }}</legend>
             <ul class="list-unstyled">
-                {% for article in articles %}
-                    <li><a href="/web/index.php?action=consult_article&id={{ article.id }}" >{{ article.title }}</a></li>
-                {% endfor %}
+                {% if articles|length == 0 %}
+                    <li>{{ writter.username }} currently not write articles.</li>
+                {% else %}
+                    {% for article in articles %}
+                        <li><a href="/web/index.php?action=consult_article&id={{ article.id }}" >{{ article.title }}</a></li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </fieldset>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-css-extras.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php-extras.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-ruby.min.js"></script>
 {% endblock %}

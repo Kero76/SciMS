@@ -46,7 +46,7 @@
          */
         public function buildDomain(array $services) {
             // Check if the database file not exist on server, and if not exist redirect the user on the installation page.
-            if (!$services['file.checker']->fileExist('../app/database.yml')) {
+            if (!$services['file.checker']->fileExist('../app/db.yml')) {
                 $url = '/web/index.php?action=installation';
                 $services['redirect.handler']->redirect($url);
             }

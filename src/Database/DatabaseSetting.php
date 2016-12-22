@@ -2,6 +2,7 @@
     namespace SciMS\Database;
     
     use \Symfony\Component\Yaml\Yaml;
+    use SciMS\Controller\Checker\FileChecker;
 
     /**
      * Class DatabaseSetting.
@@ -77,8 +78,11 @@
          * @version 1.0
          */
         private function __construct() {
-            $database_setting = Yaml::parse(file_get_contents(self::DB_SETTING_PATH))['database'];
-            $this->hydrate($database_setting);
+            $fileChecker = new FileChecker();
+            if ($fileChecker->fileExist(self::DB_SETTING_PATH)) {
+                $database_setting = Yaml::parse(file_get_contents(self::DB_SETTING_PATH))['database'];
+                $this->hydrate($database_setting);
+            }
         }
         
         /**

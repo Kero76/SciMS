@@ -11,7 +11,10 @@ function init_tinyMCE(selector, height) {
     tinymce.init({
         selector: selector,
         height: height,
-        plugins: 'visualblocks',
+        plugins: 'autolink anchor codesample hr link preview searchreplace textcolor visualblocks wordcount',
+        toolbar1: 'bold italic underline | cut, copy, paste | alignleft, aligncenter, alignright, alignjustify | subscript superscript | link anchor',
+        toolbar2: 'undo redo | styleselect fontselect fontsizeselect forecolor backcolor',
+        toolbar3: 'searchreplace | codesample | preview',
         style_formats: [
             { title: 'Headers', items: [
                 { title: 'h1', block: 'h1' },

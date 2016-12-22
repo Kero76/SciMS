@@ -50,15 +50,17 @@
             
             if ($services['session.handler']->requestFieldExist('user_id')) {
                 $domains = array(
-                    'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                    'connect'  => true,
-                    'website'  => $website,
-                    'theme'    => $theme,
+                    'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                    'categories' => $services['dao.category']->findAll(),
+                    'connect'    => true,
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             } else {
                 $domains = array(
-                    'website'  => $website,
-                    'theme'    => $theme,
+                    'categories' => $services['dao.category']->findAll(),
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             }
         

@@ -2,6 +2,7 @@
     namespace SciMS\Controller\BuildDomain\Administration;
     
     use SciMS\Controller\BuildDomain\AbstractBuildDomain;
+    use SciMS\Domain\User;
 
     /**
      * Class BuildDomainArticles.
@@ -47,20 +48,30 @@
                     break;
                 }
             }
-        
+            
+            $user = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
             if ($services['session.handler']->requestFieldExist('user_id')) {
+                // If user is an administrator, so it retrieve all articles.
+                if ($user->getRole() == User::ADMINISTRATOR) {
+                    $articles = $services['dao.article']->findAll();
+                } else {
+                    $articles = $services['dao.article']->findByOwnership($user->getId());
+                }
+                
                 $domains = array(
-                    'articles' => $services['dao.article']->findAll(),
-                    'user'     => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
-                    'connect'  => true,
-                    'website'  => $website,
-                    'theme'    => $theme,
+                    'articles'   => $articles,
+                    'categories' => $services['dao.category']->findAll(),
+                    'user'       => $services['dao.user']->findById($services['session.handler']->getRequestField('user_id')),
+                    'connect'    => true,
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             } else {
                 $domains = array(
-                    'articles' => $services['dao.article']->findAll(),
-                    'website'  => $website,
-                    'theme'    => $theme,
+                    'articles'   => $services['dao.article']->findAll(),
+                    'categories' => $services['dao.category']->findAll(),
+                    'website'    => $website,
+                    'theme'      => $theme,
                 );
             }
         

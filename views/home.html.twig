@@ -18,27 +18,32 @@
     <!-- Last X Article -->
     <section class="col-md-8 col-sm-8 col-xs-8">
         <h2>Last articles</h2>
-        {% for article in last_articles %}
-            <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
-                <h3>{{ article.title }}</h3>
-                <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
-                <p>
-                    {% if connect == true %}
-                        <a href="/web/index.php?action=consult_article&id={{ article.id }}&user={{ user.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
-                    {% else %}
-                        <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
-                    {% endif %}
-                    <span class="scims-excerpt-categories scims-excerpt-categories-home"> {{ article.categories.title }}</span>
+        {% if last_articles|length == 0 %}
+            <p>No article currently available on {{ website.title }}</p>
+        {% else %}
+            {% for article in last_articles %}
+                <aside class="col-md-4 col-sm-4 col-xs-4 scims-article-homepage">
+                    <h3>{{ article.title }}</h3>
+                    <p>{% autoescape false %}{{ article.abstract|truncate(website.abstract, true) }}{% endautoescape %}</p>
+                    <p>
+                        {% if connect == true %}
+                            <a href="/web/index.php?action=consult_article&id={{ article.id }}&user={{ user.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                        {% else %}
+                            <a href="/web/index.php?action=consult_article&id={{ article.id }}" ><button role="link" class="scims-button-text-color btn btn-primary btn-sm" value="Read more ...">Read more ...</button></a>
+                        {% endif %}
+                        <span class="scims-excerpt-categories scims-excerpt-categories-home"> {{ article.categories.title }}</span>
 
-                    Article written by
-                    {% if connect == true %}
-                        <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}&user={{ user.id }}">{{ article.writter.username }}</a>,
-                    {% else %}
-                        <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}">{{ article.writter.username }}</a>,
-                    {% endif %}
-                </p>
-            </aside>
-        {% endfor %}
+                        Article written by
+                        {% if connect == true %}
+                            <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}&user={{ user.id }}">{{ article.writter.username }}</a>,
+                        {% else %}
+                            <a href="/web/index.php?action=consult_profile&id={{ article.writter.id }}">{{ article.writter.username }}</a>,
+                        {% endif %}
+                    </p>
+                </aside>
+            {% endfor %}
+        {% endif %}
+
     </section>
 {% endblock %}
 

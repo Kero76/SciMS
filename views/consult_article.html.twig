@@ -2,6 +2,10 @@
 
 {% block keywords %}{{ article.title }}, {{ article.categories.title }}, {{ article.writter.username }}, article research, articles, research{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
+{% endblock %}
+
 {% block title %}{{ website.title }} - {{ article.title }}{% endblock %}
 
 {% block page_title %}
@@ -69,11 +73,40 @@
             {% block javascripts %}
                 <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
                 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-css.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-css-extras.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-c.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-cpp.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-csharp.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-java.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php-extras.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-markup.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-python.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-ruby.min.js"></script>
+
                 <script type="text/javascript" src="../web/js/table_of_content.js"></script>
             {% endblock %}
         {% else %}
-            <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
-            <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+            {% block javascripts %}
+                <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+                <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-css.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-css-extras.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-c.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-cpp.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-csharp.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-java.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php-extras.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-markup.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-php.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-python.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-ruby.min.js"></script>
+            {% endblock %}
         {% endif %}
     </section>
 {% endblock %}

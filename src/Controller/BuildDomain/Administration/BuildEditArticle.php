@@ -249,6 +249,7 @@
                 'user'       => $user,
                 'connect'    => true,
                 'article_id' => true,
+                'categories' => $services['dao.category']->findAll(),
                 'website'    => $website,
                 'theme'      => $theme,
             );

@@ -85,6 +85,7 @@
                 'user'        => $user,
                 'connect'     => true,
                 'category_id' => true,
+                'categories'  => $services['dao.category']->findAll(),
                 'website'     => $website,
                 'theme'       => $theme,
             );

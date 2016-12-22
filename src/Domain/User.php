@@ -14,7 +14,7 @@
      * He have an avatar, so it can using Gravatar service to add his avatar directly on website.
      *
      * -> V1.1 :
-     *  Added role constante.
+     *  Added role constants.
      * -> V1.2 :
      *  Added Birthday and Biography attribute + corresponding Getters and Setters.
      *  Removed salt attribute + corresponding Getter and Setter.

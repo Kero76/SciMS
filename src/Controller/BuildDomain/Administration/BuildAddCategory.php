@@ -76,6 +76,7 @@
                 )->getForms(),
                 'user'       => $user,
                 'connect'    => true,
+                'categories' => $services['dao.category']->findAll(),
                 'website'    => $website,
                 'theme'      => $theme,
             );

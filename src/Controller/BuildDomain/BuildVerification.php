@@ -2,6 +2,9 @@
     namespace SciMS\Controller\BuildDomain;
     
     use \DateTime;
+    use SciMS\DAO\ArticleDAO;
+    use SciMS\DAO\CategoryDAO;
+    use SciMS\DAO\UserDAO;
     use SciMS\Domain\Article;
     use SciMS\Domain\Category;
     use SciMS\Domain\User;
@@ -70,6 +73,14 @@
                         ),
                     );
                     $services['yaml.file']->write($database, '../app/database.yml');
+                    
+                    $services['dao.article']  = new ArticleDAO();
+                    $services['dao.category'] = new CategoryDAO();
+                    $services['dao.user']     = new UserDAO();
+                    
+                    $services['dao.category']->createTable();
+                    $services['dao.user']->createTable();
+                    $services['dao.article']->createTable();
                     
                     // Create an user instance.
                     $user = new User(array(
@@ -238,6 +249,7 @@
                 case 'edit_article' :
                     $edit = $services['article.checker']->checkUpdate($services);
                     if ($edit === true) {
+                        $article  = $services['dao.article']->findById($services['post.handler']->getRequestField('article_id'));
                         $category = $services['dao.category']->findById($services['post.handler']->getRequestField('category'));
                         $user     = $services['dao.user']->findById($services['post.handler']->getRequestField('writter'));
     
@@ -252,7 +264,7 @@
                             'tags'              => $services['post.handler']->getRequestField('tags'),
                             'status'            => $services['post.handler']->getRequestField('status'),
                             'date_modified'     => $date->format("Y-m-d H:i:s"),
-                            'writter'           => $user,
+                            'writter'           => $article->getWritter(),
                             'displayed_summary' => $services['post.handler']->getRequestField('summary'),
                         ));
     

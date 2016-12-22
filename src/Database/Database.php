@@ -3,6 +3,7 @@
     
     use \PDO;
     use \Exception;
+    use SciMS\Controller\Checker\FileChecker;
 
     /**
      * Class Database.
@@ -14,15 +15,19 @@
      * So, it's not necessary to develop a "close" method, but it can be possible to use it, then, it develop it.
      *
      * -> v1.1 :
-     *  - Added method update($sql, array $statement) to update table on database.
+     *  - Add method update($sql, array $statement) to update table on database.
+     *
      * -> v1.2 :
-     *  - Added Singleton DatabaseSetting to configure database connection on app/database.yml files.
-     *  - Removed const defines to configure Database access.
+     *  - Add Singleton DatabaseSetting to configure database connection on app/database.yml files.
+     *  - Remove const defines to configure Database access.
+     *
+     * -> v1.3 :
+     *  - Add method exec.
      *
      * @author Kero76
      * @package \SciMS\Database
      * @since SciMS 0.1
-     * @version 1.2
+     * @version 1.3
      */
     class Database {
         
@@ -56,13 +61,16 @@
          * @version 1.1
          */
         private function __construct() {
-            try {
-                $this->_pdo = new PDO(DatabaseSetting::getInstance()->getDns() . DatabaseSetting::getInstance()->getDbname(),
-                                      DatabaseSetting::getInstance()->getUser(), DatabaseSetting::getInstance()->getPassword());
-                $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (Exception $e) {
-                echo 'Erreur : ' . $e->getMessage().'<br />';
-                echo 'N° : '.$e->getCode();
+            $fileChecker = new FileChecker();
+            if ($fileChecker->fileExist(DatabaseSetting::DB_SETTING_PATH)) {
+                try {
+                    $this->_pdo = new PDO(DatabaseSetting::getInstance()->getDns() . DatabaseSetting::getInstance()->getDbname(),
+                        DatabaseSetting::getInstance()->getUser(), DatabaseSetting::getInstance()->getPassword());
+                    $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                } catch (Exception $e) {
+                    echo 'Erreur : ' . $e->getMessage().'<br />';
+                    echo 'N° : '.$e->getCode();
+                }
             }
         }
     
@@ -138,6 +146,20 @@
             } else {
                 return $this->_pdo->query($sql)->fetchAll($fetch_style);
             }
+        }
+    
+        /**
+         * Method use to execute SQL request.
+         *
+         * @param $sql
+         *  SQL request to execute on Database.
+         * @return integer
+         *  Return the number of rows update by SQL request.
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function exec($sql) {
+            return $this->_pdo->exec($sql);
         }
         
         /**

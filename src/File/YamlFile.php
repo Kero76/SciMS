@@ -39,7 +39,7 @@
          * @since   SciMS 0.5
          * @version 1.0
          */
-        function create($file_name) {
+        public function create($file_name) {
             
         }
     
@@ -53,7 +53,7 @@
          * @since   SciMS 0.5
          * @version 1.0
          */
-        function delete($file_name) {
+        public function delete($file_name) {
             
         }
     
@@ -69,7 +69,7 @@
          * @since   SciMS 0.5
          * @version 1.0
          */
-        function write(array $data, $file_name) {
+        public function write(array $data, $file_name) {
             $yaml = Yaml::dump($data, YamlFile::INLINE, YamlFile::INDENTATION);
             $result = file_put_contents($file_name, $yaml);
             
@@ -89,7 +89,7 @@
          * @since   SciMS 0.5
          * @version 1.0
          */
-        function read($file_name) {
-            
+        public function read($file_name) {
+            return Yaml::parse(file_get_contents($file_name));
         }
     }

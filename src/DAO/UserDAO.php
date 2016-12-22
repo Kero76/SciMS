@@ -205,6 +205,29 @@
         }
     
         /**
+         * Method call when you initialize for the first time the website.
+         *
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function createTable() {
+            $sql = 'CREATE TABLE IF NOT EXISTS `users` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `fname` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+                      `lname` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+                      `birthday` datetime DEFAULT NULL,
+                      `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+                      `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                      `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                      `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+                      `biography` text COLLATE utf8_unicode_ci,
+                      `role` int(3) NOT NULL,
+                      PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT=\'Table users\' AUTO_INCREMENT=1 ;';
+            $this->getDatabase()->exec($sql);
+        }
+    
+        /**
          * Method use for build a Domain object.
          *
          * @param array $row

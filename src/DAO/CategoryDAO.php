@@ -148,6 +148,21 @@
         }
     
         /**
+         * Method call when you initialize for the first time the website.
+         *
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function createTable() {
+            $sql = 'CREATE TABLE IF NOT EXISTS `categories` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+                      PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT=\'Table category\' AUTO_INCREMENT=1 ;';
+            $this->getDatabase()->exec($sql);
+        }
+    
+        /**
          * Method use for build a Domain object.
          *
          * @param array $row

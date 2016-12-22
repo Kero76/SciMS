@@ -319,6 +319,33 @@
             $sql = "DELETE FROM `articles` WHERE id = ?";
             $this->getDatabase()->update($sql, array($id));
         }
+    
+        /**
+         * Method call when you initialize for the first time the website.
+         *
+         * @since SciMS 0.5
+         * @version 1.0
+         */
+        public function createTable() {
+            $sql = 'CREATE TABLE IF NOT EXISTS `articles` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                      `title` text COLLATE utf8_unicode_ci,
+                      `abstract` text COLLATE utf8_unicode_ci,
+                      `content` text COLLATE utf8_unicode_ci,
+                      `authors` text COLLATE utf8_unicode_ci,
+                      `categories` int(11) NOT NULL,
+                      `tags` text COLLATE utf8_unicode_ci,
+                      `status` int(3) DEFAULT NULL,
+                      `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      `date_modified` datetime DEFAULT NULL,
+                      `writter` int(11) NOT NULL,
+                      `displayed_summary` int(1) NOT NULL,
+                      PRIMARY KEY (`id`),
+                      KEY `writter` (`writter`),
+                      KEY `category` (`categories`)
+                    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT=\'Table articles\' AUTO_INCREMENT=1 ;';
+            $this->getDatabase()->exec($sql);
+        }
         
         /**
          * Method use for search a writter thanks to the article id.

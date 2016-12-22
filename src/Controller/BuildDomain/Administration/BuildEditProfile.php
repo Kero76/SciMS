@@ -170,11 +170,12 @@
                         'readonly' => false,
                     ))
                 )->getForms(),
-                'user'     => $user,
-                'user_id'  => $services['session.handler']->getRequestField('user_id'),
-                'connect'  => true,
-                'website'  => $website,
-                'theme'    => $theme,
+                'user'       => $user,
+                'user_id'    => $services['session.handler']->getRequestField('user_id'),
+                'categories' => $services['dao.category']->findAll(),
+                'connect'    => true,
+                'website'    => $website,
+                'theme'      => $theme,
             );
             
             return $domains;
