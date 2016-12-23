@@ -38,7 +38,12 @@
                     <td>{{ u.fName }}</td>
                     <td>{{ u.lName }}</td>
                     <td class="text-center align-middle"><a href="/web/index.php?action=edit_profile&user={{ user.id }}&user_update={{ u.id }}" class="scims-edit-user-btn" role="button">Edit</a></td>
-                    <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_user&user={{ user.id }}&user_delete={{ u.id }}" class="scims-delete-user-btn" role="button">Delete</a></td>
+                    {% if u.id == user.id %}
+                        <td class="text-center align-middle"></td>
+                    {% else %}
+                        <td class="text-center align-middle"><a href="/web/index.php?action=verification&form=delete_user&user={{ user.id }}&user_delete={{ u.id }}" class="scims-delete-user-btn" role="button">Delete</a></td>
+                    {% endif %}
+
                 </tr>
             {% endfor %}
             </tbody>
