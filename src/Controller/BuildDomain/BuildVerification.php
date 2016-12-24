@@ -345,6 +345,18 @@
                 
                 // Delete an User
                 case 'delete_user' :
+                    // Retrieve deleted user, admin and deleted user articles.
+                    $user = $services['dao.user']->findById($services['get.handler']->getRequestField('user_delete'));
+                    $articles = $services['dao.article']->findByOwnership($user->getId());
+                    $admin = $services['dao.user']->findById($services['session.handler']->getRequestField('user_id'));
+                    
+                    // Change onwership for each articles of deleted user to admin.
+                    foreach ($articles as $article) {
+                        $article->setWritter($admin);
+                        $services['dao.article']->updateArticle($article);
+                    }
+                    
+                    // Delete user and redirect admin on administration page.
                     $services['dao.user']->deleteUser($services['get.handler']->getRequestField('user_delete'));
                     $url = '/web/index.php?action=administration&user=' . $services['session.handler']->getRequestField('user_id');
                     $services['redirect.handler']->redirect($url);
