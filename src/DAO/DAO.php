@@ -16,26 +16,7 @@
      * @version 1.0
      */
     abstract class DAO {
-    
-        /**
-         * Stored the unique instance of Database.
-         *
-         * @var \SciMS\Database\Database
-         * @since SciMS 0.1
-         */
-        private $_db;
-    
-        /**
-         * DAO constructor.
-         *
-         * @constructor
-         * @since SciMS 0.1
-         * @version 1.0
-         */
-        public function __construct() {
-            $this->_db = Database::getInstance();
-        }
-    
+        
         /**
          * Return the instance of the Database access.
          *
@@ -46,7 +27,7 @@
          * @version 1.0
          */
         protected function getDatabase() {
-            return $this->_db;
+            return Database::getInstance();
         }
     
         /**

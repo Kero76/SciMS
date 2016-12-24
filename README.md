@@ -1,5 +1,5 @@
 # SciMS
-SciMS is an CMS like to post research article. In fact, thanks to SciMS, you can create really easily a website in few step.<br>
+SciMS is a CMS like to post research article. In fact, thanks to SciMS, you can create really easily a website in few step.<br>
 You can administrate the website with an administration panel. Many persons can registered on SciMS and collaborate to write research articles.<br>
 SciMS have an editor WYSIWYG to help the redaction of the article and support LaTeX and MathML syntax to render a good mathematical formula.<br>
 So, let's go, install and use SciMS to develop your scientist blogs.
@@ -25,7 +25,7 @@ An installation screen appear, type all information required :
     * Email of the future website administrator.
     * Username of the future administrator.
     * The password of the future administrator.
-6. After these form, you must redirect on the home page and you can administrate and using your website.
+6. After these form, you must redirect on the home page and you can administrate and using your website. (Read How to use it for more information)
 
 ### Optional features
 Before send all folders on the server, you can modify settings.yml file present on /app/.
@@ -39,6 +39,13 @@ In fact this file include some feature can personalize by yourself :
 * user_role : Coming soon. 
 * abstract : The number of character displayed on abstract on homepage, because the abstract element can huge and it truncate at XXX characters.
 * theme : If this attribute is empty, you don't use theme. So to fill this attribute, check the file themes.yml for add a theme.
+
+## How to use it
+To use SciMS project, you must register or connect on website. 
+So, to write on article, you can go on administration on left navigation and click on articles link. Then, you can click on Write article below the table.<br>
+You're coming in a form with all information to describe the Article. Fill all fields and click on submit button to register the new article.<br>
+If you are an administrator website, you can create a new category on website on administration panel. <br>
+You can manage too all articles and users profile available on website.
 
 ## Features
 * Installation directly without modified settings files (See Installation part above).
@@ -60,8 +67,8 @@ In fact this file include some feature can personalize by yourself :
 
 ## Authors
 You can contact authors on the following email address :
-* Nicolas GILLE (aka Kero76) <nic.gille@gmail.com>
-* Grégoire POMMIER (aka TeeGreg) <gregoire.pommier@etu.univ-rouen.fr>
+* Lead Developer - Nicolas GILLE (aka Kero76) - <nic.gille@gmail.com>
+* Developer and beta-tester - Grégoire POMMIER (aka TeeGreg) - <gregoire.pommier@etu.univ-rouen.fr>
 
 ## External Links
 ### SciMS
@@ -101,3 +108,4 @@ You can contact authors on the following email address :
 * An article to see more information about URL Rewriting : [https://craym.eu/tutoriels/referencement/url_rewriting.html](https://craym.eu/tutoriels/referencement/url_rewriting.html)
 * You search a specific icon : [http://glyphsearch.com/](http://glyphsearch.com/)
 * More information abouts all themes available on SciMS : [https://www.bootstrapcdn.com/bootswatch/](https://www.bootstrapcdn.com/bootswatch/)
+* Code quality by SensioLabsInsight : [https://insight.sensiolabs.com/projects/c10f665a-e11b-4d7c-9cb6-eacd096125d8](https://insight.sensiolabs.com/projects/c10f665a-e11b-4d7c-9cb6-eacd096125d8)

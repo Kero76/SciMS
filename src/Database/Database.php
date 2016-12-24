@@ -65,7 +65,7 @@
             if ($fileChecker->fileExist(DatabaseSetting::DB_SETTING_PATH)) {
                 try {
                     $this->_pdo = new PDO(DatabaseSetting::getInstance()->getDns() . DatabaseSetting::getInstance()->getDbname(),
-                        DatabaseSetting::getInstance()->getUser(), DatabaseSetting::getInstance()->getPassword());
+                                          DatabaseSetting::getInstance()->getUser(), DatabaseSetting::getInstance()->getPassword());
                     $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 } catch (Exception $e) {
                     echo 'Erreur : ' . $e->getMessage().'<br />';
